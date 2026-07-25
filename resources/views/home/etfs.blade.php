@@ -78,7 +78,6 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
 @include('home.header')
 
-@include('home.footer')
 
 
 <a class="skip-link screen-reader-text" href="#content">Skip to content</a>
@@ -538,3 +537,4 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/finvoradigital.com\/wp-ad
 <!-- Mirrored from finvoradigital.com/etfs/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jul 2026 13:28:39 GMT -->
 </html>
 
+@include('home.footer')

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="csrf-token" content="FoGahQ68eJHa4QAEymfnA3i9sRekUy97U8W8UmnT">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Finvora Digital - Login account">
     <title>Login account | Finvora Digital</title>
@@ -97,12 +97,18 @@
         <h1 class="text-2xl font-bold text-content-primary mb-1">Sign In</h1>
         <p class="text-content-tertiary text-sm mb-6">Sign in to start trading crypto, forex and stocks.</p>
 
-        <form method="POST" action="{{url('login')}}">
-            <input type="hidden" name="_token" value="FoGahQ68eJHa4QAEymfnA3i9sRekUy97U8W8UmnT">
+        @if ($errors->any())
+            <div class="mb-4 rounded-lg border border-loss/40 bg-loss/10 px-4 py-3 text-sm text-red-200">
+                {{ $errors->first() }}
+            </div>
+        @endif
+
+        <form method="POST" action="{{route('login.user')}}">
+            @csrf
             
             <div class="mb-4">
                 <label class="block text-sm font-medium text-content-secondary mb-1.5">Email or Username</label>
-                <input type="text" name="email" value="" required
+                <input type="text" name="email" value="{{ old('email') }}" required
                     placeholder="Email or Username"
                     class="w-full bg-surface-overlay border border-surface-border rounded-lg px-4 py-2.5 text-content-primary placeholder-content-tertiary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
                             </div>

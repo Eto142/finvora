@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\DepositController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -60,14 +64,6 @@ Route::get('/faq', function () {
     return view('home.faq');
 });
 
-Route::get('/login', function () {
-    return view('auth.login');
-});
-
-Route::get('/register', function () {
-    return view('auth.register');
-});
-
 Route::get('/forgot-password', function () {
     return view('auth.forgot-password');
 });
@@ -79,3 +75,24 @@ Route::get('/terms-and-conditions', function () {
 Route::get('/privacy-policy', function () {
     return view('home.privacy-policy');
 });
+
+
+
+//AUTHENTICATION ROUTES
+
+Route::middleware('guest')->group(function () {
+    Route::view('/login', 'auth.login')->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login.user');
+
+    Route::view('/register', 'auth.register')->name('register');
+    Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
+});
+
+Route::post('/logout', [LoginController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
+
+//USER ROUTES
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+Route::get('/deposit', [DepositController::class, 'index'])->middleware('auth')->name('user.deposit');

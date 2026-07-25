@@ -26,7 +26,13 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'username' => fake()->unique()->userName(),
             'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->numerify('###########'),
+            'gender' => fake()->randomElement(['Female', 'Male', 'Others']),
+            'country' => fake()->country(),
+            'currency_code' => fake()->currencyCode(),
+            'account_types' => [fake()->randomElement(['Binary Option Trading', 'Forex Trading', 'Stock Trading'])],
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
