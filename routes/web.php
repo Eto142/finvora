@@ -4,7 +4,14 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\DepositController;
+use App\Http\Controllers\User\InvestmentController;
+use App\Http\Controllers\User\LoanController;
+use App\Http\Controllers\User\TransactionController;
+use App\Http\Controllers\User\WithdrawalController;
 use Illuminate\Support\Facades\Route;
+
+
+
 
 Route::get('/', function () {
     return view('home.homepage');
@@ -94,5 +101,9 @@ Route::post('/logout', [LoginController::class, 'logout'])
 
 //USER ROUTES
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('user.dashboard');
 Route::get('/deposit', [DepositController::class, 'index'])->middleware('auth')->name('user.deposit');
+Route::get('/withdrawal', [WithdrawalController::class, 'index'])->middleware('auth')->name('user.withdrawal');
+Route::get('/transactions', [TransactionController::class, 'index'])->middleware('auth')->name('user.transactions');
+Route::get('/loans', [LoanController::class, 'index'])->middleware('auth')->name('user.loans');
+Route::get('/investment-plan', [InvestmentController::class, 'index'])->middleware('auth')->name('user.investment.plan');
