@@ -13,4 +13,21 @@ class DashboardController extends Controller
     {
         return view('user.home');
     }
+
+    public function profile()
+    {
+        return view('user.profile');
+    }
+
+    public function preipo()
+    {
+        return view('user.pre-ipo');
+    }
+
+    public function stocks() {
+        return view('user.stocks');
+    }
+
+
+
 }

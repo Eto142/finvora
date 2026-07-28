@@ -31,6 +31,10 @@
 
         <div class="p-4 lg:p-6 space-y-6">
             
+    <div>
+    </div>    <div>
+    </div>
+
     
     <div class="w-full overflow-hidden rounded-lg border border-surface-border bg-surface-raised mb-6">
     <!-- TradingView Widget BEGIN -->
@@ -56,6 +60,8 @@
     </div>
     <!-- TradingView Widget END -->
 </div>
+
+    
     <div class="flex flex-wrap gap-2 mb-6">
     <a href="{{ url('/') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
         bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
@@ -114,7 +120,7 @@
  Markets
     </a>
         <a href="{{ route('user.transactions') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
-        bg-primary text-content-inverse">
+        bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
 </svg>
@@ -136,84 +142,76 @@
     <!--</button>-->
 </div>
 
+    
     <div class="mb-6">
-    <h2 class="text-xl font-bold text-content-primary">Transactions</h2>
-            <p class="text-sm text-content-secondary mt-1">View your deposit, withdrawal, and other transaction history</p>
+    <h2 class="text-xl font-bold text-content-primary">Referral Program</h2>
+            <p class="text-sm text-content-secondary mt-1">Invite friends and earn rewards</p>
     </div>
 
     
-    <div class="bg-surface-raised border border-surface-border rounded-xl overflow-hidden" x-data="{ tab: 'deposits' }">
-        
-        <div class="flex border-b border-surface-border">
-            <button @click="tab = 'deposits'" :class="tab === 'deposits' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Deposits
-            </button>
-            <button @click="tab = 'withdrawals'" :class="tab === 'withdrawals' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Withdrawals
-            </button>
-            <button @click="tab = 'others'" :class="tab === 'others' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Others
-            </button>
-        </div>
+    <div class="rounded-xl bg-surface-raised border border-surface-border p-6 mb-6">
+        <div class="max-w-2xl mx-auto text-center">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-primary" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+</svg>
+            </div>
+            <h3 class="text-lg font-semibold text-content-primary mb-2">Share Your Referral Link</h3>
+            <p class="text-sm text-content-secondary mb-5">Invite friends using your unique link or referral ID below.</p>
 
-        
-        <div x-show="tab === 'deposits'" class="overflow-x-auto">
+            
+            <div class="flex items-center gap-2 max-w-lg mx-auto mb-4">
+                <input type="text" id="reflink" value="{{ url('/') }}//ref/egod1422" readonly
+                       class="flex-1 px-4 py-2.5 rounded-lg bg-surface-overlay border border-surface-border text-content-primary text-sm focus:outline-none">
+                <button onclick="copyReferralLink()" class="px-4 py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-sm font-medium transition-colors flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9.334a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+</svg>
+                    Copy
+                </button>
+            </div>
+
+            
+            <p class="text-sm text-content-secondary mb-1">or share your Referral ID</p>
+            <span class="text-lg font-bold text-primary">egod1422</span>
+
+            
+            <div class="mt-5 pt-5 border-t border-surface-border">
+                <p class="text-xs text-content-tertiary mb-1">You were referred by</p>
+                <div class="inline-flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-surface-overlay flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-content-secondary" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+</svg>
+                    </div>
+                    <span class="text-sm font-medium text-content-primary">null</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="rounded-xl bg-surface-raised border border-surface-border overflow-hidden">
+        <div class="px-5 py-3 border-b border-surface-border flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-primary" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+</svg>
+            <h3 class="text-sm font-semibold text-content-primary">Your Referrals</h3>
+        </div>
+        <div class="overflow-x-auto">
             <table class="w-full text-sm">
                 <thead>
                     <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Payment Mode</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Status</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
+                        <th class="px-5 py-3 text-left text-xs font-medium text-content-tertiary uppercase tracking-wider">Client Name</th>
+                        <th class="px-5 py-3 text-left text-xs font-medium text-content-tertiary uppercase tracking-wider">Ref. Level</th>
+                        <th class="px-5 py-3 text-left text-xs font-medium text-content-tertiary uppercase tracking-wider">Parent</th>
+                        <th class="px-5 py-3 text-left text-xs font-medium text-content-tertiary uppercase tracking-wider">Status</th>
+                        <th class="px-5 py-3 text-left text-xs font-medium text-content-tertiary uppercase tracking-wider">Date Registered</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="4" class="px-5 py-8 text-center text-content-tertiary">No deposit records found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
-        </div>
-
-        
-        <div x-show="tab === 'withdrawals'" x-cloak class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">With Charges</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Mode</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Status</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="5" class="px-5 py-8 text-center text-content-tertiary">No withdrawal records found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
-        </div>
-
-        
-        <div x-show="tab === 'others'" x-cloak class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Type</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Plan / Narration</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="4" class="px-5 py-8 text-center text-content-tertiary">No other transactions found.</td>
-                    </tr>
-                                    </tbody>
+                <tbody class="divide-y divide-surface-border text-content-secondary">
+                    
+                </tbody>
             </table>
         </div>
     </div>
@@ -246,7 +244,7 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/otherpayment" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <div>
+                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <div>
                         <label class="text-xs text-content-tertiary font-medium mb-1 block">Full Name</label>
                         <input type="text" name="name" value="egod" readonly
                                class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
@@ -300,7 +298,7 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/sendcontact" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
+                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
                     <input type="hidden" name="email" value="egod1422@gmail.com">
                     <input type="hidden" name="name" value="egod">
                     <div>
@@ -322,10 +320,27 @@
         </div>
     </div>
 
-    <script src="/livewire/livewire.js?id=90730a3b0e7144480175" data-turbo-eval="false" data-turbolinks-eval="false" ></script><script data-turbo-eval="false" data-turbolinks-eval="false" >window.livewire = new Livewire();window.Livewire = window.livewire;window.livewire_app_url = '';window.livewire_token = 'rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG';window.deferLoadingAlpine = function (callback) {window.addEventListener('livewire:load', function () {callback();});};let started = false;window.addEventListener('alpine:initializing', function () {if (! started) {window.livewire.start();started = true;}});document.addEventListener("DOMContentLoaded", function () {if (! started) {window.livewire.start();started = true;}});</script>
-       
-
-
+    <script src="/livewire/livewire.js?id=90730a3b0e7144480175" data-turbo-eval="false" data-turbolinks-eval="false" ></script><script data-turbo-eval="false" data-turbolinks-eval="false" >window.livewire = new Livewire();window.Livewire = window.livewire;window.livewire_app_url = '';window.livewire_token = '33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT';window.deferLoadingAlpine = function (callback) {window.addEventListener('livewire:load', function () {callback();});};let started = false;window.addEventListener('alpine:initializing', function () {if (! started) {window.livewire.start();started = true;}});document.addEventListener("DOMContentLoaded", function () {if (! started) {window.livewire.start();started = true;}});</script>
+    <script>
+    function copyReferralLink() {
+        const refInput = document.getElementById('reflink');
+        refInput.select();
+        refInput.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(refInput.value).then(() => {
+            Swal.fire({
+                title: 'Copied!',
+                text: 'Referral link copied to clipboard.',
+                icon: 'success',
+                background: '#161A1E',
+                color: '#E8EAED',
+                confirmButtonColor: '#059669',
+                timer: 2000,
+                timerProgressBar: true
+            });
+        });
+    }
+</script>
+   
 
 
 

@@ -73,70 +73,70 @@
 
             
             <div class="flex flex-wrap gap-2 mb-6">
-    <a href="https://account.finvoradigital.com/dashboard" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
+    <a href="{{ url('/') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
         bg-primary text-content-inverse">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
 </svg>
  Dashboard
     </a>
-    <a href="https://account.finvoradigital.com/dashboard/deposits" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
+    <a href="{{ route('user.deposit') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
         bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
 </svg>
  Deposit
     </a>
-        <a href="https://account.finvoradigital.com/dashboard/buy-plan" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
+        <a href="{{ route('user.investment.plan') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
         bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
 </svg>
  Invest
     </a>
-            <a href="https://account.finvoradigital.com/dashboard/withdrawals" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
+            <a href="{{ route('user.withdrawal') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
         bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
 </svg>
  Withdraw
     </a>
-            <a href="https://account.finvoradigital.com/dashboard/trade" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
+            <a href="{{ route('user.trade') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
         bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
 </svg>
  Trade
     </a>
-    <!--<a href="https://account.finvoradigital.com/dashboard/portfolio" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors-->
+    <!--<a href="{{ route('user.portfolio') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors-->
     <!--    bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">-->
     <!--    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
 </svg>
  Portfolio-->
     <!--</a>-->
-    <!--<a href="https://account.finvoradigital.com/dashboard/trades/positions" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors-->
+    <!--<a href="{{ route('user.trade') }}s/positions" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors-->
     <!--    bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">-->
     <!--    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
 </svg>
  Positions-->
     <!--</a>-->
-    <a href="https://account.finvoradigital.com/dashboard/markets" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
+    <a href="{{ route('user.markets') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
         bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
 </svg>
  Markets
     </a>
-        <a href="https://account.finvoradigital.com/dashboard/accounthistory" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
+        <a href="{{ route('user.transactions') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
         bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
 </svg>
  Transactions
     </a>
-    <a href="https://account.finvoradigital.com/dashboard/account-settings" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
+    <a href="{{ route('user.profile') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
         bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
@@ -178,7 +178,7 @@
 
             <div class="flex items-center gap-2">
                 
-                                    <a href="https://account.finvoradigital.com/dashboard/connect-wallet" class="inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-full hover:bg-primary/20 transition-colors">
+                                    <a href="{{ url('/') }}/connect-wallet" class="inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-full hover:bg-primary/20 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3" />
 </svg>
@@ -186,7 +186,7 @@
                     </a>
                 
                 
-                                                            <a href="https://account.finvoradigital.com/dashboard/verify-account" class="inline-flex items-center gap-1.5 text-xs font-medium text-warning bg-warning/10 border border-warning/20 px-3 py-1.5 rounded-full hover:bg-warning/20 transition-colors">
+                                                            <a href="{{ route('user.kyc') }}" class="inline-flex items-center gap-1.5 text-xs font-medium text-warning bg-warning/10 border border-warning/20 px-3 py-1.5 rounded-full hover:bg-warning/20 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
 </svg>
@@ -239,19 +239,19 @@
 
         
         <div class="flex items-center gap-2 sm:gap-3 relative">
-            <a href="https://account.finvoradigital.com/dashboard/deposits" class="flex-1 flex items-center justify-center gap-1.5 bg-primary hover:bg-primary-dark text-content-inverse text-xs sm:text-sm font-medium py-2 sm:py-2.5 rounded-lg transition-colors">
+            <a href="{{ route('user.deposit') }}" class="flex-1 flex items-center justify-center gap-1.5 bg-primary hover:bg-primary-dark text-content-inverse text-xs sm:text-sm font-medium py-2 sm:py-2.5 rounded-lg transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
 </svg>
                 Deposit
             </a>
-            <a href="https://account.finvoradigital.com/dashboard/withdrawals" class="flex-1 flex items-center justify-center gap-1.5 bg-surface-overlay hover:bg-surface-border text-content-primary text-xs sm:text-sm font-medium py-2 sm:py-2.5 rounded-lg border border-surface-border transition-colors">
+            <a href="{{ route('user.withdrawal') }}" class="flex-1 flex items-center justify-center gap-1.5 bg-surface-overlay hover:bg-surface-border text-content-primary text-xs sm:text-sm font-medium py-2 sm:py-2.5 rounded-lg border border-surface-border transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
 </svg>
                 Withdraw
             </a>
-                        <a href="https://account.finvoradigital.com/dashboard/trade" class="flex-1 flex items-center justify-center gap-1.5 bg-surface-overlay hover:bg-surface-border text-content-primary text-xs sm:text-sm font-medium py-2 sm:py-2.5 rounded-lg border border-surface-border transition-colors">
+                        <a href="{{ route('user.trade') }}" class="flex-1 flex items-center justify-center gap-1.5 bg-surface-overlay hover:bg-surface-border text-content-primary text-xs sm:text-sm font-medium py-2 sm:py-2.5 rounded-lg border border-surface-border transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
 </svg>
@@ -311,13 +311,13 @@
 
             
             <!---->
-            <!--<a href="https://account.finvoradigital.com/dashboard/trade" class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse font-semibold text-sm py-3 rounded-xl transition-colors">-->
+            <!--<a href="{{ route('user.trade') }}" class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse font-semibold text-sm py-3 rounded-xl transition-colors">-->
             <!--    Trade Now-->
             <!--</a>-->
             <!---->
 
             
-                        <a href="https://account.finvoradigital.com/dashboard/connect-wallet"
+                        <a href="{{ url('/') }}/connect-wallet"
                class="group relative block w-full overflow-hidden bg-surface-raised border border-primary/30 rounded-xl p-4 hover:border-primary/60 transition-all duration-300">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
@@ -350,7 +350,7 @@
         <div class="flex items-center gap-2">
             <h3 class="text-sm font-semibold text-content-primary">Support</h3>
                     </div>
-        <a href="https://account.finvoradigital.com/dashboard/support/create" class="inline-flex items-center gap-1 text-xs font-medium text-primary hover:text-primary-dark transition-colors">
+        <a href="{{ route('user.support') }}/create" class="inline-flex items-center gap-1 text-xs font-medium text-primary hover:text-primary-dark transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
 </svg>
@@ -363,7 +363,7 @@
     <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
 </svg>
             <p class="text-xs text-content-tertiary mb-3">Need help? Open a support ticket.</p>
-            <a href="https://account.finvoradigital.com/dashboard/support/create"
+            <a href="{{ route('user.support') }}/create"
                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-xs font-semibold transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -386,14 +386,14 @@
 </svg>
             <h3 class="text-sm font-semibold text-content-primary">Top Expert Traders</h3>
         </div>
-        <a href="https://account.finvoradigital.com/dashboard/copy-trading" class="text-xs text-primary hover:text-primary-dark transition-colors">View All</a>
+        <a href="{{ route('user.copy-trading') }}" class="text-xs text-primary hover:text-primary-dark transition-colors">View All</a>
     </div>
 
     <div class="space-y-3">
-                    <a href="https://account.finvoradigital.com/dashboard/copy-trading/expert/7" class="group flex items-center gap-3 p-3 rounded-lg bg-surface-overlay/50 border border-transparent hover:border-primary/30 hover:bg-surface-overlay transition-all duration-200">
+                    <a href="{{ route('user.copy-trading') }}/expert/7" class="group flex items-center gap-3 p-3 rounded-lg bg-surface-overlay/50 border border-transparent hover:border-primary/30 hover:bg-surface-overlay transition-all duration-200">
                 
                 <div class="relative flex-shrink-0">
-                                            <img src="https://account.finvoradigital.com/storage/app/public/experts/w7rvBcvM4y7NO9bnWNXk5A6MSlaco0rIJH36qlaA.jpg" alt="Abdullah Rasheed" class="w-10 h-10 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
+                                            <img src="{{ url('/') }}/storage/app/public/experts/w7rvBcvM4y7NO9bnWNXk5A6MSlaco0rIJH36qlaA.jpg" alt="Abdullah Rasheed" class="w-10 h-10 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
                                         <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-gain rounded-full border-2 border-surface-raised"></span>
                 </div>
 
@@ -412,10 +412,10 @@
                     <p class="text-[10px] text-content-tertiary">daily ROI</p>
                 </div>
             </a>
-                    <a href="https://account.finvoradigital.com/dashboard/copy-trading/expert/5" class="group flex items-center gap-3 p-3 rounded-lg bg-surface-overlay/50 border border-transparent hover:border-primary/30 hover:bg-surface-overlay transition-all duration-200">
+                    <a href="{{ route('user.copy-trading') }}/expert/5" class="group flex items-center gap-3 p-3 rounded-lg bg-surface-overlay/50 border border-transparent hover:border-primary/30 hover:bg-surface-overlay transition-all duration-200">
                 
                 <div class="relative flex-shrink-0">
-                                            <img src="https://account.finvoradigital.com/storage/app/public/experts/Pig6FQxoDQopSzBT2xsrbKrlQnHnk0Qh70ZEWHrN.jpg" alt="Andrew Kreiger" class="w-10 h-10 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
+                                            <img src="{{ url('/') }}/storage/app/public/experts/Pig6FQxoDQopSzBT2xsrbKrlQnHnk0Qh70ZEWHrN.jpg" alt="Andrew Kreiger" class="w-10 h-10 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
                                         <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-gain rounded-full border-2 border-surface-raised"></span>
                 </div>
 
@@ -434,10 +434,10 @@
                     <p class="text-[10px] text-content-tertiary">daily ROI</p>
                 </div>
             </a>
-                    <a href="https://account.finvoradigital.com/dashboard/copy-trading/expert/6" class="group flex items-center gap-3 p-3 rounded-lg bg-surface-overlay/50 border border-transparent hover:border-primary/30 hover:bg-surface-overlay transition-all duration-200">
+                    <a href="{{ route('user.copy-trading') }}/expert/6" class="group flex items-center gap-3 p-3 rounded-lg bg-surface-overlay/50 border border-transparent hover:border-primary/30 hover:bg-surface-overlay transition-all duration-200">
                 
                 <div class="relative flex-shrink-0">
-                                            <img src="https://account.finvoradigital.com/storage/app/public/experts/aXps1D2XJxOyBphvaIOIBVVPm7umALLmq4T4ePf6.jpg" alt="Andrei Neagu" class="w-10 h-10 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
+                                            <img src="{{ url('/') }}/storage/app/public/experts/aXps1D2XJxOyBphvaIOIBVVPm7umALLmq4T4ePf6.jpg" alt="Andrei Neagu" class="w-10 h-10 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
                                         <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-gain rounded-full border-2 border-surface-raised"></span>
                 </div>
 
@@ -458,7 +458,7 @@
             </a>
             </div>
 
-    <a href="https://account.finvoradigital.com/dashboard/copy-trading" class="mt-4 flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-primary/10 text-primary text-xs font-semibold hover:bg-primary hover:text-content-inverse transition-all duration-200">
+    <a href="{{ route('user.copy-trading') }}" class="mt-4 flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-primary/10 text-primary text-xs font-semibold hover:bg-primary hover:text-content-inverse transition-all duration-200">
         Explore All Experts
         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
     </a>
@@ -710,7 +710,7 @@
             <span class="w-2 h-2 rounded-full bg-info"></span>
             <h3 class="text-sm font-semibold text-content-primary">Recent Transactions</h3>
         </div>
-        <a href="https://account.finvoradigital.com/dashboard/accounthistory" class="text-xs text-primary hover:text-primary-light font-medium transition-colors">
+        <a href="{{ route('user.transactions') }}" class="text-xs text-primary hover:text-primary-light font-medium transition-colors">
             View All &rarr;
         </a>
     </div>
@@ -783,7 +783,7 @@
                 <div class="border-t border-surface-border/60"></div>
 
                 
-                <form action="https://account.finvoradigital.com/dashboard/savedeposit" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <form action="{{ url('/') }}/savedeposit" method="POST" enctype="multipart/form-data" class="space-y-4">
                     <input type="hidden" name="_token" value="4H60DyDUvWAS66zocDJnVrbaeRcvMv4w7PZgSi5d">                    <input type="hidden" name="paymethd_method" value="Gift Card">
                     <input type="hidden" name="mode" value="Gift Card">
 
@@ -868,7 +868,7 @@
                 <div class="border-t border-surface-border/60"></div>
 
                 
-                <form action="https://account.finvoradigital.com/dashboard/savedeposit" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <form action="{{ url('/') }}/savedeposit" method="POST" enctype="multipart/form-data" class="space-y-4">
                     <input type="hidden" name="_token" value="4H60DyDUvWAS66zocDJnVrbaeRcvMv4w7PZgSi5d">                    <input type="hidden" name="paymethd_method" value="USDT">
                     <input type="hidden" name="mode" value="USDT">
 
@@ -953,7 +953,7 @@
                 <div class="border-t border-surface-border/60"></div>
 
                 
-                <form action="https://account.finvoradigital.com/dashboard/savedeposit" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <form action="{{ url('/') }}/savedeposit" method="POST" enctype="multipart/form-data" class="space-y-4">
                     <input type="hidden" name="_token" value="4H60DyDUvWAS66zocDJnVrbaeRcvMv4w7PZgSi5d">                    <input type="hidden" name="paymethd_method" value="Ethereum">
                     <input type="hidden" name="mode" value="Ethereum">
 
@@ -1038,7 +1038,7 @@
                 <div class="border-t border-surface-border/60"></div>
 
                 
-                <form action="https://account.finvoradigital.com/dashboard/savedeposit" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <form action="{{ url('/') }}/savedeposit" method="POST" enctype="multipart/form-data" class="space-y-4">
                     <input type="hidden" name="_token" value="4H60DyDUvWAS66zocDJnVrbaeRcvMv4w7PZgSi5d">                    <input type="hidden" name="paymethd_method" value="Bitcoin">
                     <input type="hidden" name="mode" value="Bitcoin">
 
@@ -1093,7 +1093,7 @@
 </svg>
 </button>
                 </div>
-                <form method="POST" action="https://account.finvoradigital.com/otherpayment" class="space-y-4">
+                <form method="POST" action="{{ url('/') }}/otherpayment" class="space-y-4">
                     <input type="hidden" name="_token" value="4H60DyDUvWAS66zocDJnVrbaeRcvMv4w7PZgSi5d">                    <div>
                         <label class="text-xs text-content-tertiary font-medium mb-1 block">Full Name</label>
                         <input type="text" name="name" value="egod" readonly
@@ -1147,7 +1147,7 @@
 </svg>
 </button>
                 </div>
-                <form method="POST" action="https://account.finvoradigital.com/sendcontact" class="space-y-4">
+                <form method="POST" action="{{ url('/') }}/sendcontact" class="space-y-4">
                     <input type="hidden" name="_token" value="4H60DyDUvWAS66zocDJnVrbaeRcvMv4w7PZgSi5d">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
                     <input type="hidden" name="email" value="egod1422@gmail.com">
                     <input type="hidden" name="name" value="egod">
@@ -1182,3 +1182,4 @@
 
 </body>
 </html>
+

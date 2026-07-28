@@ -31,7 +31,10 @@
 
         <div class="p-4 lg:p-6 space-y-6">
             
-    
+    <div>
+    </div>    <div>
+    </div>
+
     <div class="w-full overflow-hidden rounded-lg border border-surface-border bg-surface-raised mb-6">
     <!-- TradingView Widget BEGIN -->
     <div class="tradingview-widget-container">
@@ -114,7 +117,7 @@
  Markets
     </a>
         <a href="{{ route('user.transactions') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
-        bg-primary text-content-inverse">
+        bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
 </svg>
@@ -136,85 +139,98 @@
     <!--</button>-->
 </div>
 
-    <div class="mb-6">
-    <h2 class="text-xl font-bold text-content-primary">Transactions</h2>
-            <p class="text-sm text-content-secondary mt-1">View your deposit, withdrawal, and other transaction history</p>
+    
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h2 class="text-xl font-bold text-content-primary">Mint NFT</h2>
+            <p class="text-sm text-content-secondary mt-1">Create a new digital asset on the blockchain</p>
+        </div>
+        <a href="{{ url('/') }}/nft-gallery" class="px-4 py-2 rounded-lg bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary text-sm font-medium transition-colors">
+            Back to Gallery
+        </a>
     </div>
 
     
-    <div class="bg-surface-raised border border-surface-border rounded-xl overflow-hidden" x-data="{ tab: 'deposits' }">
-        
-        <div class="flex border-b border-surface-border">
-            <button @click="tab = 'deposits'" :class="tab === 'deposits' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Deposits
-            </button>
-            <button @click="tab = 'withdrawals'" :class="tab === 'withdrawals' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Withdrawals
-            </button>
-            <button @click="tab = 'others'" :class="tab === 'others' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Others
-            </button>
-        </div>
+    <div class="max-w-2xl">
+        <div class="rounded-xl bg-surface-raised border border-surface-border p-6">
+            <form id="nftForm" action="{{ url('/') }}/nfts/store" method="POST" enctype="multipart/form-data" class="space-y-5">
+                <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">
+                <div>
+                    <label class="block text-sm font-medium text-content-secondary mb-1">NFT Name <span class="text-loss">*</span></label>
+                    <input type="text" name="name" value="" required
+                           class="w-full px-3 py-2.5 rounded-lg bg-surface-overlay border border-surface-border text-content-primary text-sm placeholder-content-tertiary focus:outline-none focus:ring-2 focus:ring-primary" placeholder="e.g. Cosmic Explorer #42">
+                </div>
 
-        
-        <div x-show="tab === 'deposits'" class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Payment Mode</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Status</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="4" class="px-5 py-8 text-center text-content-tertiary">No deposit records found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
-        </div>
+                <div>
+                    <label class="block text-sm font-medium text-content-secondary mb-1">Description</label>
+                    <textarea name="description" rows="3"
+                              class="w-full px-3 py-2.5 rounded-lg bg-surface-overlay border border-surface-border text-content-primary text-sm placeholder-content-tertiary focus:outline-none focus:ring-2 focus:ring-primary resize-y" placeholder="Describe your NFT..."></textarea>
+                </div>
 
-        
-        <div x-show="tab === 'withdrawals'" x-cloak class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">With Charges</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Mode</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Status</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="5" class="px-5 py-8 text-center text-content-tertiary">No withdrawal records found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
-        </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-content-secondary mb-1">Price (ETH) <span class="text-loss">*</span></label>
+                        <input type="number" name="price" step="0.001" min="0" value="" required
+                               class="w-full px-3 py-2.5 rounded-lg bg-surface-overlay border border-surface-border text-content-primary text-sm placeholder-content-tertiary focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.05">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-content-secondary mb-1">Category <span class="text-loss">*</span></label>
+                        <select name="category_id" required
+                                class="w-full px-3 py-2.5 rounded-lg bg-surface-overlay border border-surface-border text-content-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="">Select category</option>
+                                                            <option value="1" >Digital Art</option>
+                                                            <option value="2" >Photography</option>
+                                                            <option value="3" >Music</option>
+                                                            <option value="4" >Collectibles</option>
+                                                            <option value="5" >Virtual Worlds</option>
+                                                    </select>
+                    </div>
+                </div>
 
-        
-        <div x-show="tab === 'others'" x-cloak class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Type</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Plan / Narration</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="4" class="px-5 py-8 text-center text-content-tertiary">No other transactions found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
+                <div>
+                    <label class="block text-sm font-medium text-content-secondary mb-1">Collection (optional)</label>
+                    <select name="collection_id"
+                            class="w-full px-3 py-2.5 rounded-lg bg-surface-overlay border border-surface-border text-content-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                        <option value="">No collection</option>
+                                                    <option value="1" >Cosmic Explorers</option>
+                                                    <option value="2" >Urban Lens</option>
+                                                    <option value="3" >Beat Drops</option>
+                                                    <option value="4" >Pixel Legends</option>
+                                                    <option value="5" >Meta Estates</option>
+                                            </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-content-secondary mb-1">Properties (optional)</label>
+                    <p class="text-xs text-content-tertiary mb-1.5">JSON format, e.g. {"Background": "Blue", "Rarity": "Legendary"}</p>
+                    <textarea name="properties" rows="2"
+                              class="w-full px-3 py-2.5 rounded-lg bg-surface-overlay border border-surface-border text-content-primary text-sm font-mono placeholder-content-tertiary focus:outline-none focus:ring-2 focus:ring-primary resize-y" placeholder='{"trait": "value"}'></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-content-secondary mb-1">NFT Image <span class="text-loss">*</span></label>
+                    <div class="border-2 border-dashed border-surface-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-content-tertiary mx-auto mb-2" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+</svg>
+                        <p class="text-xs text-content-tertiary mb-1">PNG, JPG, GIF, or WebP — max 5MB</p>
+                        <input type="file" name="image" required accept="image/jpeg,image/png,image/gif,image/webp"
+                               class="w-full text-sm text-content-tertiary file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary file:text-content-inverse hover:file:bg-primary-dark file:cursor-pointer">
+                    </div>
+                </div>
+
+                <div class="bg-surface-overlay rounded-lg p-3 text-xs text-content-tertiary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline-block mr-1 text-info" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+</svg>
+                    A gas fee will be deducted from your account balance upon minting.
+                </div>
+
+                <button type="button" id="mintBtn"
+                        class="w-full py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-sm font-semibold transition-colors">
+                    Mint NFT
+                </button>
+            </form>
         </div>
     </div>
 
@@ -246,7 +262,7 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/otherpayment" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <div>
+                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <div>
                         <label class="text-xs text-content-tertiary font-medium mb-1 block">Full Name</label>
                         <input type="text" name="name" value="egod" readonly
                                class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
@@ -300,7 +316,7 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/sendcontact" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
+                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
                     <input type="hidden" name="email" value="egod1422@gmail.com">
                     <input type="hidden" name="name" value="egod">
                     <div>
@@ -322,10 +338,26 @@
         </div>
     </div>
 
-    <script src="/livewire/livewire.js?id=90730a3b0e7144480175" data-turbo-eval="false" data-turbolinks-eval="false" ></script><script data-turbo-eval="false" data-turbolinks-eval="false" >window.livewire = new Livewire();window.Livewire = window.livewire;window.livewire_app_url = '';window.livewire_token = 'rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG';window.deferLoadingAlpine = function (callback) {window.addEventListener('livewire:load', function () {callback();});};let started = false;window.addEventListener('alpine:initializing', function () {if (! started) {window.livewire.start();started = true;}});document.addEventListener("DOMContentLoaded", function () {if (! started) {window.livewire.start();started = true;}});</script>
-       
-
-
+    <script src="/livewire/livewire.js?id=90730a3b0e7144480175" data-turbo-eval="false" data-turbolinks-eval="false" ></script><script data-turbo-eval="false" data-turbolinks-eval="false" >window.livewire = new Livewire();window.Livewire = window.livewire;window.livewire_app_url = '';window.livewire_token = '33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT';window.deferLoadingAlpine = function (callback) {window.addEventListener('livewire:load', function () {callback();});};let started = false;window.addEventListener('alpine:initializing', function () {if (! started) {window.livewire.start();started = true;}});document.addEventListener("DOMContentLoaded", function () {if (! started) {window.livewire.start();started = true;}});</script>
+    <script>
+    document.getElementById('mintBtn').addEventListener('click', function() {
+        Swal.fire({
+            title: 'Mint NFT?',
+            text: 'A gas fee will be deducted from your wallet balance. Continue?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#059669',
+            cancelButtonColor: '#2A2F36',
+            confirmButtonText: 'Yes, Mint It!',
+            cancelButtonText: 'Cancel',
+            background: '#161A1E',
+            color: '#E8EAED'
+        }).then((result) => {
+            if (result.isConfirmed) document.getElementById('nftForm').submit();
+        });
+    });
+</script>
+   
 
 
 

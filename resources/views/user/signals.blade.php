@@ -4,7 +4,9 @@
         
         <div x-data="{ toasts: [] }"
              x-init="
-                                             "
+                                                    toasts.push({ id: Date.now() + 1, message: 'You need an active subscription to view signals.', type: 'error' });
+                    setTimeout(() => { toasts = toasts.filter(t => t.id !== toasts[0]?.id) }, 5000);
+                             "
              class="fixed top-20 right-4 z-50 space-y-2 w-80">
             <template x-for="toast in toasts" :key="toast.id">
                 <div x-transition:enter="transition ease-out duration-300"
@@ -31,6 +33,21 @@
 
         <div class="p-4 lg:p-6 space-y-6">
             
+    <div>
+            <div x-data="{ show: true }" x-show="show" x-transition class="flex items-start gap-3 p-4 rounded-lg bg-loss/10 border border-loss/20 mb-4" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-loss mt-0.5 shrink-0" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+</svg>
+            <p class="flex-1 text-sm text-loss">You need an active subscription to view signals.</p>
+            <button @click="show = false" class="text-loss/60 hover:text-loss transition shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+</svg>
+            </button>
+        </div>
+    </div>    <div>
+    </div>
+
     
     <div class="w-full overflow-hidden rounded-lg border border-surface-border bg-surface-raised mb-6">
     <!-- TradingView Widget BEGIN -->
@@ -56,6 +73,8 @@
     </div>
     <!-- TradingView Widget END -->
 </div>
+
+    
     <div class="flex flex-wrap gap-2 mb-6">
     <a href="{{ url('/') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
         bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
@@ -114,7 +133,7 @@
  Markets
     </a>
         <a href="{{ route('user.transactions') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
-        bg-primary text-content-inverse">
+        bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
 </svg>
@@ -136,87 +155,174 @@
     <!--</button>-->
 </div>
 
-    <div class="mb-6">
-    <h2 class="text-xl font-bold text-content-primary">Transactions</h2>
-            <p class="text-sm text-content-secondary mt-1">View your deposit, withdrawal, and other transaction history</p>
+    
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h2 class="text-xl font-bold text-content-primary">Signal Plans</h2>
+            <p class="text-sm text-content-secondary mt-1">Subscribe to receive premium trading signals</p>
+        </div>
+        <div class="flex items-center gap-2">
+            <a href="{{ url('/') }}/my-subscriptions" class="px-4 py-2 rounded-lg bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary text-sm font-medium transition-colors">My Plans</a>
+            <a href="{{ url('/') }}/singalssubscriptions" class="px-4 py-2 rounded-lg bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary text-sm font-medium transition-colors">Signals</a>
+        </div>
     </div>
 
     
-    <div class="bg-surface-raised border border-surface-border rounded-xl overflow-hidden" x-data="{ tab: 'deposits' }">
-        
-        <div class="flex border-b border-surface-border">
-            <button @click="tab = 'deposits'" :class="tab === 'deposits' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Deposits
-            </button>
-            <button @click="tab = 'withdrawals'" :class="tab === 'withdrawals' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Withdrawals
-            </button>
-            <button @click="tab = 'others'" :class="tab === 'others' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Others
-            </button>
-        </div>
-
-        
-        <div x-show="tab === 'deposits'" class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Payment Mode</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Status</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="4" class="px-5 py-8 text-center text-content-tertiary">No deposit records found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
-        </div>
-
-        
-        <div x-show="tab === 'withdrawals'" x-cloak class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">With Charges</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Mode</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Status</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="5" class="px-5 py-8 text-center text-content-tertiary">No withdrawal records found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
-        </div>
-
-        
-        <div x-show="tab === 'others'" x-cloak class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Type</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Plan / Narration</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="4" class="px-5 py-8 text-center text-content-tertiary">No other transactions found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
-        </div>
+    <div class="rounded-xl bg-surface-raised border border-surface-border p-4 mb-6 flex items-center gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-primary" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3" />
+</svg>
+        <span class="text-sm text-content-secondary">Your Balance:</span>
+        <span class="text-sm font-bold text-content-primary">$0.00</span>
     </div>
+
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="rounded-xl bg-surface-raised border border-surface-border overflow-hidden hover:border-primary/50 transition-colors flex flex-col">
+                
+                <div class="p-6 text-center border-b border-surface-border">
+                    <h3 class="text-lg font-bold text-content-primary mb-2">Alpha Signals</h3>
+                    <div>
+                        <span class="text-3xl font-bold text-primary">$99</span>
+                    </div>
+                </div>
+
+                
+                <div class="p-6 space-y-3 flex-1">
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gain flex-shrink-0" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                        <span class="text-content-secondary">General trading signals</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gain flex-shrink-0" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                        <span class="text-content-secondary">High-accuracy signals with risk-reward ratios.</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gain flex-shrink-0" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                        <span class="text-content-secondary">24/7 Expert support</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-primary flex-shrink-0" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                        <span class="text-content-secondary">Duration: 1 Weeks</span>
+                    </div>
+                </div>
+
+                
+                <div class="px-6 pb-6">
+                    <form id="subscribe-form-2" action="{{ url('/') }}/subscribe" method="POST">
+                        <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                        <input type="hidden" name="plan_id" value="2">
+                        <button type="button" onclick="confirmSubscription(2, 99.00)"
+                                class="w-full py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-sm font-semibold transition-colors">
+                            Subscribe Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+                    <div class="rounded-xl bg-surface-raised border border-surface-border overflow-hidden hover:border-primary/50 transition-colors flex flex-col">
+                
+                <div class="p-6 text-center border-b border-surface-border">
+                    <h3 class="text-lg font-bold text-content-primary mb-2">Velocity Pro Signals</h3>
+                    <div>
+                        <span class="text-3xl font-bold text-primary">$299</span>
+                    </div>
+                </div>
+
+                
+                <div class="p-6 space-y-3 flex-1">
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gain flex-shrink-0" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                        <span class="text-content-secondary">General trading signals</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gain flex-shrink-0" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                        <span class="text-content-secondary">Real-time signals with smart trade execution.</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gain flex-shrink-0" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                        <span class="text-content-secondary">24/7 Expert support</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-primary flex-shrink-0" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                        <span class="text-content-secondary">Duration: 4 Weeks</span>
+                    </div>
+                </div>
+
+                
+                <div class="px-6 pb-6">
+                    <form id="subscribe-form-6" action="{{ url('/') }}/subscribe" method="POST">
+                        <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                        <input type="hidden" name="plan_id" value="6">
+                        <button type="button" onclick="confirmSubscription(6, 299.00)"
+                                class="w-full py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-sm font-semibold transition-colors">
+                            Subscribe Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+                    <div class="rounded-xl bg-surface-raised border border-surface-border overflow-hidden hover:border-primary/50 transition-colors flex flex-col">
+                
+                <div class="p-6 text-center border-b border-surface-border">
+                    <h3 class="text-lg font-bold text-content-primary mb-2">Legendary Investor Plan</h3>
+                    <div>
+                        <span class="text-3xl font-bold text-primary">$999</span>
+                    </div>
+                </div>
+
+                
+                <div class="p-6 space-y-3 flex-1">
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gain flex-shrink-0" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                        <span class="text-content-secondary">General trading signals</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gain flex-shrink-0" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                        <span class="text-content-secondary">Lifetime mentorship, AI-powered signals, &amp; personalized strategies.Lifetime mentorship, AI-powered signals, &amp; personalized strategies.</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gain flex-shrink-0" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                        <span class="text-content-secondary">24/7 Expert support</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-primary flex-shrink-0" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                        <span class="text-content-secondary">Duration: 12 Weeks</span>
+                    </div>
+                </div>
+
+                
+                <div class="px-6 pb-6">
+                    <form id="subscribe-form-9" action="{{ url('/') }}/subscribe" method="POST">
+                        <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                        <input type="hidden" name="plan_id" value="9">
+                        <button type="button" onclick="confirmSubscription(9, 999.00)"
+                                class="w-full py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-sm font-semibold transition-colors">
+                            Subscribe Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+            </div>
 
         </div>
 
@@ -246,7 +352,7 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/otherpayment" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <div>
+                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <div>
                         <label class="text-xs text-content-tertiary font-medium mb-1 block">Full Name</label>
                         <input type="text" name="name" value="egod" readonly
                                class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
@@ -300,7 +406,7 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/sendcontact" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
+                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
                     <input type="hidden" name="email" value="egod1422@gmail.com">
                     <input type="hidden" name="name" value="egod">
                     <div>
@@ -322,8 +428,30 @@
         </div>
     </div>
 
-    <script src="/livewire/livewire.js?id=90730a3b0e7144480175" data-turbo-eval="false" data-turbolinks-eval="false" ></script><script data-turbo-eval="false" data-turbolinks-eval="false" >window.livewire = new Livewire();window.Livewire = window.livewire;window.livewire_app_url = '';window.livewire_token = 'rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG';window.deferLoadingAlpine = function (callback) {window.addEventListener('livewire:load', function () {callback();});};let started = false;window.addEventListener('alpine:initializing', function () {if (! started) {window.livewire.start();started = true;}});document.addEventListener("DOMContentLoaded", function () {if (! started) {window.livewire.start();started = true;}});</script>
-       
+    <script src="/livewire/livewire.js?id=90730a3b0e7144480175" data-turbo-eval="false" data-turbolinks-eval="false" ></script><script data-turbo-eval="false" data-turbolinks-eval="false" >window.livewire = new Livewire();window.Livewire = window.livewire;window.livewire_app_url = '';window.livewire_token = '33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT';window.deferLoadingAlpine = function (callback) {window.addEventListener('livewire:load', function () {callback();});};let started = false;window.addEventListener('alpine:initializing', function () {if (! started) {window.livewire.start();started = true;}});document.addEventListener("DOMContentLoaded", function () {if (! started) {window.livewire.start();started = true;}});</script>
+    <script>
+    function confirmSubscription(planId, price) {
+        Swal.fire({
+            title: 'Confirm Subscription',
+            text: 'Subscribe for $' + price.toLocaleString() + '?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#059669',
+            cancelButtonColor: '#2A2F36',
+            confirmButtonText: 'Yes, Subscribe!',
+            cancelButtonText: 'Cancel',
+            background: '#161A1E',
+            color: '#E8EAED'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('subscribe-form-' + planId).submit();
+            }
+        });
+    }
+</script>
+  
+
+
 
 
 

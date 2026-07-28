@@ -1,4 +1,5 @@
 @include('user.header')
+
     
     <main class="transition-all duration-200 lg:ml-64 pt-16 min-h-screen">
         
@@ -31,6 +32,10 @@
 
         <div class="p-4 lg:p-6 space-y-6">
             
+    <div>
+    </div>    <div>
+    </div>
+
     
     <div class="w-full overflow-hidden rounded-lg border border-surface-border bg-surface-raised mb-6">
     <!-- TradingView Widget BEGIN -->
@@ -56,6 +61,8 @@
     </div>
     <!-- TradingView Widget END -->
 </div>
+
+    
     <div class="flex flex-wrap gap-2 mb-6">
     <a href="{{ url('/') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
         bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
@@ -114,7 +121,7 @@
  Markets
     </a>
         <a href="{{ route('user.transactions') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
-        bg-primary text-content-inverse">
+        bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
 </svg>
@@ -136,88 +143,21 @@
     <!--</button>-->
 </div>
 
+    
     <div class="mb-6">
-    <h2 class="text-xl font-bold text-content-primary">Transactions</h2>
-            <p class="text-sm text-content-secondary mt-1">View your deposit, withdrawal, and other transaction history</p>
+    <h2 class="text-xl font-bold text-content-primary">Your Courses</h2>
+            <p class="text-sm text-content-secondary mt-1">Continue learning where you left off</p>
     </div>
 
     
-    <div class="bg-surface-raised border border-surface-border rounded-xl overflow-hidden" x-data="{ tab: 'deposits' }">
-        
-        <div class="flex border-b border-surface-border">
-            <button @click="tab = 'deposits'" :class="tab === 'deposits' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Deposits
-            </button>
-            <button @click="tab = 'withdrawals'" :class="tab === 'withdrawals' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Withdrawals
-            </button>
-            <button @click="tab = 'others'" :class="tab === 'others' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Others
-            </button>
+            <div class="rounded-xl bg-surface-raised border border-surface-border p-8 text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-content-tertiary mx-auto mb-3">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"/>
+</svg>
+            <p class="text-content-secondary mb-3">You haven't purchased any courses yet.</p>
+            <a href="{{ route('user.courses') }}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-sm font-medium transition-colors">Browse Courses</a>
         </div>
-
-        
-        <div x-show="tab === 'deposits'" class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Payment Mode</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Status</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="4" class="px-5 py-8 text-center text-content-tertiary">No deposit records found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
-        </div>
-
-        
-        <div x-show="tab === 'withdrawals'" x-cloak class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">With Charges</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Mode</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Status</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="5" class="px-5 py-8 text-center text-content-tertiary">No withdrawal records found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
-        </div>
-
-        
-        <div x-show="tab === 'others'" x-cloak class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Type</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Plan / Narration</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="4" class="px-5 py-8 text-center text-content-tertiary">No other transactions found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
-        </div>
-    </div>
-
+    
         </div>
 
         
@@ -246,7 +186,7 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/otherpayment" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <div>
+                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <div>
                         <label class="text-xs text-content-tertiary font-medium mb-1 block">Full Name</label>
                         <input type="text" name="name" value="egod" readonly
                                class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
@@ -300,7 +240,7 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/sendcontact" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
+                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
                     <input type="hidden" name="email" value="egod1422@gmail.com">
                     <input type="hidden" name="name" value="egod">
                     <div>
@@ -322,9 +262,8 @@
         </div>
     </div>
 
-    <script src="/livewire/livewire.js?id=90730a3b0e7144480175" data-turbo-eval="false" data-turbolinks-eval="false" ></script><script data-turbo-eval="false" data-turbolinks-eval="false" >window.livewire = new Livewire();window.Livewire = window.livewire;window.livewire_app_url = '';window.livewire_token = 'rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG';window.deferLoadingAlpine = function (callback) {window.addEventListener('livewire:load', function () {callback();});};let started = false;window.addEventListener('alpine:initializing', function () {if (! started) {window.livewire.start();started = true;}});document.addEventListener("DOMContentLoaded", function () {if (! started) {window.livewire.start();started = true;}});</script>
+    <script src="/livewire/livewire.js?id=90730a3b0e7144480175" data-turbo-eval="false" data-turbolinks-eval="false" ></script><script data-turbo-eval="false" data-turbolinks-eval="false" >window.livewire = new Livewire();window.Livewire = window.livewire;window.livewire_app_url = '';window.livewire_token = '33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT';window.deferLoadingAlpine = function (callback) {window.addEventListener('livewire:load', function () {callback();});};let started = false;window.addEventListener('alpine:initializing', function () {if (! started) {window.livewire.start();started = true;}});document.addEventListener("DOMContentLoaded", function () {if (! started) {window.livewire.start();started = true;}});</script>
        
-
 
 
 

@@ -31,7 +31,10 @@
 
         <div class="p-4 lg:p-6 space-y-6">
             
-    
+    <div>
+    </div>    <div>
+    </div>
+
     <div class="w-full overflow-hidden rounded-lg border border-surface-border bg-surface-raised mb-6">
     <!-- TradingView Widget BEGIN -->
     <div class="tradingview-widget-container">
@@ -114,7 +117,7 @@
  Markets
     </a>
         <a href="{{ route('user.transactions') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
-        bg-primary text-content-inverse">
+        bg-surface-overlay text-content-secondary hover:bg-surface-border hover:text-content-primary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
 </svg>
@@ -137,87 +140,193 @@
 </div>
 
     <div class="mb-6">
-    <h2 class="text-xl font-bold text-content-primary">Transactions</h2>
-            <p class="text-sm text-content-secondary mt-1">View your deposit, withdrawal, and other transaction history</p>
+    <h2 class="text-xl font-bold text-content-primary">Pre-IPO Shares</h2>
+            <p class="text-sm text-content-secondary mt-1">Invest in companies before they go public</p>
     </div>
 
     
-    <div class="bg-surface-raised border border-surface-border rounded-xl overflow-hidden" x-data="{ tab: 'deposits' }">
-        
-        <div class="flex border-b border-surface-border">
-            <button @click="tab = 'deposits'" :class="tab === 'deposits' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Deposits
-            </button>
-            <button @click="tab = 'withdrawals'" :class="tab === 'withdrawals' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Withdrawals
-            </button>
-            <button @click="tab = 'others'" :class="tab === 'others' ? 'text-primary border-primary' : 'text-content-tertiary border-transparent hover:text-content-secondary'"
-                    class="flex-1 px-4 py-3.5 text-sm font-medium border-b-2 transition-colors text-center">
-                Others
-            </button>
-        </div>
-
-        
-        <div x-show="tab === 'deposits'" class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Payment Mode</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Status</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="4" class="px-5 py-8 text-center text-content-tertiary">No deposit records found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
-        </div>
-
-        
-        <div x-show="tab === 'withdrawals'" x-cloak class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">With Charges</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Mode</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Status</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="5" class="px-5 py-8 text-center text-content-tertiary">No withdrawal records found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
-        </div>
-
-        
-        <div x-show="tab === 'others'" x-cloak class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b border-surface-border">
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Amount</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Type</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Plan / Narration</th>
-                        <th class="text-left text-xs font-medium text-content-tertiary uppercase tracking-wider px-5 py-3">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-surface-border">
-                                        <tr>
-                        <td colspan="4" class="px-5 py-8 text-center text-content-tertiary">No other transactions found.</td>
-                    </tr>
-                                    </tbody>
-            </table>
-        </div>
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <a href="{{ url('/') }}/pre-ipo/holdings"
+           class="bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2.5 px-4 text-sm font-medium transition-colors inline-flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
+</svg>
+ My Holdings
+        </a>
     </div>
 
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="{{ url('/') }}/pre-ipo/1"
+               class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors group">
+
+                <div class="flex items-start justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                                                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">SP</div>
+                                                <div>
+                            <h3 class="text-sm font-semibold text-content-primary group-hover:text-primary transition-colors">SpaceX</h3>
+                            <p class="text-xs text-content-tertiary font-mono">SPACEX</p>
+                        </div>
+                    </div>
+                                            <span class="text-warning text-xs">★ Featured</span>
+                                    </div>
+
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-content-tertiary">Share Price</span>
+                        <span class="text-sm font-semibold text-content-primary">$185.00</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-content-tertiary">Price Change</span>
+                        <span class="text-xs font-medium text-gain">
+                            +0%
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-content-tertiary">Available</span>
+                        <span class="text-xs text-content-secondary">49,999 / 50,000</span>
+                    </div>
+
+                    
+                    <div class="w-full bg-surface-overlay rounded-full h-1.5 mt-1">
+                        <div class="bg-primary rounded-full h-1.5" style="width: 0%"></div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gain/10 text-gain">
+                            Open
+                        </span>
+                                            </div>
+                </div>
+            </a>
+                    <a href="{{ url('/') }}/pre-ipo/2"
+               class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors group">
+
+                <div class="flex items-start justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                                                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">ST</div>
+                                                <div>
+                            <h3 class="text-sm font-semibold text-content-primary group-hover:text-primary transition-colors">Stripe</h3>
+                            <p class="text-xs text-content-tertiary font-mono">STRIPE</p>
+                        </div>
+                    </div>
+                                            <span class="text-warning text-xs">★ Featured</span>
+                                    </div>
+
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-content-tertiary">Share Price</span>
+                        <span class="text-sm font-semibold text-content-primary">$72.50</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-content-tertiary">Price Change</span>
+                        <span class="text-xs font-medium text-gain">
+                            +0%
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-content-tertiary">Available</span>
+                        <span class="text-xs text-content-secondary">100,000 / 100,000</span>
+                    </div>
+
+                    
+                    <div class="w-full bg-surface-overlay rounded-full h-1.5 mt-1">
+                        <div class="bg-primary rounded-full h-1.5" style="width: 0%"></div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gain/10 text-gain">
+                            Open
+                        </span>
+                                            </div>
+                </div>
+            </a>
+                    <a href="{{ url('/') }}/pre-ipo/4"
+               class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors group">
+
+                <div class="flex items-start justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                                                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">CA</div>
+                                                <div>
+                            <h3 class="text-sm font-semibold text-content-primary group-hover:text-primary transition-colors">Canva</h3>
+                            <p class="text-xs text-content-tertiary font-mono">CANVA</p>
+                        </div>
+                    </div>
+                                            <span class="text-warning text-xs">★ Featured</span>
+                                    </div>
+
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-content-tertiary">Share Price</span>
+                        <span class="text-sm font-semibold text-content-primary">$38.25</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-content-tertiary">Price Change</span>
+                        <span class="text-xs font-medium text-gain">
+                            +0%
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-content-tertiary">Available</span>
+                        <span class="text-xs text-content-secondary">120,000 / 120,000</span>
+                    </div>
+
+                    
+                    <div class="w-full bg-surface-overlay rounded-full h-1.5 mt-1">
+                        <div class="bg-primary rounded-full h-1.5" style="width: 0%"></div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gain/10 text-gain">
+                            Open
+                        </span>
+                                            </div>
+                </div>
+            </a>
+                    <a href="{{ url('/') }}/pre-ipo/3"
+               class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors group">
+
+                <div class="flex items-start justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                                                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">DA</div>
+                                                <div>
+                            <h3 class="text-sm font-semibold text-content-primary group-hover:text-primary transition-colors">Databricks</h3>
+                            <p class="text-xs text-content-tertiary font-mono">DATABR</p>
+                        </div>
+                    </div>
+                                    </div>
+
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-content-tertiary">Share Price</span>
+                        <span class="text-sm font-semibold text-content-primary">$54.00</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-content-tertiary">Price Change</span>
+                        <span class="text-xs font-medium text-gain">
+                            +0%
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-content-tertiary">Available</span>
+                        <span class="text-xs text-content-secondary">75,000 / 75,000</span>
+                    </div>
+
+                    
+                    <div class="w-full bg-surface-overlay rounded-full h-1.5 mt-1">
+                        <div class="bg-primary rounded-full h-1.5" style="width: 0%"></div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-info/10 text-info">
+                            Upcoming
+                        </span>
+                                            </div>
+                </div>
+            </a>
+            </div>
+
+    
         </div>
 
         
@@ -246,7 +355,7 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/otherpayment" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <div>
+                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <div>
                         <label class="text-xs text-content-tertiary font-medium mb-1 block">Full Name</label>
                         <input type="text" name="name" value="egod" readonly
                                class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
@@ -300,7 +409,7 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/sendcontact" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
+                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
                     <input type="hidden" name="email" value="egod1422@gmail.com">
                     <input type="hidden" name="name" value="egod">
                     <div>
@@ -322,8 +431,8 @@
         </div>
     </div>
 
-    <script src="/livewire/livewire.js?id=90730a3b0e7144480175" data-turbo-eval="false" data-turbolinks-eval="false" ></script><script data-turbo-eval="false" data-turbolinks-eval="false" >window.livewire = new Livewire();window.Livewire = window.livewire;window.livewire_app_url = '';window.livewire_token = 'rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG';window.deferLoadingAlpine = function (callback) {window.addEventListener('livewire:load', function () {callback();});};let started = false;window.addEventListener('alpine:initializing', function () {if (! started) {window.livewire.start();started = true;}});document.addEventListener("DOMContentLoaded", function () {if (! started) {window.livewire.start();started = true;}});</script>
-       
+    <script src="/livewire/livewire.js?id=90730a3b0e7144480175" data-turbo-eval="false" data-turbolinks-eval="false" ></script><script data-turbo-eval="false" data-turbolinks-eval="false" >window.livewire = new Livewire();window.Livewire = window.livewire;window.livewire_app_url = '';window.livewire_token = '33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT';window.deferLoadingAlpine = function (callback) {window.addEventListener('livewire:load', function () {callback();});};let started = false;window.addEventListener('alpine:initializing', function () {if (! started) {window.livewire.start();started = true;}});document.addEventListener("DOMContentLoaded", function () {if (! started) {window.livewire.start();started = true;}});</script>
+ 
 
 
 
