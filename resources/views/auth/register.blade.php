@@ -86,7 +86,7 @@
     
     <div class="text-center mb-8">
         <a href="/">
-            <img src="https://account.finvoradigital.com/storage/app/public/photos/wp-content/uploads/2026/03/Asset-4651finvora-1024x127.png.png" alt="Chasedevere" class="h-12 mx-auto">
+            <img src="wp-content/uploads/2026/03/Asset-4651finvora-1024x127.png" alt="Chasedevere" class="h-12 mx-auto">
         </a>
     </div>
 
