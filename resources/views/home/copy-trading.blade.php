@@ -7,10 +7,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
-	<title>Copy Trading &#8211; Finvora Digital</title>
+	<title>Copy Trading &#8211; Chasedevere</title>
 <meta name='robots' content='max-image-preview:large' />
-<link rel="alternate" type="application/rss+xml" title="Finvora Digital &raquo; Feed" href="../feed/index.html" />
-<link rel="alternate" type="application/rss+xml" title="Finvora Digital &raquo; Comments Feed" href="../comments/feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Chasedevere &raquo; Feed" href="../feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Chasedevere &raquo; Comments Feed" href="../comments/feed/index.html" />
 <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="../wp-json/oembed/1.0/embed05a9.json?url=https%3A%2F%2Ffinvoradigital.com%2Fcopy-trading%2F" />
 <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="../wp-json/oembed/1.0/embed20bc?url=https%3A%2F%2Ffinvoradigital.com%2Fcopy-trading%2F&amp;format=xml" />
 <style id="wp-img-auto-sizes-contain-inline-css">
@@ -337,7 +337,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				</div>
 		<div class="elementor-element elementor-element-4277cc2 e-con-full e-flex e-con e-child" data-id="4277cc2" data-element_type="container" data-e-type="container" data-settings="{&quot;_ha_eqh_enable&quot;:false}">
 				<div class="elementor-element elementor-element-e69e4b7 elementor-widget elementor-widget-text-editor" data-id="e69e4b7" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
-									<p>One of the primary goals of Finvora Digital is to provide the best product in the market. Our relationships with leading tier one financial institutions mean deep liquidity and tighter spreads for Forex traders.</p>								</div>
+									<p>One of the primary goals of Chasedevere is to provide the best product in the market. Our relationships with leading tier one financial institutions mean deep liquidity and tighter spreads for Forex traders.</p>								</div>
 				<div class="elementor-element elementor-element-94d945d elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="94d945d" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
 							<ul class="elementor-icon-list-items">
 							<li class="elementor-icon-list-item">

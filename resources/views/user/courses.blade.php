@@ -151,7 +151,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
                 <h2 class="text-2xl font-bold text-content-primary">All Courses</h2>
-                <p class="text-content-secondary mt-1">Learning often happens in classrooms but it doesn't have to. Use Finvora Digital to facilitate learning experiences no matter the context.</p>
+                <p class="text-content-secondary mt-1">Learning often happens in classrooms but it doesn't have to. Use Chasedevere to facilitate learning experiences no matter the context.</p>
             </div>
             <a href="{{ route('user.my-courses') }}"
                 class="inline-flex items-center gap-2 bg-surface-overlay border border-surface-border hover:border-primary/50 text-content-primary text-sm font-medium px-4 py-2 rounded-lg transition-colors whitespace-nowrap">
@@ -384,7 +384,7 @@
         
         <footer class="border-t border-surface-border py-6 px-6 mt-8">
             <p class="text-sm text-content-tertiary text-center">
-                &copy; Finvora Digital.
+                &copy; Chasedevere.
             </p>
         </footer>
     </main>
@@ -461,7 +461,7 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/sendcontact" class="space-y-4">
-                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
+                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <input type="hidden" name="to_email" value="Chasedevere Support">
                     <input type="hidden" name="email" value="egod1422@gmail.com">
                     <input type="hidden" name="name" value="egod">
                     <div>

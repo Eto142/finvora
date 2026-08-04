@@ -7,10 +7,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
-	<title>Finvora Digital &#8211; Trading on Stocks, Gold, Crypto, Oil, Indices</title>
+	<title>Chasedevere &#8211; Trading on Stocks, Gold, Crypto, Oil, Indices</title>
 <meta name='robots' content='max-image-preview:large' />
-<link rel="alternate" type="application/rss+xml" title="Finvora Digital &raquo; Feed" href="feed/index.html" />
-<link rel="alternate" type="application/rss+xml" title="Finvora Digital &raquo; Comments Feed" href="comments/feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Chasedevere &raquo; Feed" href="feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Chasedevere &raquo; Comments Feed" href="comments/feed/index.html" />
 <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="wp-json/oembed/1.0/embedba88.json?url=https%3A%2F%2Ffinvoradigital.com%2F" />
 <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="wp-json/oembed/1.0/embedc65b?url=https%3A%2F%2Ffinvoradigital.com%2F&amp;format=xml" />
 <style id="wp-img-auto-sizes-contain-inline-css">
@@ -89,7 +89,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 		<div class="elementor-element elementor-element-136e59e e-con-full e-flex e-con e-child" data-id="136e59e" data-element_type="container" data-e-type="container" data-settings="{&quot;_ha_eqh_enable&quot;:false}">
 				<div class="elementor-element elementor-element-dad0e57 elementor-widget elementor-widget-image" data-id="dad0e57" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
 																		<a href="/">
-							<img fetchpriority="high" width="800" height="99" src="wp-content/uploads/2026/03/Asset-4651finvora-1024x127.png" class="attachment-large size-large wp-image-699" alt="" srcset="https://finvoradigital.com/wp-content/uploads/2026/03/Asset-4651finvora-1024x127.png 1024w, https://finvoradigital.com/wp-content/uploads/2026/03/Asset-4651finvora-300x37.png 300w, https://finvoradigital.com/wp-content/uploads/2026/03/Asset-4651finvora-768x95.png 768w, https://finvoradigital.com/wp-content/uploads/2026/03/Asset-4651finvora.png 1244w" sizes="(max-width: 800px) 100vw, 800px" />								</a>
+							<img fetchpriority="high" width="800" height="99" src="{{ asset('wp-content/uploads/2026/03/Asset-4651finvora-1024x127.png') }}" class="attachment-large size-large wp-image-699" alt="" srcset="{{ asset('wp-content/uploads/2026/03/Asset-4651finvora-1024x127.png') }} 1024w, {{ asset('wp-content/uploads/2026/03/Asset-4651finvora-1024x127.png') }} 300w, {{ asset('wp-content/uploads/2026/03/Asset-4651finvora-1024x127.png') }} 768w, {{ asset('wp-content/uploads/2026/03/Asset-4651finvora-1024x127.png') }} 1244w" sizes="(max-width: 800px) 100vw, 800px" />								</a>
 															</div>
 				</div>
 		<div class="elementor-element elementor-element-b11967d e-con-full e-flex e-con e-child" data-id="b11967d" data-element_type="container" data-e-type="container" data-settings="{&quot;_ha_eqh_enable&quot;:false}">

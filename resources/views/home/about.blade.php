@@ -7,10 +7,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
-	<title>About Us &#8211; Finvora Digital</title>
+	<title>About Us &#8211; Chasedevere</title>
 <meta name='robots' content='max-image-preview:large' />
-<link rel="alternate" type="application/rss+xml" title="Finvora Digital &raquo; Feed" href="../feed/index.html" />
-<link rel="alternate" type="application/rss+xml" title="Finvora Digital &raquo; Comments Feed" href="../comments/feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Chasedevere &raquo; Feed" href="../feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Chasedevere &raquo; Comments Feed" href="../comments/feed/index.html" />
 <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="../wp-json/oembed/1.0/embed8641.json?url=https%3A%2F%2Ffinvoradigital.com%2Fabout%2F" />
 <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="../wp-json/oembed/1.0/embede83b?url=https%3A%2F%2Ffinvoradigital.com%2Fabout%2F&amp;format=xml" />
 <style id="wp-img-auto-sizes-contain-inline-css">
@@ -152,7 +152,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 					</h3>
 				
 									<p class="elementor-icon-box-description">
-						Everybody can become a trader with our easiest to use trading platform. Finvora Digital is available on all modern platforms: Web, Windows, MacOS, iPhone, iPad and Android.
+						Everybody can become a trader with our easiest to use trading platform. Chasedevere is available on all modern platforms: Web, Windows, MacOS, iPhone, iPad and Android.
 
 					</p>
 				
@@ -293,7 +293,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				</div>
 		<div class="elementor-element elementor-element-a175a0d e-con-full e-flex e-con e-child" data-id="a175a0d" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;_ha_eqh_enable&quot;:false}">
 				<div class="elementor-element elementor-element-0bddce3 elementor-widget elementor-widget-text-editor" data-id="0bddce3" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
-									<section class="py-16 bg-gray-900 relative overflow-hidden"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"><div class="bg-gray-800 bg-opacity-70 backdrop-blur-sm rounded-2xl border border-gray-700 shadow-xl overflow-hidden p-6 md:p-10"><div class="prose prose-lg prose-invert max-w-none"><p>Finvora Digital has become one of the most reputable brokers in the industry, offering to traders CFDs across Forex, Equities, Commodities and Futures. Trading on the Forex market is a legitimate and straightforward way of generating income. And the good news is that you don&#8217;t have to be a professional trader in order to make money. All you need is the right personality and the right skill set and you can make money trading on foreign exchanges.</p><p>Finvora Digital lets you trade in the way that best suits you. Do you want to risk a little or a lot? Do you want gains in the short term or are you playing a longer game? Are you a day trader, a swing trader or a scalper? Are you an old hand or a rookie just testing the water? It does not matter because Finvora Digital puts you in control.</p><p>If you can control today&#8217;s success and not let it cloud tomorrow&#8217;s judgment, you probably have it in you to make money as a currency trader. The prizes in Forex are certainly glittering but it is level headedness and persistence that win the day. With the right tools, information and access to all the world&#8217;s currencies, Finvora Digital puts you in control of the trades you make.</p></div></div></div></section>								</div>
+									<section class="py-16 bg-gray-900 relative overflow-hidden"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"><div class="bg-gray-800 bg-opacity-70 backdrop-blur-sm rounded-2xl border border-gray-700 shadow-xl overflow-hidden p-6 md:p-10"><div class="prose prose-lg prose-invert max-w-none"><p>Chasedevere has become one of the most reputable brokers in the industry, offering to traders CFDs across Forex, Equities, Commodities and Futures. Trading on the Forex market is a legitimate and straightforward way of generating income. And the good news is that you don&#8217;t have to be a professional trader in order to make money. All you need is the right personality and the right skill set and you can make money trading on foreign exchanges.</p><p>Chasedevere lets you trade in the way that best suits you. Do you want to risk a little or a lot? Do you want gains in the short term or are you playing a longer game? Are you a day trader, a swing trader or a scalper? Are you an old hand or a rookie just testing the water? It does not matter because Chasedevere puts you in control.</p><p>If you can control today&#8217;s success and not let it cloud tomorrow&#8217;s judgment, you probably have it in you to make money as a currency trader. The prizes in Forex are certainly glittering but it is level headedness and persistence that win the day. With the right tools, information and access to all the world&#8217;s currencies, Chasedevere puts you in control of the trades you make.</p></div></div></div></section>								</div>
 				</div>
 					</div>
 				</div>

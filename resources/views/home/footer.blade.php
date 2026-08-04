@@ -50,7 +50,7 @@
                     </a>
                 </div>
                 <div class="elementor-element elementor-element-da24d3a elementor-widget__width-initial elementor-widget-mobile__width-inherit elementor-widget elementor-widget-text-editor" data-id="da24d3a" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
-                    <p class="text-sm text-gray-400 mb-6">Finvora Digital offers CFD trading on stocks, forex, indices, commodities, and cryptocurrencies with competitive spreads and advanced trading tools.</p>
+                    <p class="text-sm text-gray-400 mb-6">Chasedevere offers CFD trading on stocks, forex, indices, commodities, and cryptocurrencies with competitive spreads and advanced trading tools.</p>
                 </div>
             </div>
 

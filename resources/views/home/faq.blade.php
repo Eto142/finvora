@@ -7,10 +7,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
-	<title>FAQ &#8211; Finvora Digital</title>
+	<title>FAQ &#8211; Chasedevere</title>
 <meta name='robots' content='max-image-preview:large' />
-<link rel="alternate" type="application/rss+xml" title="Finvora Digital &raquo; Feed" href="../feed/index.html" />
-<link rel="alternate" type="application/rss+xml" title="Finvora Digital &raquo; Comments Feed" href="../comments/feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Chasedevere &raquo; Feed" href="../feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Chasedevere &raquo; Comments Feed" href="../comments/feed/index.html" />
 <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="../wp-json/oembed/1.0/embed3022.json?url=https%3A%2F%2Ffinvoradigital.com%2Ffaq%2F" />
 <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="../wp-json/oembed/1.0/embedf0a0?url=https%3A%2F%2Ffinvoradigital.com%2Ffaq%2F&amp;format=xml" />
 <style id="wp-img-auto-sizes-contain-inline-css">
@@ -247,7 +247,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 						</summary>
 				<div role="region" aria-labelledby="e-n-accordion-item-2131" class="elementor-element elementor-element-d3d7222 e-con-full e-flex e-con e-child" data-id="d3d7222" data-element_type="container" data-e-type="container" data-settings="{&quot;_ha_eqh_enable&quot;:false}">
 				<div class="elementor-element elementor-element-39a3433 elementor-widget__width-inherit elementor-widget-mobile__width-inherit elementor-widget elementor-widget-text-editor" data-id="39a3433" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
-									<p class="mb-3">Finvora Digital offers a unique investment and referral program that rewards you not only for partners who came from you to the platform, but also for partners from levels 2,3 and 4. This unique affiliate program brings you passive referral income.</p>								</div>
+									<p class="mb-3">Chasedevere offers a unique investment and referral program that rewards you not only for partners who came from you to the platform, but also for partners from levels 2,3 and 4. This unique affiliate program brings you passive referral income.</p>								</div>
 				</div>
 					</details>
 					</div>
@@ -272,7 +272,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				</div>
 		<div class="elementor-element elementor-element-c12464a e-con-full e-flex e-con e-child" data-id="c12464a" data-element_type="container" data-e-type="container" data-settings="{&quot;_ha_eqh_enable&quot;:false}">
 				<div class="elementor-element elementor-element-c69ea5e elementor-widget elementor-widget-text-editor" data-id="c69ea5e" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
-									<p>One of the primary goals of Finvora Digital is to provide the best product in the market. Our relationships with leading tier one financial institutions mean deep liquidity and tighter spreads for Forex traders.</p>								</div>
+									<p>One of the primary goals of Chasedevere is to provide the best product in the market. Our relationships with leading tier one financial institutions mean deep liquidity and tighter spreads for Forex traders.</p>								</div>
 				<div class="elementor-element elementor-element-4235927 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="4235927" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
 							<ul class="elementor-icon-list-items">
 							<li class="elementor-icon-list-item">

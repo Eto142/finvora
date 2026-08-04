@@ -20,7 +20,7 @@
         
         <div class="flex items-center justify-between h-16 px-4 border-b border-surface-border shrink-0">
             <a href="{{ url('/') }}" class="flex items-center">
-                <img src="{{ url('/') }}/storage/app/public/photos/RByLroJ7nnT2IoSLNkiKQu84lT0tyjLhtaA68IVj.png" alt="Finvora Digital" class="h-8 w-auto max-w-[140px] object-contain">
+                <img src="{{ url('/') }}/storage/app/public/photos/RByLroJ7nnT2IoSLNkiKQu84lT0tyjLhtaA68IVj.png" alt="Chasedevere" class="h-8 w-auto max-w-[140px] object-contain">
             </a>
             <button @click="mobileSidebar = false" class="lg:hidden text-content-tertiary hover:text-content-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
@@ -543,7 +543,7 @@
         
         <footer class="border-t border-surface-border py-6 px-6 mt-8">
             <p class="text-sm text-content-tertiary text-center">
-                &copy; Finvora Digital.
+                &copy; Chasedevere.
             </p>
         </footer>
     </main>
@@ -620,7 +620,7 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/sendcontact" class="space-y-4">
-                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
+                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <input type="hidden" name="to_email" value="Chasedevere Support">
                     <input type="hidden" name="email" value="egod1422@gmail.com">
                     <input type="hidden" name="name" value="egod">
                     <div>

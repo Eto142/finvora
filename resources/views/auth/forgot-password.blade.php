@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="csrf-token" content="Hu5ORGzul1FtA3DYObIXomyG3uVppUND2ef64wG5">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Finvora Digital - Forgot your password">
-    <title>Forgot your password | Finvora Digital</title>
+    <meta name="description" content="Chasedevere - Forgot your password">
+    <title>Forgot your password | Chasedevere</title>
 
     <!-- Favicon -->
     <link rel="icon" href="https://account.finvoradigital.com/storage/app/public/photos/ZO47mJRZQWecg1WB4wWXp7hVtMvbRWiHdtXxGc4Q.png" sizes="any">
@@ -86,7 +86,7 @@
     
     <div class="text-center mb-8">
         <a href="/">
-            <img src="https://account.finvoradigital.com/storage/app/public/photos/RByLroJ7nnT2IoSLNkiKQu84lT0tyjLhtaA68IVj.png" alt="Finvora Digital" class="h-12 mx-auto">
+            <img src="https://account.finvoradigital.com/storage/app/public/photos/RByLroJ7nnT2IoSLNkiKQu84lT0tyjLhtaA68IVj.png" alt="Chasedevere" class="h-12 mx-auto">
         </a>
     </div>
 

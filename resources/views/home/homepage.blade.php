@@ -1036,7 +1036,7 @@
 				</div>
 		<div class="elementor-element elementor-element-d64df97 e-con-full e-flex e-con e-child" data-id="d64df97" data-element_type="container" data-e-type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;_ha_eqh_enable&quot;:false}">
 				<div class="elementor-element elementor-element-c78a11f elementor-widget elementor-widget-text-editor" data-id="c78a11f" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
-									<p class="text-gray-300 leading-relaxed">Finvora Digital has become one of the most reputable brokers in the industry, offering traders CFDs across Forex, Equities, Commodities and Futures. Trading on the Forex market is a legitimate and straightforward way of generating income.</p><p class="text-gray-300 leading-relaxed mt-4">The good news is that you don&#8217;t have to be a professional trader in order to make money. All you need is the right personality and the right skill set and you can make money trading on foreign exchanges. Finvora Digital lets you trade in the way that best suits you.</p>								</div>
+									<p class="text-gray-300 leading-relaxed">Chasedevere has become one of the most reputable brokers in the industry, offering traders CFDs across Forex, Equities, Commodities and Futures. Trading on the Forex market is a legitimate and straightforward way of generating income.</p><p class="text-gray-300 leading-relaxed mt-4">The good news is that you don&#8217;t have to be a professional trader in order to make money. All you need is the right personality and the right skill set and you can make money trading on foreign exchanges. Chasedevere lets you trade in the way that best suits you.</p>								</div>
 		<div class="elementor-element elementor-element-3b83102 e-grid e-con-full e-con e-child" data-id="3b83102" data-element_type="container" data-e-type="container" data-settings="{&quot;_ha_eqh_enable&quot;:false}">
 		<div class="elementor-element elementor-element-2898799 e-con-full e-flex e-con e-child" data-id="2898799" data-element_type="container" data-e-type="container" data-settings="{&quot;_ha_eqh_enable&quot;:false}">
 				<div class="elementor-element elementor-element-72ebc45 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="72ebc45" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
@@ -1062,7 +1062,7 @@
 						</ul>
 						</div>
 				<div class="elementor-element elementor-element-8e8eff2 elementor-widget elementor-widget-text-editor" data-id="8e8eff2" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
-									<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6"><div class="bg-dark-300 bg-opacity-60 p-4 rounded-lg"><p class="text-gray-400 mt-2">With the right tools, information and access to all the world&#8217;s currencies, Finvora Digital puts you in control of the trades you make.</p></div></div>								</div>
+									<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6"><div class="bg-dark-300 bg-opacity-60 p-4 rounded-lg"><p class="text-gray-400 mt-2">With the right tools, information and access to all the world&#8217;s currencies, Chasedevere puts you in control of the trades you make.</p></div></div>								</div>
 				</div>
 				</div>
 				<div class="elementor-element elementor-element-0a78cd3 elementor-align-center elementor-mobile-align-justify elementor-widget elementor-widget-button" data-id="0a78cd3" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
@@ -1466,7 +1466,7 @@
 					</h3>
 				
 									<p class="elementor-icon-box-description">
-						Featuring the market's sharpest execution, Finvora Digital cTrader fills your orders in milliseconds without any requotes or price manipulation.
+						Featuring the market's sharpest execution, Chasedevere cTrader fills your orders in milliseconds without any requotes or price manipulation.
 
 					</p>
 				
@@ -1544,7 +1544,7 @@
 					</h3>
 				
 									<p class="elementor-icon-box-description">
-						Easy to use and navigate, Finvora Digital cTrader was built with real traders' needs in mind. Trade with Finvora Digital cTrader and experience its distinct advantage.
+						Easy to use and navigate, Chasedevere cTrader was built with real traders' needs in mind. Trade with Chasedevere cTrader and experience its distinct advantage.
 
 					</p>
 				
@@ -1562,7 +1562,7 @@
 				<div class="elementor-element elementor-element-655fdb8 ha-has-bg-overlay elementor-widget elementor-widget-heading" data-id="655fdb8" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 					<h2 class="elementor-heading-title elementor-size-default">Global Trust</h2>				</div>
 				<div class="elementor-element elementor-element-256fef1 elementor-widget elementor-widget-heading" data-id="256fef1" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-					<h2 class="elementor-heading-title elementor-size-default">Why Finvora Digital Is One of the World's Most Trusted Brands</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">Why Chasedevere Is One of the World's Most Trusted Brands</h2>				</div>
 				<div class="elementor-element elementor-element-39db931 elementor-widget elementor-widget-text-editor" data-id="39db931" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
 									<div class="mb-12 text-center"><p>Experience the reliability and security that our global clients have come to trust</p></div>								</div>
 				</div>
@@ -1869,7 +1869,7 @@
 				<div class="elementor-element elementor-element-5d11bdf elementor-widget elementor-widget-heading" data-id="5d11bdf" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 					<h2 class="elementor-heading-title elementor-size-default">Premium Trading Experience</h2>				</div>
 				<div class="elementor-element elementor-element-f2533e0 elementor-widget elementor-widget-text-editor" data-id="f2533e0" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
-									<p>One of the primary goals of Finvora Digital is to provide the best product in the market. Our relationships with leading tier one financial institutions mean deep liquidity and tighter spreads for Forex traders.</p>								</div>
+									<p>One of the primary goals of Chasedevere is to provide the best product in the market. Our relationships with leading tier one financial institutions mean deep liquidity and tighter spreads for Forex traders.</p>								</div>
 				<div class="elementor-element elementor-element-26fe0e9 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="26fe0e9" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
 							<ul class="elementor-icon-list-items">
 							<li class="elementor-icon-list-item">
@@ -1913,7 +1913,7 @@
 				<div class="elementor-element elementor-element-24e72dd ha-has-bg-overlay elementor-widget elementor-widget-heading" data-id="24e72dd" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
 					<h2 class="elementor-heading-title elementor-size-default">Comprehensive Services</h2>				</div>
 				<div class="elementor-element elementor-element-14cb751 elementor-widget elementor-widget-heading" data-id="14cb751" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-					<h2 class="elementor-heading-title elementor-size-default">Start Trading with Finvora Digital</h2>				</div>
+					<h2 class="elementor-heading-title elementor-size-default">Start Trading with Chasedevere</h2>				</div>
 				<div class="elementor-element elementor-element-ab5f197 elementor-widget elementor-widget-text-editor" data-id="ab5f197" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
 									<p>Everything you need for successful trading in one platform</p>								</div>
 				</div>
@@ -2130,7 +2130,7 @@
 				</div>
 				<div class="elementor-element elementor-element-757edcc elementor-widget elementor-widget-testimonial" data-id="757edcc" data-element_type="widget" data-e-type="widget" data-widget_type="testimonial.default">
 							<div class="elementor-testimonial-wrapper">
-							<div class="elementor-testimonial-content">Since I started using Finvora Digital, I have been earning like never before. You guys have the best signals.
+							<div class="elementor-testimonial-content">Since I started using Chasedevere, I have been earning like never before. You guys have the best signals.
 </div>
 			
 						<div class="elementor-testimonial-meta elementor-has-image elementor-testimonial-image-position-aside">
@@ -2196,7 +2196,7 @@
 				</div>
 				<div class="elementor-element elementor-element-1cc17e1 elementor-widget elementor-widget-testimonial" data-id="1cc17e1" data-element_type="widget" data-e-type="widget" data-widget_type="testimonial.default">
 							<div class="elementor-testimonial-wrapper">
-							<div class="elementor-testimonial-content">I already got more than $200,000 within a month investing with Finvora Digital. Will again invest soon.</div>
+							<div class="elementor-testimonial-content">I already got more than $200,000 within a month investing with Chasedevere. Will again invest soon.</div>
 			
 						<div class="elementor-testimonial-meta elementor-has-image elementor-testimonial-image-position-aside">
 				<div class="elementor-testimonial-meta-inner">
@@ -2326,7 +2326,7 @@
 				</div>
 				<div class="elementor-element elementor-element-3b06a14 elementor-widget elementor-widget-testimonial" data-id="3b06a14" data-element_type="widget" data-e-type="widget" data-widget_type="testimonial.default">
 							<div class="elementor-testimonial-wrapper">
-							<div class="elementor-testimonial-content">This was a very easy process and I received my funds quickly as I needed them! Highly recommend Finvora Digital.
+							<div class="elementor-testimonial-content">This was a very easy process and I received my funds quickly as I needed them! Highly recommend Chasedevere.
 
 </div>
 			

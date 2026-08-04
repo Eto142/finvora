@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="4H60DyDUvWAS66zocDJnVrbaeRcvMv4w7PZgSi5d">
-    <title>Account Dashboard — Finvora Digital</title>
+    <title>Account Dashboard — Chasedevere</title>
     <link rel="icon" href="{{ url('/') }}/storage/app/public/photos/photos/ZO47mJRZQWecg1WB4wWXp7hVtMvbRWiHdtXxGc4Q.png" type="image/png">
 
     
@@ -104,7 +104,7 @@
         
         <div class="flex items-center justify-between h-16 px-4 border-b border-surface-border shrink-0">
             <a href="{{route('user.dashboard')}}" class="flex items-center">
-                <img src="{{ url('/') }}/storage/app/public/photos/RByLroJ7nnT2IoSLNkiKQu84lT0tyjLhtaA68IVj.png" alt="Finvora Digital" class="h-8 w-auto max-w-[140px] object-contain">
+                <img src="{{ asset('wp-content/uploads/2026/03/Asset-4651finvora-1024x127.png') }}" alt="Chasedevere" class="h-8 w-auto max-w-[140px] object-contain">
             </a>
             <button @click="mobileSidebar = false" class="lg:hidden text-content-tertiary hover:text-content-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true">

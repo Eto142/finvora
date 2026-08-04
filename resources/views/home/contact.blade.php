@@ -7,10 +7,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
-	<title>Contact Us &#8211; Finvora Digital</title>
+	<title>Contact Us &#8211; Chasedevere</title>
 <meta name='robots' content='max-image-preview:large' />
-<link rel="alternate" type="application/rss+xml" title="Finvora Digital &raquo; Feed" href="../feed/index.html" />
-<link rel="alternate" type="application/rss+xml" title="Finvora Digital &raquo; Comments Feed" href="../comments/feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Chasedevere &raquo; Feed" href="../feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Chasedevere &raquo; Comments Feed" href="../comments/feed/index.html" />
 <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="../wp-json/oembed/1.0/embed43c4.json?url=https%3A%2F%2Ffinvoradigital.com%2Fcontact-us%2F" />
 <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="../wp-json/oembed/1.0/embedc293?url=https%3A%2F%2Ffinvoradigital.com%2Fcontact-us%2F&amp;format=xml" />
 <style id="wp-img-auto-sizes-contain-inline-css">

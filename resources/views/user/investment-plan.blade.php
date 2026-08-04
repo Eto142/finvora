@@ -794,7 +794,7 @@
         
         <footer class="border-t border-surface-border py-6 px-6 mt-8">
             <p class="text-sm text-content-tertiary text-center">
-                &copy; Finvora Digital.
+                &copy; Chasedevere.
             </p>
         </footer>
     </main>
@@ -871,7 +871,7 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/sendcontact" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <input type="hidden" name="to_email" value="Finvora Digital Support">
+                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <input type="hidden" name="to_email" value="Chasedevere Support">
                     <input type="hidden" name="email" value="egod1422@gmail.com">
                     <input type="hidden" name="name" value="egod">
                     <div>
