@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\OtpNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -30,6 +31,8 @@ class RegisterController extends Controller
         ]);
 
         try {
+            $code = (string) random_int(100000, 999999);
+
             $user = User::create([
                 'name' => $request->name,
                 'username' => $request->username,
@@ -40,11 +43,15 @@ class RegisterController extends Controller
                 'currency_code' => $request->currency_code,
                 'account_types' => $request->account ?? [],
                 'password' => Hash::make($request->password),
+                'otp_code' => Hash::make($code),
+                'otp_expires_at' => now()->addMinutes(10),
             ]);
 
             Auth::login($user);
 
-            return redirect('/dashboard')->with('success', 'Registration successful! Welcome to your dashboard.');
+            $user->notify(new OtpNotification($code));
+
+            return redirect()->route('otp.verify')->with('success', 'Registration successful! Please verify your email to continue.');
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'Something went wrong during registration. Please try again later.');
         }

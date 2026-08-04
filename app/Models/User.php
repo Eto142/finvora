@@ -38,6 +38,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'otp_code',
     ];
 
     /**
@@ -49,8 +50,17 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'otp_expires_at' => 'datetime',
             'account_types' => 'array',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Determine if the user has verified their email via OTP.
+     */
+    public function hasVerifiedEmail(): bool
+    {
+        return ! is_null($this->email_verified_at);
     }
 }

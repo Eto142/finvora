@@ -24,7 +24,11 @@ class LoginController extends Controller
 
             if (Auth::attempt([$loginField => $credentials['email'], 'password' => $credentials['password']])) {
                 $request->session()->regenerate();
-                
+
+                if (! $request->user()->hasVerifiedEmail()) {
+                    return redirect()->route('otp.verify');
+                }
+
                 return redirect()->intended('/dashboard')->with('success', 'Login successful! Welcome back.');
             }
 
