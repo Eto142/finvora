@@ -145,7 +145,7 @@
             <h2 class="text-xl font-bold text-content-primary">Mint NFT</h2>
             <p class="text-sm text-content-secondary mt-1">Create a new digital asset on the blockchain</p>
         </div>
-        <a href="{{ url('/') }}/nft-gallery" class="px-4 py-2 rounded-lg bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary text-sm font-medium transition-colors">
+        <a href="{{ route('user.nft-gallery') }}" class="px-4 py-2 rounded-lg bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary text-sm font-medium transition-colors">
             Back to Gallery
         </a>
     </div>

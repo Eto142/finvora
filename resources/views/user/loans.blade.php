@@ -5,7 +5,13 @@
         
         <div x-data="{ toasts: [] }"
              x-init="
-                                             "
+                @if (session('success'))
+                    toasts.push({ id: Date.now(), message: @js(session('success')), type: 'success' });
+                @endif
+                @if (session('error'))
+                    toasts.push({ id: Date.now() + 1, message: @js(session('error')), type: 'error' });
+                @endif
+             "
              class="fixed top-20 right-4 z-50 space-y-2 w-80">
             <template x-for="toast in toasts" :key="toast.id">
                 <div x-transition:enter="transition ease-out duration-300"
@@ -150,7 +156,7 @@
             <h2 class="text-xl font-bold text-content-primary">Apply for a Loan</h2>
             <p class="text-sm text-content-secondary mt-1">Choose a plan, enter your details, and preview your repayment</p>
         </div>
-        <a href="{{ url('/') }}/my-loans" class="px-4 py-2 rounded-lg bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary text-sm font-medium transition-colors">
+        <a href="{{ route('user.loans.my') }}" class="px-4 py-2 rounded-lg bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary text-sm font-medium transition-colors">
             My Loans
         </a>
     </div>
@@ -163,164 +169,50 @@
         <div class="lg:col-span-2 space-y-4">
             <h3 class="text-sm font-semibold text-content-secondary uppercase tracking-wider">Available Plans</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div @click="selectPlan({&quot;id&quot;:1,&quot;name&quot;:&quot;Trading Margin Loan&quot;,&quot;description&quot;:&quot;Short-term leverage for active traders. Higher amounts, lower rates, designed for quick market opportunities.&quot;,&quot;min_amount&quot;:&quot;5000.00&quot;,&quot;max_amount&quot;:&quot;500000.00&quot;,&quot;interest_rate&quot;:&quot;3.50&quot;,&quot;interest_type&quot;:&quot;simple&quot;,&quot;min_duration&quot;:1,&quot;max_duration&quot;:12,&quot;max_active_loans&quot;:2,&quot;min_account_balance&quot;:&quot;1000.00&quot;,&quot;requires_collateral&quot;:false,&quot;collateral_percentage&quot;:null,&quot;processing_fee&quot;:&quot;0.50&quot;,&quot;grace_period_days&quot;:3,&quot;late_fee_percentage&quot;:&quot;2.00&quot;,&quot;is_active&quot;:true,&quot;created_at&quot;:&quot;2026-03-11T12:42:20.000000Z&quot;,&quot;updated_at&quot;:&quot;2026-03-11T12:42:20.000000Z&quot;})"
-                     :class="selectedPlan && selectedPlan.id === 1 ? 'ring-2 ring-primary border-primary' : 'border-surface-border hover:border-primary/50'"
-                     class="cursor-pointer rounded-xl bg-surface-raised border p-5 transition-all">
-                    <div class="flex items-start justify-between mb-3">
-                        <h4 class="font-semibold text-content-primary">Trading Margin Loan</h4>
-                        <span class="text-xs font-medium px-2 py-1 rounded-full bg-primary-subtle text-primary">
-                            3.50% Simple
-                        </span>
-                    </div>
-                                            <p class="text-xs text-content-tertiary mb-3">Short-term leverage for active traders. Higher amounts, lower rates, designed for quick market opportunities.</p>
-                                        <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div>
-                            <span class="text-content-tertiary">Amount:</span>
-                            <span class="text-content-secondary">$5,000.00 – 500,000</span>
+                @foreach ($plans as $plan)
+                    <div @click="selectPlan({{ $plan->toJson() }})"
+                         :class="selectedPlan && selectedPlan.id === {{ $plan->id }} ? 'ring-2 ring-primary border-primary' : 'border-surface-border hover:border-primary/50'"
+                         class="cursor-pointer rounded-xl bg-surface-raised border p-5 transition-all">
+                        <div class="flex items-start justify-between mb-3">
+                            <h4 class="font-semibold text-content-primary">{{ $plan->name }}</h4>
+                            <span class="text-xs font-medium px-2 py-1 rounded-full bg-primary-subtle text-primary">
+                                {{ number_format($plan->interest_rate, 2) }}% {{ ucfirst($plan->interest_type) }}
+                            </span>
                         </div>
-                        <div>
-                            <span class="text-content-tertiary">Duration:</span>
-                            <span class="text-content-secondary">1 – 12 mo</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Fee:</span>
-                            <span class="text-content-secondary">0.50%</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Min Balance:</span>
-                            <span class="text-content-secondary">$1,000.00</span>
-                        </div>
-                    </div>
-                                    </div>
-                                <div @click="selectPlan({&quot;id&quot;:2,&quot;name&quot;:&quot;Personal Loan&quot;,&quot;description&quot;:&quot;General-purpose loan for personal needs. Medium amounts with flexible terms.&quot;,&quot;min_amount&quot;:&quot;1000.00&quot;,&quot;max_amount&quot;:&quot;100000.00&quot;,&quot;interest_rate&quot;:&quot;8.00&quot;,&quot;interest_type&quot;:&quot;compound&quot;,&quot;min_duration&quot;:3,&quot;max_duration&quot;:36,&quot;max_active_loans&quot;:1,&quot;min_account_balance&quot;:&quot;500.00&quot;,&quot;requires_collateral&quot;:false,&quot;collateral_percentage&quot;:null,&quot;processing_fee&quot;:&quot;1.00&quot;,&quot;grace_period_days&quot;:5,&quot;late_fee_percentage&quot;:&quot;1.50&quot;,&quot;is_active&quot;:true,&quot;created_at&quot;:&quot;2026-03-11T12:42:20.000000Z&quot;,&quot;updated_at&quot;:&quot;2026-03-11T12:42:20.000000Z&quot;})"
-                     :class="selectedPlan && selectedPlan.id === 2 ? 'ring-2 ring-primary border-primary' : 'border-surface-border hover:border-primary/50'"
-                     class="cursor-pointer rounded-xl bg-surface-raised border p-5 transition-all">
-                    <div class="flex items-start justify-between mb-3">
-                        <h4 class="font-semibold text-content-primary">Personal Loan</h4>
-                        <span class="text-xs font-medium px-2 py-1 rounded-full bg-primary-subtle text-primary">
-                            8.00% Compound
-                        </span>
-                    </div>
-                                            <p class="text-xs text-content-tertiary mb-3">General-purpose loan for personal needs. Medium amounts with flexible terms.</p>
-                                        <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div>
-                            <span class="text-content-tertiary">Amount:</span>
-                            <span class="text-content-secondary">$1,000.00 – 100,000</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Duration:</span>
-                            <span class="text-content-secondary">3 – 36 mo</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Fee:</span>
-                            <span class="text-content-secondary">1.00%</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Min Balance:</span>
-                            <span class="text-content-secondary">$500.00</span>
-                        </div>
-                    </div>
-                                    </div>
-                                <div @click="selectPlan({&quot;id&quot;:3,&quot;name&quot;:&quot;Business Expansion Loan&quot;,&quot;description&quot;:&quot;Long-term financing for business growth and investment expansion.&quot;,&quot;min_amount&quot;:&quot;10000.00&quot;,&quot;max_amount&quot;:&quot;1000000.00&quot;,&quot;interest_rate&quot;:&quot;6.00&quot;,&quot;interest_type&quot;:&quot;compound&quot;,&quot;min_duration&quot;:6,&quot;max_duration&quot;:60,&quot;max_active_loans&quot;:1,&quot;min_account_balance&quot;:&quot;5000.00&quot;,&quot;requires_collateral&quot;:true,&quot;collateral_percentage&quot;:&quot;10.00&quot;,&quot;processing_fee&quot;:&quot;1.50&quot;,&quot;grace_period_days&quot;:7,&quot;late_fee_percentage&quot;:&quot;1.00&quot;,&quot;is_active&quot;:true,&quot;created_at&quot;:&quot;2026-03-11T12:42:20.000000Z&quot;,&quot;updated_at&quot;:&quot;2026-03-11T12:42:20.000000Z&quot;})"
-                     :class="selectedPlan && selectedPlan.id === 3 ? 'ring-2 ring-primary border-primary' : 'border-surface-border hover:border-primary/50'"
-                     class="cursor-pointer rounded-xl bg-surface-raised border p-5 transition-all">
-                    <div class="flex items-start justify-between mb-3">
-                        <h4 class="font-semibold text-content-primary">Business Expansion Loan</h4>
-                        <span class="text-xs font-medium px-2 py-1 rounded-full bg-primary-subtle text-primary">
-                            6.00% Compound
-                        </span>
-                    </div>
-                                            <p class="text-xs text-content-tertiary mb-3">Long-term financing for business growth and investment expansion.</p>
-                                        <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div>
-                            <span class="text-content-tertiary">Amount:</span>
-                            <span class="text-content-secondary">$10,000.00 – 1,000,000</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Duration:</span>
-                            <span class="text-content-secondary">6 – 60 mo</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Fee:</span>
-                            <span class="text-content-secondary">1.50%</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Min Balance:</span>
-                            <span class="text-content-secondary">$5,000.00</span>
-                        </div>
-                    </div>
-                                            <div class="mt-2 text-xs text-warning">
-                            Requires 10.00% collateral
-                        </div>
-                                    </div>
-                                <div @click="selectPlan({&quot;id&quot;:4,&quot;name&quot;:&quot;Quick Cash Loan&quot;,&quot;description&quot;:&quot;Small, short-term loan for immediate needs. Fast approval, higher rate.&quot;,&quot;min_amount&quot;:&quot;100.00&quot;,&quot;max_amount&quot;:&quot;10000.00&quot;,&quot;interest_rate&quot;:&quot;12.00&quot;,&quot;interest_type&quot;:&quot;simple&quot;,&quot;min_duration&quot;:1,&quot;max_duration&quot;:6,&quot;max_active_loans&quot;:1,&quot;min_account_balance&quot;:&quot;0.00&quot;,&quot;requires_collateral&quot;:false,&quot;collateral_percentage&quot;:null,&quot;processing_fee&quot;:&quot;2.00&quot;,&quot;grace_period_days&quot;:0,&quot;late_fee_percentage&quot;:&quot;3.00&quot;,&quot;is_active&quot;:true,&quot;created_at&quot;:&quot;2026-03-11T12:42:20.000000Z&quot;,&quot;updated_at&quot;:&quot;2026-03-11T12:42:20.000000Z&quot;})"
-                     :class="selectedPlan && selectedPlan.id === 4 ? 'ring-2 ring-primary border-primary' : 'border-surface-border hover:border-primary/50'"
-                     class="cursor-pointer rounded-xl bg-surface-raised border p-5 transition-all">
-                    <div class="flex items-start justify-between mb-3">
-                        <h4 class="font-semibold text-content-primary">Quick Cash Loan</h4>
-                        <span class="text-xs font-medium px-2 py-1 rounded-full bg-primary-subtle text-primary">
-                            12.00% Simple
-                        </span>
-                    </div>
-                                            <p class="text-xs text-content-tertiary mb-3">Small, short-term loan for immediate needs. Fast approval, higher rate.</p>
-                                        <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div>
-                            <span class="text-content-tertiary">Amount:</span>
-                            <span class="text-content-secondary">$100.00 – 10,000</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Duration:</span>
-                            <span class="text-content-secondary">1 – 6 mo</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Fee:</span>
-                            <span class="text-content-secondary">2.00%</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Min Balance:</span>
-                            <span class="text-content-secondary">$0.00</span>
-                        </div>
-                    </div>
-                                    </div>
-                                <div @click="selectPlan({&quot;id&quot;:5,&quot;name&quot;:&quot;Portfolio Leverage Loan&quot;,&quot;description&quot;:&quot;Leverage your trading portfolio with competitive rates. Designed for experienced investors.&quot;,&quot;min_amount&quot;:&quot;25000.00&quot;,&quot;max_amount&quot;:&quot;2000000.00&quot;,&quot;interest_rate&quot;:&quot;4.50&quot;,&quot;interest_type&quot;:&quot;compound&quot;,&quot;min_duration&quot;:3,&quot;max_duration&quot;:24,&quot;max_active_loans&quot;:1,&quot;min_account_balance&quot;:&quot;10000.00&quot;,&quot;requires_collateral&quot;:true,&quot;collateral_percentage&quot;:&quot;15.00&quot;,&quot;processing_fee&quot;:&quot;0.75&quot;,&quot;grace_period_days&quot;:5,&quot;late_fee_percentage&quot;:&quot;1.50&quot;,&quot;is_active&quot;:true,&quot;created_at&quot;:&quot;2026-03-11T12:42:20.000000Z&quot;,&quot;updated_at&quot;:&quot;2026-03-11T12:42:20.000000Z&quot;})"
-                     :class="selectedPlan && selectedPlan.id === 5 ? 'ring-2 ring-primary border-primary' : 'border-surface-border hover:border-primary/50'"
-                     class="cursor-pointer rounded-xl bg-surface-raised border p-5 transition-all">
-                    <div class="flex items-start justify-between mb-3">
-                        <h4 class="font-semibold text-content-primary">Portfolio Leverage Loan</h4>
-                        <span class="text-xs font-medium px-2 py-1 rounded-full bg-primary-subtle text-primary">
-                            4.50% Compound
-                        </span>
-                    </div>
-                                            <p class="text-xs text-content-tertiary mb-3">Leverage your trading portfolio with competitive rates. Designed for experienced investors.</p>
-                                        <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div>
-                            <span class="text-content-tertiary">Amount:</span>
-                            <span class="text-content-secondary">$25,000.00 – 2,000,000</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Duration:</span>
-                            <span class="text-content-secondary">3 – 24 mo</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Fee:</span>
-                            <span class="text-content-secondary">0.75%</span>
-                        </div>
-                        <div>
-                            <span class="text-content-tertiary">Min Balance:</span>
-                            <span class="text-content-secondary">$10,000.00</span>
-                        </div>
-                    </div>
-                                            <div class="mt-2 text-xs text-warning">
-                            Requires 15.00% collateral
-                        </div>
-                                    </div>
+                        <p class="text-xs text-content-tertiary mb-3">{{ $plan->description }}</p>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                                <span class="text-content-tertiary">Amount:</span>
+                                <span class="text-content-secondary">${{ number_format($plan->min_amount, 2) }} – {{ number_format($plan->max_amount) }}</span>
                             </div>
+                            <div>
+                                <span class="text-content-tertiary">Duration:</span>
+                                <span class="text-content-secondary">{{ $plan->min_duration }} – {{ $plan->max_duration }} mo</span>
+                            </div>
+                            <div>
+                                <span class="text-content-tertiary">Fee:</span>
+                                <span class="text-content-secondary">{{ number_format($plan->processing_fee, 2) }}%</span>
+                            </div>
+                            <div>
+                                <span class="text-content-tertiary">Min Balance:</span>
+                                <span class="text-content-secondary">${{ number_format($plan->min_account_balance, 2) }}</span>
+                            </div>
+                        </div>
+                        @if ($plan->requires_collateral)
+                            <div class="mt-2 text-xs text-warning">
+                                Requires {{ number_format($plan->collateral_percentage, 2) }}% collateral
+                            </div>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
 
             
             <div x-show="selectedPlan" x-cloak class="rounded-xl bg-surface-raised border border-surface-border p-6">
                 <h3 class="text-sm font-semibold text-content-secondary uppercase tracking-wider mb-4">Loan Details</h3>
-                <form action="{{ url('/') }}/loans/store" method="POST" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <input type="hidden" name="loan_plan_id" :value="selectedPlan ? selectedPlan.id : ''">
+                <form action="{{ route('user.loans.store') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <input type="hidden" name="loan_plan_id" :value="selectedPlan ? selectedPlan.id : ''">
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
@@ -441,11 +333,11 @@
                 }
                 this.loading = true;
                 try {
-                    const resp = await fetch('{{ url('/') }}/loans/calculate-preview', {
+                    const resp = await fetch('{{ route('user.loans.preview') }}', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': 'rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
                             'Accept': 'application/json',
                         },
                         body: JSON.stringify({
@@ -481,60 +373,6 @@
 
     
     
-    
-    <div x-data="{ open: false }"
-         @open-other-deposit.window="open = true"
-         x-show="open" x-cloak
-         class="fixed inset-0 z-[60] flex items-center justify-center p-4">
-        <div x-show="open" x-transition.opacity class="absolute inset-0 bg-black/60" @click="open = false"></div>
-        <div x-show="open" x-transition class="relative w-full max-w-md bg-surface-raised border border-surface-border rounded-2xl shadow-2xl overflow-hidden">
-            <div class="p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold text-content-primary">Other Deposit Method</h3>
-                    <button @click="open = false" class="text-content-tertiary hover:text-content-primary"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-</svg>
-</button>
-                </div>
-                <form method="POST" action="{{ url('/') }}/otherpayment" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Full Name</label>
-                        <input type="text" name="name" value="egod" readonly
-                               class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Email</label>
-                        <input type="email" name="email" value="egod1422@gmail.com" readonly
-                               class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Deposit Type</label>
-                        <select name="mode" required
-                                class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="" disabled selected>Select method</option>
-                            <option value="Litecoin">Litecoin</option>
-                            <option value="BANK TRANSFER">Bank Transfer</option>
-                            <option value="BITCOIN CASH">Bitcoin Cash</option>
-                            <option value="USDT">USDT</option>
-                            <option value="PAYPAL">PayPal</option>
-                            <option value="WESTERN UNION">Western Union</option>
-                            <option value="SKRILL">Skrill</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Amount</label>
-                        <input type="number" step="0.01" name="amount" required placeholder="0.00"
-                               class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary placeholder-content-tertiary focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-                    <div class="flex gap-3">
-                        <button type="button" @click="open = false" class="flex-1 bg-surface-overlay text-content-secondary hover:bg-surface-border rounded-lg py-2.5 text-sm font-medium transition-colors">Cancel</button>
-                        <button type="submit" name="request_deposit" class="flex-1 bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2.5 text-sm font-medium transition-colors">Request</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     
     <div x-data="{ open: false }"
          @open-mail-support.window="open = true"

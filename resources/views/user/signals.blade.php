@@ -162,7 +162,7 @@
             <p class="text-sm text-content-secondary mt-1">Subscribe to receive premium trading signals</p>
         </div>
         <div class="flex items-center gap-2">
-            <a href="{{ url('/') }}/my-subscriptions" class="px-4 py-2 rounded-lg bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary text-sm font-medium transition-colors">My Plans</a>
+            <a href="{{ route('user.my-subscriptions') }}" class="px-4 py-2 rounded-lg bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary text-sm font-medium transition-colors">My Plans</a>
             <a href="{{ url('/') }}/singalssubscriptions" class="px-4 py-2 rounded-lg bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary text-sm font-medium transition-colors">Signals</a>
         </div>
     </div>

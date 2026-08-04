@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Notifications\OtpNotification;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class OtpController extends Controller
 {
@@ -42,7 +41,7 @@ class OtpController extends Controller
             return back()->with('error', 'Your code has expired. Please request a new one.');
         }
 
-        if (! Hash::check($request->otp, $user->otp_code)) {
+        if ($request->otp !== $user->otp_code) {
             return back()->with('error', 'The code you entered is incorrect.');
         }
 
@@ -73,7 +72,7 @@ class OtpController extends Controller
         $code = (string) random_int(100000, 999999);
 
         $user->forceFill([
-            'otp_code' => Hash::make($code),
+            'otp_code' => $code,
             'otp_expires_at' => now()->addMinutes(10),
         ])->save();
 

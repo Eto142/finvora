@@ -151,7 +151,7 @@
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                 Mint NFT
             </a>
-            <a href="{{ url('/') }}/nft-gallery" class="px-4 py-2 rounded-lg bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary text-sm font-medium transition-colors">Gallery</a>
+            <a href="{{ route('user.nft-gallery') }}" class="px-4 py-2 rounded-lg bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary text-sm font-medium transition-colors">Gallery</a>
         </div>
     </div>
 
@@ -223,7 +223,7 @@
 </svg>
                             <p class="text-content-secondary mb-1">No NFTs in your collection</p>
                 <p class="text-xs text-content-tertiary mb-3">Browse the marketplace to find your first NFT</p>
-                        <a href="{{ url('/') }}/nft-gallery" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-sm font-medium transition-colors">
+                        <a href="{{ route('user.nft-gallery') }}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-sm font-medium transition-colors">
                 Browse Gallery
             </a>
         </div>

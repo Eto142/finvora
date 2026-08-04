@@ -29,7 +29,7 @@ class LoginController extends Controller
                     return redirect()->route('otp.verify');
                 }
 
-                return redirect()->intended('/dashboard')->with('success', 'Login successful! Welcome back.');
+                return redirect()->intended(route('user.dashboard'))->with('success', 'Login successful! Welcome back.');
             }
 
             return back()->withErrors([

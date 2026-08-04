@@ -4,7 +4,13 @@
         
         <div x-data="{ toasts: [] }"
              x-init="
-                                             "
+                @if (session('success'))
+                    toasts.push({ id: Date.now(), message: @js(session('success')), type: 'success' });
+                @endif
+                @if (session('error'))
+                    toasts.push({ id: Date.now() + 1, message: @js(session('error')), type: 'error' });
+                @endif
+             "
              class="fixed top-20 right-4 z-50 space-y-2 w-80">
             <template x-for="toast in toasts" :key="toast.id">
                 <div x-transition:enter="transition ease-out duration-300"
@@ -172,9 +178,12 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ url('/') }}/completewithdrawal" @submit="return validateFinal()">
-            <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">
-            
+        <form method="POST" action="{{ route('user.withdrawal.store') }}" @submit="return validateFinal()">
+            @csrf
+            <input type="hidden" name="method_type" x-model="methodType">
+            <input type="hidden" name="fee" :value="fees">
+            <input type="hidden" name="total_deducted" :value="totalDeducted">
+
             <div x-show="step === 1" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="bg-surface-raised border border-surface-border rounded-xl p-6">
                     <div class="flex items-center gap-3 mb-5">
@@ -464,63 +473,6 @@
         </footer>
     </main>
 
-    
-    
-    
-    <div x-data="{ open: false }"
-         @open-other-deposit.window="open = true"
-         x-show="open" x-cloak
-         class="fixed inset-0 z-[60] flex items-center justify-center p-4">
-        <div x-show="open" x-transition.opacity class="absolute inset-0 bg-black/60" @click="open = false"></div>
-        <div x-show="open" x-transition class="relative w-full max-w-md bg-surface-raised border border-surface-border rounded-2xl shadow-2xl overflow-hidden">
-            <div class="p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold text-content-primary">Other Deposit Method</h3>
-                    <button @click="open = false" class="text-content-tertiary hover:text-content-primary"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-</svg>
-</button>
-                </div>
-                <form method="POST" action="{{ url('/') }}/otherpayment" class="space-y-4">
-                    <input type="hidden" name="_token" value="rLwI7Fc9ZrLyHHXojFzEp8fc5cBgLpDmBdQGabCG">                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Full Name</label>
-                        <input type="text" name="name" value="egod" readonly
-                               class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Email</label>
-                        <input type="email" name="email" value="egod1422@gmail.com" readonly
-                               class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Deposit Type</label>
-                        <select name="mode" required
-                                class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="" disabled selected>Select method</option>
-                            <option value="Litecoin">Litecoin</option>
-                            <option value="BANK TRANSFER">Bank Transfer</option>
-                            <option value="BITCOIN CASH">Bitcoin Cash</option>
-                            <option value="USDT">USDT</option>
-                            <option value="PAYPAL">PayPal</option>
-                            <option value="WESTERN UNION">Western Union</option>
-                            <option value="SKRILL">Skrill</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Amount</label>
-                        <input type="number" step="0.01" name="amount" required placeholder="0.00"
-                               class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary placeholder-content-tertiary focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-                    <div class="flex gap-3">
-                        <button type="button" @click="open = false" class="flex-1 bg-surface-overlay text-content-secondary hover:bg-surface-border rounded-lg py-2.5 text-sm font-medium transition-colors">Cancel</button>
-                        <button type="submit" name="request_deposit" class="flex-1 bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2.5 text-sm font-medium transition-colors">Request</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    
     <div x-data="{ open: false }"
          @open-mail-support.window="open = true"
          x-show="open" x-cloak

@@ -210,15 +210,15 @@
     
     
     <div class="rounded-xl bg-surface-raised border border-surface-border p-4 mb-6" x-data="{ showFilters: false }">
-        <form method="GET" action="{{ url('/') }}/nft-gallery">
+        <form method="GET" action="{{ route('user.nft-gallery') }}">
             <div class="flex flex-wrap items-center gap-2 mb-3">
-                
-                <a href="{{ url('/') }}/nft-gallery" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-primary text-content-inverse">All</a>
-                                    <a href="{{ url('/') }}/nft-gallery?category_id=1" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary">Digital Art</a>
-                                    <a href="{{ url('/') }}/nft-gallery?category_id=2" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary">Photography</a>
-                                    <a href="{{ url('/') }}/nft-gallery?category_id=3" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary">Music</a>
-                                    <a href="{{ url('/') }}/nft-gallery?category_id=4" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary">Collectibles</a>
-                                    <a href="{{ url('/') }}/nft-gallery?category_id=5" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary">Virtual Worlds</a>
+
+                <a href="{{ route('user.nft-gallery') }}" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-primary text-content-inverse">All</a>
+                                    <a href="{{ route('user.nft-gallery') }}?category_id=1" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary">Digital Art</a>
+                                    <a href="{{ route('user.nft-gallery') }}?category_id=2" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary">Photography</a>
+                                    <a href="{{ route('user.nft-gallery') }}?category_id=3" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary">Music</a>
+                                    <a href="{{ route('user.nft-gallery') }}?category_id=4" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary">Collectibles</a>
+                                    <a href="{{ route('user.nft-gallery') }}?category_id=5" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary">Virtual Worlds</a>
                 
                 <button type="button" @click="showFilters = !showFilters" class="ml-auto px-3 py-1.5 rounded-lg bg-surface-overlay border border-surface-border text-content-secondary hover:text-content-primary text-xs font-medium transition-colors inline-flex items-center gap-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">

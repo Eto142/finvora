@@ -123,7 +123,7 @@ Route::middleware('auth')->group(function () {
 
 //USER ROUTES
 
-Route::middleware(['auth', 'otp.verified'])->group(function () {
+Route::prefix('user')->middleware(['auth', 'otp.verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
     Route::get('/preipo', [DashboardController::class, 'preipo'])->name('user.pre-ipo');
     Route::get('/stocks', [DashboardController::class, 'stocks'])->name('user.stocks');
@@ -131,10 +131,18 @@ Route::middleware(['auth', 'otp.verified'])->group(function () {
     Route::get('/signal-plans', [SignalController::class, 'signalplans'])->name('user.signal-plans');
     Route::get('/my-subscriptions', [SignalController::class, 'mysubscriptions'])->name('user.my-subscriptions');
     Route::get('/deposit', [DepositController::class, 'index'])->name('user.deposit');
+    Route::post('/deposit', [DepositController::class, 'store'])->name('user.deposit.store');
+    Route::post('/deposit/other', [DepositController::class, 'storeOther'])->name('user.deposit.other');
     Route::get('/withdrawal', [WithdrawalController::class, 'index'])->name('user.withdrawal');
+    Route::post('/withdrawal', [WithdrawalController::class, 'store'])->name('user.withdrawal.store');
     Route::get('/transactions', [TransactionController::class, 'index'])->name('user.transactions');
     Route::get('/loans', [LoanController::class, 'index'])->name('user.loans');
+    Route::post('/loans/calculate-preview', [LoanController::class, 'calculatePreview'])->name('user.loans.preview');
+    Route::post('/loans/store', [LoanController::class, 'store'])->name('user.loans.store');
+    Route::get('/my-loans', [LoanController::class, 'myLoans'])->name('user.loans.my');
     Route::get('/investment-plan', [InvestmentController::class, 'index'])->name('user.investment.plan');
+    Route::post('/investment-plan/store', [InvestmentController::class, 'store'])->name('user.investment.store');
+    Route::get('/my-investments', [InvestmentController::class, 'myPlans'])->name('user.investment.my');
     Route::get('/profile', [ProfileController::class, 'index'])->name('user.profile');
     Route::get('/security', [SecurityController::class, 'index'])->name('user.security');
     Route::get('/kyc', [KYCController::class, 'index'])->name('user.kyc');

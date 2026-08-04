@@ -63,4 +63,24 @@ class User extends Authenticatable
     {
         return ! is_null($this->email_verified_at);
     }
+
+    public function deposits()
+    {
+        return $this->hasMany(Deposit::class);
+    }
+
+    public function withdrawals()
+    {
+        return $this->hasMany(Withdrawal::class);
+    }
+
+    public function loans()
+    {
+        return $this->hasMany(Loan::class);
+    }
+
+    public function investments()
+    {
+        return $this->hasMany(Investment::class);
+    }
 }

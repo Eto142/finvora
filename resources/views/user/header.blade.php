@@ -304,9 +304,10 @@
 
         
         <div class="border-t border-surface-border p-4 shrink-0">
-            <form method="POST" action="{{ url('/') }}/logout" id="sidebar-logout-form">
-                <input type="hidden" name="_token" value="4H60DyDUvWAS66zocDJnVrbaeRcvMv4w7PZgSi5d">            </form>
-            <a href="{{ url('/') }}/logout"
+            <form method="POST" action="{{ route('logout') }}" id="sidebar-logout-form" class="hidden">
+                @csrf
+            </form>
+            <a href="{{ route('logout') }}"
                onclick="event.preventDefault(); document.getElementById('sidebar-logout-form').submit();"
                class="nav-link-item !px-0 text-loss/80 hover:text-loss">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
@@ -431,7 +432,7 @@
  Transactions
                         </a>
                         <div class="border-t border-surface-border my-1"></div>
-                        <a href="{{ url('/') }}/logout"
+                        <a href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('sidebar-logout-form').submit();"
                            class="flex items-center gap-2 px-4 py-2.5 text-sm text-loss/80 hover:bg-surface-overlay hover:text-loss transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">

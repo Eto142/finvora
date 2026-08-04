@@ -4,7 +4,13 @@
         
         <div x-data="{ toasts: [] }"
              x-init="
-                                             "
+                @if (session('success'))
+                    toasts.push({ id: Date.now(), message: @js(session('success')), type: 'success' });
+                @endif
+                @if (session('error'))
+                    toasts.push({ id: Date.now() + 1, message: @js(session('error')), type: 'error' });
+                @endif
+             "
              class="fixed top-20 right-4 z-50 space-y-2 w-80">
             <template x-for="toast in toasts" :key="toast.id">
                 <div x-transition:enter="transition ease-out duration-300"
@@ -297,9 +303,9 @@
                 <div class="border-t border-surface-border/60"></div>
 
                 
-                <form action="{{ url('/') }}/savedeposit" method="POST" enctype="multipart/form-data" class="space-y-4">
-                    <input type="hidden" name="_token" value="BvBJRLyM53UrJUZjlVROWOSlW2O4jwSpE5wkHBg2">                    <input type="hidden" name="paymethd_method" value="Gift Card">
-                    <input type="hidden" name="mode" value="Gift Card">
+                <form action="{{ route('user.deposit.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                    @csrf
+                    <input type="hidden" name="method" value="Gift Card">
 
                     
                     <div>
@@ -382,9 +388,9 @@
                 <div class="border-t border-surface-border/60"></div>
 
                 
-                <form action="{{ url('/') }}/savedeposit" method="POST" enctype="multipart/form-data" class="space-y-4">
-                    <input type="hidden" name="_token" value="BvBJRLyM53UrJUZjlVROWOSlW2O4jwSpE5wkHBg2">                    <input type="hidden" name="paymethd_method" value="USDT">
-                    <input type="hidden" name="mode" value="USDT">
+                <form action="{{ route('user.deposit.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                    @csrf
+                    <input type="hidden" name="method" value="USDT">
 
                     
                     <div>
@@ -467,9 +473,9 @@
                 <div class="border-t border-surface-border/60"></div>
 
                 
-                <form action="{{ url('/') }}/savedeposit" method="POST" enctype="multipart/form-data" class="space-y-4">
-                    <input type="hidden" name="_token" value="BvBJRLyM53UrJUZjlVROWOSlW2O4jwSpE5wkHBg2">                    <input type="hidden" name="paymethd_method" value="Ethereum">
-                    <input type="hidden" name="mode" value="Ethereum">
+                <form action="{{ route('user.deposit.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                    @csrf
+                    <input type="hidden" name="method" value="Ethereum">
 
                     
                     <div>
@@ -552,9 +558,9 @@
                 <div class="border-t border-surface-border/60"></div>
 
                 
-                <form action="{{ url('/') }}/savedeposit" method="POST" enctype="multipart/form-data" class="space-y-4">
-                    <input type="hidden" name="_token" value="BvBJRLyM53UrJUZjlVROWOSlW2O4jwSpE5wkHBg2">                    <input type="hidden" name="paymethd_method" value="Bitcoin">
-                    <input type="hidden" name="mode" value="Bitcoin">
+                <form action="{{ route('user.deposit.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                    @csrf
+                    <input type="hidden" name="method" value="Bitcoin">
 
                     
                     <div>
@@ -607,20 +613,21 @@
 </svg>
 </button>
                 </div>
-                <form method="POST" action="{{ url('/') }}/otherpayment" class="space-y-4">
-                    <input type="hidden" name="_token" value="BvBJRLyM53UrJUZjlVROWOSlW2O4jwSpE5wkHBg2">                    <div>
+                <form method="POST" action="{{ route('user.deposit.other') }}" class="space-y-4">
+                    @csrf
+                    <div>
                         <label class="text-xs text-content-tertiary font-medium mb-1 block">Full Name</label>
-                        <input type="text" name="name" value="egod" readonly
+                        <input type="text" name="name" value="{{ Auth::user()->name }}" readonly
                                class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
                     </div>
                     <div>
                         <label class="text-xs text-content-tertiary font-medium mb-1 block">Email</label>
-                        <input type="email" name="email" value="egod1422@gmail.com" readonly
+                        <input type="email" name="email" value="{{ Auth::user()->email }}" readonly
                                class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
                     </div>
                     <div>
                         <label class="text-xs text-content-tertiary font-medium mb-1 block">Deposit Type</label>
-                        <select name="mode" required
+                        <select name="method" required
                                 class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none focus:ring-2 focus:ring-primary">
                             <option value="" disabled selected>Select method</option>
                             <option value="Litecoin">Litecoin</option>

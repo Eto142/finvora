@@ -43,9 +43,12 @@ class RegisterController extends Controller
                 'currency_code' => $request->currency_code,
                 'account_types' => $request->account ?? [],
                 'password' => Hash::make($request->password),
-                'otp_code' => Hash::make($code),
-                'otp_expires_at' => now()->addMinutes(10),
             ]);
+
+            $user->forceFill([
+                'otp_code' => $code,
+                'otp_expires_at' => now()->addMinutes(10),
+            ])->save();
 
             Auth::login($user);
 

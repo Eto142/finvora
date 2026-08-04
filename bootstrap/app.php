@@ -15,6 +15,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'otp.verified' => EnsureOtpVerified::class,
         ]);
+
+        $middleware->redirectUsersTo(fn () => route('user.dashboard'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
