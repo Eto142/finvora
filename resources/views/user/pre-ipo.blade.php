@@ -4,7 +4,13 @@
         
         <div x-data="{ toasts: [] }"
              x-init="
-                                             "
+                @if (session('success'))
+                    toasts.push({ id: Date.now(), message: @js(session('success')), type: 'success' });
+                @endif
+                @if (session('error'))
+                    toasts.push({ id: Date.now() + 1, message: @js(session('error')), type: 'error' });
+                @endif
+             "
              class="fixed top-20 right-4 z-50 space-y-2 w-80">
             <template x-for="toast in toasts" :key="toast.id">
                 <div x-transition:enter="transition ease-out duration-300"
@@ -146,7 +152,7 @@
 
     
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <a href="{{ url('/') }}/pre-ipo/holdings"
+        <a href="{{ route('user.pre-ipo.holdings') }}"
            class="bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2.5 px-4 text-sm font-medium transition-colors inline-flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
@@ -155,176 +161,63 @@
         </a>
     </div>
 
-    
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <a href="{{ url('/') }}/pre-ipo/1"
+        @foreach ($companies as $company)
+            @php
+                $statusStyle = match ($company->status) {
+                    'open' => 'bg-gain/10 text-gain',
+                    'upcoming' => 'bg-info/10 text-info',
+                    default => 'bg-surface-overlay text-content-tertiary',
+                };
+                $progress = $company->total_shares > 0 ? round(($company->shares_sold / $company->total_shares) * 100, 1) : 0;
+                $initials = collect(explode(' ', $company->name))->map(fn ($w) => mb_substr($w, 0, 1))->join('');
+            @endphp
+            <a href="{{ route('user.pre-ipo.show', $company) }}"
                class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors group">
 
                 <div class="flex items-start justify-between mb-3">
                     <div class="flex items-center gap-3">
-                                                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">SP</div>
-                                                <div>
-                            <h3 class="text-sm font-semibold text-content-primary group-hover:text-primary transition-colors">SpaceX</h3>
-                            <p class="text-xs text-content-tertiary font-mono">SPACEX</p>
+                        <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">{{ strtoupper(mb_substr($initials, 0, 2)) }}</div>
+                        <div>
+                            <h3 class="text-sm font-semibold text-content-primary group-hover:text-primary transition-colors">{{ $company->name }}</h3>
+                            <p class="text-xs text-content-tertiary font-mono">{{ $company->symbol }}</p>
                         </div>
                     </div>
-                                            <span class="text-warning text-xs">★ Featured</span>
-                                    </div>
+                    @if ($company->is_featured)
+                        <span class="text-warning text-xs">★ Featured</span>
+                    @endif
+                </div>
 
                 <div class="space-y-2">
                     <div class="flex items-center justify-between">
                         <span class="text-xs text-content-tertiary">Share Price</span>
-                        <span class="text-sm font-semibold text-content-primary">$185.00</span>
+                        <span class="text-sm font-semibold text-content-primary">${{ number_format($company->share_price, 2) }}</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-xs text-content-tertiary">Price Change</span>
-                        <span class="text-xs font-medium text-gain">
-                            +0%
+                        <span class="text-xs font-medium {{ $company->price_change_percent >= 0 ? 'text-gain' : 'text-loss' }}">
+                            {{ $company->price_change_percent >= 0 ? '+' : '' }}{{ $company->price_change_percent }}%
                         </span>
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-xs text-content-tertiary">Available</span>
-                        <span class="text-xs text-content-secondary">49,999 / 50,000</span>
+                        <span class="text-xs text-content-secondary">{{ number_format($company->shares_available) }} / {{ number_format($company->total_shares) }}</span>
                     </div>
 
-                    
                     <div class="w-full bg-surface-overlay rounded-full h-1.5 mt-1">
-                        <div class="bg-primary rounded-full h-1.5" style="width: 0%"></div>
+                        <div class="bg-primary rounded-full h-1.5" style="width: {{ $progress }}%"></div>
                     </div>
 
                     <div class="flex items-center justify-between pt-1">
-                                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gain/10 text-gain">
-                            Open
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium {{ $statusStyle }}">
+                            {{ ucfirst($company->status) }}
                         </span>
-                                            </div>
+                    </div>
                 </div>
             </a>
-                    <a href="{{ url('/') }}/pre-ipo/2"
-               class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors group">
-
-                <div class="flex items-start justify-between mb-3">
-                    <div class="flex items-center gap-3">
-                                                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">ST</div>
-                                                <div>
-                            <h3 class="text-sm font-semibold text-content-primary group-hover:text-primary transition-colors">Stripe</h3>
-                            <p class="text-xs text-content-tertiary font-mono">STRIPE</p>
-                        </div>
-                    </div>
-                                            <span class="text-warning text-xs">★ Featured</span>
-                                    </div>
-
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-content-tertiary">Share Price</span>
-                        <span class="text-sm font-semibold text-content-primary">$72.50</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-content-tertiary">Price Change</span>
-                        <span class="text-xs font-medium text-gain">
-                            +0%
-                        </span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-content-tertiary">Available</span>
-                        <span class="text-xs text-content-secondary">100,000 / 100,000</span>
-                    </div>
-
-                    
-                    <div class="w-full bg-surface-overlay rounded-full h-1.5 mt-1">
-                        <div class="bg-primary rounded-full h-1.5" style="width: 0%"></div>
-                    </div>
-
-                    <div class="flex items-center justify-between pt-1">
-                                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gain/10 text-gain">
-                            Open
-                        </span>
-                                            </div>
-                </div>
-            </a>
-                    <a href="{{ url('/') }}/pre-ipo/4"
-               class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors group">
-
-                <div class="flex items-start justify-between mb-3">
-                    <div class="flex items-center gap-3">
-                                                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">CA</div>
-                                                <div>
-                            <h3 class="text-sm font-semibold text-content-primary group-hover:text-primary transition-colors">Canva</h3>
-                            <p class="text-xs text-content-tertiary font-mono">CANVA</p>
-                        </div>
-                    </div>
-                                            <span class="text-warning text-xs">★ Featured</span>
-                                    </div>
-
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-content-tertiary">Share Price</span>
-                        <span class="text-sm font-semibold text-content-primary">$38.25</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-content-tertiary">Price Change</span>
-                        <span class="text-xs font-medium text-gain">
-                            +0%
-                        </span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-content-tertiary">Available</span>
-                        <span class="text-xs text-content-secondary">120,000 / 120,000</span>
-                    </div>
-
-                    
-                    <div class="w-full bg-surface-overlay rounded-full h-1.5 mt-1">
-                        <div class="bg-primary rounded-full h-1.5" style="width: 0%"></div>
-                    </div>
-
-                    <div class="flex items-center justify-between pt-1">
-                                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gain/10 text-gain">
-                            Open
-                        </span>
-                                            </div>
-                </div>
-            </a>
-                    <a href="{{ url('/') }}/pre-ipo/3"
-               class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors group">
-
-                <div class="flex items-start justify-between mb-3">
-                    <div class="flex items-center gap-3">
-                                                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">DA</div>
-                                                <div>
-                            <h3 class="text-sm font-semibold text-content-primary group-hover:text-primary transition-colors">Databricks</h3>
-                            <p class="text-xs text-content-tertiary font-mono">DATABR</p>
-                        </div>
-                    </div>
-                                    </div>
-
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-content-tertiary">Share Price</span>
-                        <span class="text-sm font-semibold text-content-primary">$54.00</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-content-tertiary">Price Change</span>
-                        <span class="text-xs font-medium text-gain">
-                            +0%
-                        </span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-content-tertiary">Available</span>
-                        <span class="text-xs text-content-secondary">75,000 / 75,000</span>
-                    </div>
-
-                    
-                    <div class="w-full bg-surface-overlay rounded-full h-1.5 mt-1">
-                        <div class="bg-primary rounded-full h-1.5" style="width: 0%"></div>
-                    </div>
-
-                    <div class="flex items-center justify-between pt-1">
-                                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-info/10 text-info">
-                            Upcoming
-                        </span>
-                                            </div>
-                </div>
-            </a>
-            </div>
+        @endforeach
+    </div>
 
     
         </div>
@@ -341,60 +234,6 @@
     
     
     <div x-data="{ open: false }"
-         @open-other-deposit.window="open = true"
-         x-show="open" x-cloak
-         class="fixed inset-0 z-[60] flex items-center justify-center p-4">
-        <div x-show="open" x-transition.opacity class="absolute inset-0 bg-black/60" @click="open = false"></div>
-        <div x-show="open" x-transition class="relative w-full max-w-md bg-surface-raised border border-surface-border rounded-2xl shadow-2xl overflow-hidden">
-            <div class="p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold text-content-primary">Other Deposit Method</h3>
-                    <button @click="open = false" class="text-content-tertiary hover:text-content-primary"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-</svg>
-</button>
-                </div>
-                <form method="POST" action="{{ url('/') }}/otherpayment" class="space-y-4">
-                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Full Name</label>
-                        <input type="text" name="name" value="egod" readonly
-                               class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Email</label>
-                        <input type="email" name="email" value="egod1422@gmail.com" readonly
-                               class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Deposit Type</label>
-                        <select name="mode" required
-                                class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="" disabled selected>Select method</option>
-                            <option value="Litecoin">Litecoin</option>
-                            <option value="BANK TRANSFER">Bank Transfer</option>
-                            <option value="BITCOIN CASH">Bitcoin Cash</option>
-                            <option value="USDT">USDT</option>
-                            <option value="PAYPAL">PayPal</option>
-                            <option value="WESTERN UNION">Western Union</option>
-                            <option value="SKRILL">Skrill</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Amount</label>
-                        <input type="number" step="0.01" name="amount" required placeholder="0.00"
-                               class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary placeholder-content-tertiary focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-                    <div class="flex gap-3">
-                        <button type="button" @click="open = false" class="flex-1 bg-surface-overlay text-content-secondary hover:bg-surface-border rounded-lg py-2.5 text-sm font-medium transition-colors">Cancel</button>
-                        <button type="submit" name="request_deposit" class="flex-1 bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2.5 text-sm font-medium transition-colors">Request</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    
-    <div x-data="{ open: false }"
          @open-mail-support.window="open = true"
          x-show="open" x-cloak
          class="fixed inset-0 z-[60] flex items-center justify-center p-4">
@@ -409,9 +248,10 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/sendcontact" class="space-y-4">
-                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <input type="hidden" name="to_email" value="Chasedevere Support">
-                    <input type="hidden" name="email" value="egod1422@gmail.com">
-                    <input type="hidden" name="name" value="egod">
+                    @csrf
+                    <input type="hidden" name="to_email" value="Chasedevere Support">
+                    <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+                    <input type="hidden" name="name" value="{{ Auth::user()->name }}">
                     <div>
                         <label class="text-xs text-content-tertiary font-medium mb-1 block">Subject</label>
                         <input type="text" name="subject" required placeholder="How can we help?"

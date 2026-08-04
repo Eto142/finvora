@@ -4,7 +4,13 @@
         
         <div x-data="{ toasts: [] }"
              x-init="
-                                             "
+                @if (session('success'))
+                    toasts.push({ id: Date.now(), message: @js(session('success')), type: 'success' });
+                @endif
+                @if (session('error'))
+                    toasts.push({ id: Date.now() + 1, message: @js(session('error')), type: 'error' });
+                @endif
+             "
              class="fixed top-20 right-4 z-50 space-y-2 w-80">
             <template x-for="toast in toasts" :key="toast.id">
                 <div x-transition:enter="transition ease-out duration-300"
@@ -148,13 +154,13 @@
 
     
     <div class="flex items-center gap-3 mb-6">
-        <a href="{{ url('/') }}/stocks/portfolio" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium bg-surface-overlay text-content-secondary hover:text-content-primary hover:bg-surface-overlay/80 rounded-lg transition-colors">
+        <a href="{{ route('user.stocks.portfolio') }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium bg-surface-overlay text-content-secondary hover:text-content-primary hover:bg-surface-overlay/80 rounded-lg transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
 </svg>
  My Portfolio
         </a>
-        <a href="{{ url('/') }}/stocks/history" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium bg-surface-overlay text-content-secondary hover:text-content-primary hover:bg-surface-overlay/80 rounded-lg transition-colors">
+        <a href="{{ route('user.stocks.history') }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium bg-surface-overlay text-content-secondary hover:text-content-primary hover:bg-surface-overlay/80 rounded-lg transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
 </svg>
@@ -172,387 +178,45 @@
 
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                            <div x-show="!search || 'amd advanced micro devices, inc.'.includes(search.toLowerCase())"
+            @foreach ($stocks as $stock)
+                @php
+                    $searchKey = strtolower($stock->symbol . ' ' . $stock->name);
+                    $initials = strtoupper(mb_substr($stock->symbol, 0, 2));
+                @endphp
+                <div x-show="!search || '{{ addslashes($searchKey) }}'.includes(search.toLowerCase())"
                      class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
                     <div class="flex items-start justify-between mb-3">
                         <div class="flex items-center gap-3">
-                                                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
-                                    AM
+                            @if ($stock->logo_url)
+                                <img src="{{ $stock->logo_url }}" alt="{{ $stock->symbol }}" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
+                            @else
+                                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
+                                    {{ $initials }}
                                 </div>
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">AMD</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">Advanced Micro Devices, Inc.</p>
+                            @endif
+                            <div>
+                                <h3 class="text-sm font-semibold text-content-primary">{{ $stock->symbol }}</h3>
+                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">{{ $stock->name }}</p>
                             </div>
                         </div>
-                                            </div>
+                    </div>
 
                     <div class="flex items-end justify-between mb-4">
                         <div>
-                            <span class="text-lg font-bold text-content-primary">$494.95</span>
-                                                            <span class="text-xs font-medium ml-1 text-loss">
-                                    -5.17%
-                                </span>
-                                                    </div>
+                            <span class="text-lg font-bold text-content-primary">${{ number_format($stock->price, 2) }}</span>
+                            <span class="text-xs font-medium ml-1 {{ $stock->change_percent >= 0 ? 'text-gain' : 'text-loss' }}">
+                                {{ $stock->change_percent >= 0 ? '+' : '' }}{{ $stock->change_percent }}%
+                            </span>
+                        </div>
                     </div>
 
-                    
-                    <a href="{{ url('/') }}/stocks/86"
+                    <a href="{{ route('user.stocks.show', $stock) }}"
                        class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
                         Trade
                     </a>
                 </div>
-                            <div x-show="!search || 'googl alphabet inc.'.includes(search.toLowerCase())"
-                     class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                                                            <img src="https://static2.finnhub.io/file/publicdatany/finnhubimage/stock_logo/GOOG.png" alt="GOOGL" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">GOOGL</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">Alphabet Inc.</p>
-                            </div>
-                        </div>
-                                            </div>
-
-                    <div class="flex items-end justify-between mb-4">
-                        <div>
-                            <span class="text-lg font-bold text-content-primary">$326.56</span>
-                                                            <span class="text-xs font-medium ml-1 text-gain">
-                                    +2.13%
-                                </span>
-                                                    </div>
-                    </div>
-
-                    
-                    <a href="{{ url('/') }}/stocks/30"
-                       class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
-                        Trade
-                    </a>
-                </div>
-                            <div x-show="!search || 'amzn amazon.com, inc.'.includes(search.toLowerCase())"
-                     class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                                                            <img src="https://static2.finnhub.io/file/publicdatany/finnhubimage/stock_logo/AMZN.png" alt="AMZN" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">AMZN</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">Amazon.com, Inc.</p>
-                            </div>
-                        </div>
-                                            </div>
-
-                    <div class="flex items-end justify-between mb-4">
-                        <div>
-                            <span class="text-lg font-bold text-content-primary">$231.39</span>
-                                                            <span class="text-xs font-medium ml-1 text-loss">
-                                    -0.31%
-                                </span>
-                                                    </div>
-                    </div>
-
-                    
-                    <a href="{{ url('/') }}/stocks/31"
-                       class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
-                        Trade
-                    </a>
-                </div>
-                            <div x-show="!search || 'aapl apple inc.'.includes(search.toLowerCase())"
-                     class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                                                            <img src="https://static2.finnhub.io/file/publicdatany/finnhubimage/stock_logo/AAPL.png" alt="AAPL" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">AAPL</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">Apple Inc.</p>
-                            </div>
-                        </div>
-                                            </div>
-
-                    <div class="flex items-end justify-between mb-4">
-                        <div>
-                            <span class="text-lg font-bold text-content-primary">$336.91</span>
-                                                            <span class="text-xs font-medium ml-1 text-gain">
-                                    +1.17%
-                                </span>
-                                                    </div>
-                    </div>
-
-                    
-                    <a href="{{ url('/') }}/stocks/28"
-                       class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
-                        Trade
-                    </a>
-                </div>
-                            <div x-show="!search || 'ba boeing company'.includes(search.toLowerCase())"
-                     class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                                                            <img src="https://logo.clearbit.com/boeing.com" alt="BA" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">BA</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">Boeing Company</p>
-                            </div>
-                        </div>
-                                            </div>
-
-                    <div class="flex items-end justify-between mb-4">
-                        <div>
-                            <span class="text-lg font-bold text-content-primary">$211.50</span>
-                                                            <span class="text-xs font-medium ml-1 text-gain">
-                                    +0.95%
-                                </span>
-                                                    </div>
-                    </div>
-
-                    
-                    <a href="{{ url('/') }}/stocks/40"
-                       class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
-                        Trade
-                    </a>
-                </div>
-                            <div x-show="!search || 'intc intel corporation'.includes(search.toLowerCase())"
-                     class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                                                            <img src="https://static2.finnhub.io/file/publicdatany/finnhubimage/stock_logo/INTC.png" alt="INTC" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">INTC</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">Intel Corporation</p>
-                            </div>
-                        </div>
-                                            </div>
-
-                    <div class="flex items-end justify-between mb-4">
-                        <div>
-                            <span class="text-lg font-bold text-content-primary">$91.67</span>
-                                                            <span class="text-xs font-medium ml-1 text-loss">
-                                    -0.70%
-                                </span>
-                                                    </div>
-                    </div>
-
-                    
-                    <a href="{{ url('/') }}/stocks/37"
-                       class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
-                        Trade
-                    </a>
-                </div>
-                            <div x-show="!search || 'jpm jpmorgan chase &amp; co.'.includes(search.toLowerCase())"
-                     class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                                                            <img src="https://logo.clearbit.com/jpmorganchase.com" alt="JPM" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">JPM</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">JPMorgan Chase &amp; Co.</p>
-                            </div>
-                        </div>
-                                            </div>
-
-                    <div class="flex items-end justify-between mb-4">
-                        <div>
-                            <span class="text-lg font-bold text-content-primary">$356.20</span>
-                                                            <span class="text-xs font-medium ml-1 text-gain">
-                                    +0.85%
-                                </span>
-                                                    </div>
-                    </div>
-
-                    
-                    <a href="{{ url('/') }}/stocks/41"
-                       class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
-                        Trade
-                    </a>
-                </div>
-                            <div x-show="!search || 'meta meta platforms inc class a'.includes(search.toLowerCase())"
-                     class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                                                            <img src="https://static2.finnhub.io/file/publicdatany/finnhubimage/stock_logo/FB.png" alt="META" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">META</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">Meta Platforms Inc Class A</p>
-                            </div>
-                        </div>
-                                            </div>
-
-                    <div class="flex items-end justify-between mb-4">
-                        <div>
-                            <span class="text-lg font-bold text-content-primary">$593.87</span>
-                                                            <span class="text-xs font-medium ml-1 text-loss">
-                                    -0.22%
-                                </span>
-                                                    </div>
-                    </div>
-
-                    
-                    <a href="{{ url('/') }}/stocks/34"
-                       class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
-                        Trade
-                    </a>
-                </div>
-                            <div x-show="!search || 'msft microsoft corp.'.includes(search.toLowerCase())"
-                     class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                                                            <img src="https://static2.finnhub.io/file/publicdatany/finnhubimage/stock_logo/MSFT.png" alt="MSFT" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">MSFT</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">Microsoft Corp.</p>
-                            </div>
-                        </div>
-                                            </div>
-
-                    <div class="flex items-end justify-between mb-4">
-                        <div>
-                            <span class="text-lg font-bold text-content-primary">$389.10</span>
-                                                            <span class="text-xs font-medium ml-1 text-gain">
-                                    +1.94%
-                                </span>
-                                                    </div>
-                    </div>
-
-                    
-                    <a href="{{ url('/') }}/stocks/29"
-                       class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
-                        Trade
-                    </a>
-                </div>
-                            <div x-show="!search || 'nflx netflix, inc.'.includes(search.toLowerCase())"
-                     class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                                                            <img src="https://static2.finnhub.io/file/publicdatany/finnhubimage/stock_logo/NFLX.png" alt="NFLX" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">NFLX</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">Netflix, Inc.</p>
-                            </div>
-                        </div>
-                                            </div>
-
-                    <div class="flex items-end justify-between mb-4">
-                        <div>
-                            <span class="text-lg font-bold text-content-primary">$70.40</span>
-                                                            <span class="text-xs font-medium ml-1 text-gain">
-                                    +0.44%
-                                </span>
-                                                    </div>
-                    </div>
-
-                    
-                    <a href="{{ url('/') }}/stocks/35"
-                       class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
-                        Trade
-                    </a>
-                </div>
-                            <div x-show="!search || 'nvda nvidia corporation'.includes(search.toLowerCase())"
-                     class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                                                            <img src="https://static2.finnhub.io/file/publicdatany/finnhubimage/stock_logo/NVDA.png" alt="NVDA" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">NVDA</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">NVIDIA Corporation</p>
-                            </div>
-                        </div>
-                                            </div>
-
-                    <div class="flex items-end justify-between mb-4">
-                        <div>
-                            <span class="text-lg font-bold text-content-primary">$196.51</span>
-                                                            <span class="text-xs font-medium ml-1 text-loss">
-                                    -4.99%
-                                </span>
-                                                    </div>
-                    </div>
-
-                    
-                    <a href="{{ url('/') }}/stocks/33"
-                       class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
-                        Trade
-                    </a>
-                </div>
-                            <div x-show="!search || 'pypl paypal holdings inc'.includes(search.toLowerCase())"
-                     class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                                                            <img src="https://logo.clearbit.com/paypal.com" alt="PYPL" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">PYPL</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">PayPal Holdings Inc</p>
-                            </div>
-                        </div>
-                                            </div>
-
-                    <div class="flex items-end justify-between mb-4">
-                        <div>
-                            <span class="text-lg font-bold text-content-primary">$56.07</span>
-                                                            <span class="text-xs font-medium ml-1 text-loss">
-                                    -0.14%
-                                </span>
-                                                    </div>
-                    </div>
-
-                    
-                    <a href="{{ url('/') }}/stocks/38"
-                       class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
-                        Trade
-                    </a>
-                </div>
-                            <div x-show="!search || 'tsla tesla, inc.'.includes(search.toLowerCase())"
-                     class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                                                            <img src="https://static2.finnhub.io/file/publicdatany/finnhubimage/stock_logo/TSLA.png" alt="TSLA" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">TSLA</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">Tesla, Inc.</p>
-                            </div>
-                        </div>
-                                            </div>
-
-                    <div class="flex items-end justify-between mb-4">
-                        <div>
-                            <span class="text-lg font-bold text-content-primary">$309.22</span>
-                                                            <span class="text-xs font-medium ml-1 text-loss">
-                                    -1.22%
-                                </span>
-                                                    </div>
-                    </div>
-
-                    
-                    <a href="{{ url('/') }}/stocks/32"
-                       class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
-                        Trade
-                    </a>
-                </div>
-                            <div x-show="!search || 'dis the walt disney company'.includes(search.toLowerCase())"
-                     class="bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/30 transition-colors">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                                                            <img src="https://logo.clearbit.com/disney.com" alt="DIS" class="w-10 h-10 rounded-full object-cover bg-surface-overlay">
-                                                        <div>
-                                <h3 class="text-sm font-semibold text-content-primary">DIS</h3>
-                                <p class="text-xs text-content-tertiary truncate max-w-[120px]">The Walt Disney Company</p>
-                            </div>
-                        </div>
-                                            </div>
-
-                    <div class="flex items-end justify-between mb-4">
-                        <div>
-                            <span class="text-lg font-bold text-content-primary">$96.65</span>
-                                                            <span class="text-xs font-medium ml-1 text-gain">
-                                    +1.90%
-                                </span>
-                                                    </div>
-                    </div>
-
-                    
-                    <a href="{{ url('/') }}/stocks/39"
-                       class="block w-full text-center bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2 text-sm font-medium transition-colors">
-                        Trade
-                    </a>
-                </div>
-                    </div>
+            @endforeach
+        </div>
     </div>
 
         </div>
@@ -569,60 +233,6 @@
     
     
     <div x-data="{ open: false }"
-         @open-other-deposit.window="open = true"
-         x-show="open" x-cloak
-         class="fixed inset-0 z-[60] flex items-center justify-center p-4">
-        <div x-show="open" x-transition.opacity class="absolute inset-0 bg-black/60" @click="open = false"></div>
-        <div x-show="open" x-transition class="relative w-full max-w-md bg-surface-raised border border-surface-border rounded-2xl shadow-2xl overflow-hidden">
-            <div class="p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold text-content-primary">Other Deposit Method</h3>
-                    <button @click="open = false" class="text-content-tertiary hover:text-content-primary"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-</svg>
-</button>
-                </div>
-                <form method="POST" action="{{ url('/') }}/otherpayment" class="space-y-4">
-                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Full Name</label>
-                        <input type="text" name="name" value="egod" readonly
-                               class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Email</label>
-                        <input type="email" name="email" value="egod1422@gmail.com" readonly
-                               class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Deposit Type</label>
-                        <select name="mode" required
-                                class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="" disabled selected>Select method</option>
-                            <option value="Litecoin">Litecoin</option>
-                            <option value="BANK TRANSFER">Bank Transfer</option>
-                            <option value="BITCOIN CASH">Bitcoin Cash</option>
-                            <option value="USDT">USDT</option>
-                            <option value="PAYPAL">PayPal</option>
-                            <option value="WESTERN UNION">Western Union</option>
-                            <option value="SKRILL">Skrill</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="text-xs text-content-tertiary font-medium mb-1 block">Amount</label>
-                        <input type="number" step="0.01" name="amount" required placeholder="0.00"
-                               class="w-full bg-surface-overlay border border-surface-border rounded-lg px-3 py-2.5 text-sm text-content-primary placeholder-content-tertiary focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-                    <div class="flex gap-3">
-                        <button type="button" @click="open = false" class="flex-1 bg-surface-overlay text-content-secondary hover:bg-surface-border rounded-lg py-2.5 text-sm font-medium transition-colors">Cancel</button>
-                        <button type="submit" name="request_deposit" class="flex-1 bg-primary hover:bg-primary-dark text-content-inverse rounded-lg py-2.5 text-sm font-medium transition-colors">Request</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    
-    <div x-data="{ open: false }"
          @open-mail-support.window="open = true"
          x-show="open" x-cloak
          class="fixed inset-0 z-[60] flex items-center justify-center p-4">
@@ -637,9 +247,10 @@
 </button>
                 </div>
                 <form method="POST" action="{{ url('/') }}/sendcontact" class="space-y-4">
-                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">                    <input type="hidden" name="to_email" value="Chasedevere Support">
-                    <input type="hidden" name="email" value="egod1422@gmail.com">
-                    <input type="hidden" name="name" value="egod">
+                    @csrf
+                    <input type="hidden" name="to_email" value="Chasedevere Support">
+                    <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+                    <input type="hidden" name="name" value="{{ Auth::user()->name }}">
                     <div>
                         <label class="text-xs text-content-tertiary font-medium mb-1 block">Subject</label>
                         <input type="text" name="subject" required placeholder="How can we help?"

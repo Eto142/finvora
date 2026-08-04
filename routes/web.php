@@ -21,6 +21,8 @@ use App\Http\Controllers\User\TradeController;
 use App\Http\Controllers\User\EducationController;
 use App\Http\Controllers\User\NewsController;
 use App\Http\Controllers\User\NotificationController;
+use App\Http\Controllers\User\PreIpoController;
+use App\Http\Controllers\User\StockController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -125,8 +127,16 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('user')->middleware(['auth', 'otp.verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
-    Route::get('/preipo', [DashboardController::class, 'preipo'])->name('user.pre-ipo');
-    Route::get('/stocks', [DashboardController::class, 'stocks'])->name('user.stocks');
+    Route::get('/pre-ipo', [PreIpoController::class, 'index'])->name('user.pre-ipo');
+    Route::get('/pre-ipo/holdings', [PreIpoController::class, 'holdings'])->name('user.pre-ipo.holdings');
+    Route::get('/pre-ipo/{company}', [PreIpoController::class, 'show'])->name('user.pre-ipo.show');
+    Route::post('/pre-ipo/{company}/buy', [PreIpoController::class, 'buy'])->name('user.pre-ipo.buy');
+    Route::get('/stocks', [StockController::class, 'index'])->name('user.stocks');
+    Route::get('/stocks/portfolio', [StockController::class, 'portfolio'])->name('user.stocks.portfolio');
+    Route::get('/stocks/history', [StockController::class, 'history'])->name('user.stocks.history');
+    Route::get('/stocks/{stock}', [StockController::class, 'show'])->name('user.stocks.show');
+    Route::post('/stocks/{stock}/buy', [StockController::class, 'buy'])->name('user.stocks.buy');
+    Route::post('/stocks/{stock}/sell', [StockController::class, 'sell'])->name('user.stocks.sell');
     Route::get('/signals', [SignalController::class, 'signals'])->name('user.signals');
     Route::get('/signal-plans', [SignalController::class, 'signalplans'])->name('user.signal-plans');
     Route::get('/my-subscriptions', [SignalController::class, 'mysubscriptions'])->name('user.my-subscriptions');

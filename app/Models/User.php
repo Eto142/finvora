@@ -83,4 +83,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Investment::class);
     }
+
+    public function preIpoHoldings()
+    {
+        return $this->hasMany(PreIpoHolding::class);
+    }
+
+    public function stockOrders()
+    {
+        return $this->hasMany(StockOrder::class);
+    }
 }
