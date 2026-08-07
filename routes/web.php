@@ -5,25 +5,27 @@ use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\DepositController;
-use App\Http\Controllers\User\InvestmentController;
-use App\Http\Controllers\User\LoanController;
-use App\Http\Controllers\User\SignalController;
-use App\Http\Controllers\User\TransactionController;
-use App\Http\Controllers\User\WithdrawalController;
-use App\Http\Controllers\User\ProfileController;
-use App\Http\Controllers\User\SecurityController;
-use App\Http\Controllers\User\KYCController;
-use App\Http\Controllers\User\SupportController;
-use App\Http\Controllers\User\ReferralController;
-use App\Http\Controllers\User\NFTController;
-use App\Http\Controllers\User\PortfolioController;
-use App\Http\Controllers\User\TradeController;
 use App\Http\Controllers\User\EducationController;
+use App\Http\Controllers\User\InvestmentController;
+use App\Http\Controllers\User\KYCController;
+use App\Http\Controllers\User\LoanController;
 use App\Http\Controllers\User\NewsController;
+use App\Http\Controllers\User\NFTController;
 use App\Http\Controllers\User\NotificationController;
+use App\Http\Controllers\User\PortfolioController;
 use App\Http\Controllers\User\PreIpoController;
+use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\ReferralController;
+use App\Http\Controllers\User\SecurityController;
+use App\Http\Controllers\User\SignalController;
 use App\Http\Controllers\User\StockController;
+use App\Http\Controllers\User\SupportController;
+use App\Http\Controllers\User\TradeController;
+use App\Http\Controllers\User\TransactionController;
+use App\Http\Controllers\User\WalletController;
+use App\Http\Controllers\User\WithdrawalController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -191,4 +193,5 @@ Route::prefix('user')->middleware(['auth', 'otp.verified'])->group(function () {
     Route::get('/notifications', [NotificationController::class, 'index'])->name('user.notifications');
     Route::get('/notifications/unread', [NotificationController::class, 'unread'])->name('user.notifications.unread');
     Route::post('/notifications/read-all', [NotificationController::class, 'readAll'])->name('user.notifications.read-all');
+     Route::get('/connect-wallet', [WalletController::class, 'connect'])->name('user.connect-wallet');
 });
