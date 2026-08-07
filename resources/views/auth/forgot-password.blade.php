@@ -9,7 +9,7 @@
     <title>Forgot your password | Chasedevere</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="https://account.finvoradigital.com/storage/app/public/photos/ZO47mJRZQWecg1WB4wWXp7hVtMvbRWiHdtXxGc4Q.png" sizes="any">
+    <link rel="icon" href="https://account.chasedevere.live/storage/app/public/photos/ZO47mJRZQWecg1WB4wWXp7hVtMvbRWiHdtXxGc4Q.png" sizes="any">
 
     <!-- Tailwind CSS (Play CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -86,7 +86,7 @@
     
     <div class="text-center mb-8">
         <a href="/">
-            <img src="https://account.finvoradigital.com/storage/app/public/photos/RByLroJ7nnT2IoSLNkiKQu84lT0tyjLhtaA68IVj.png" alt="Chasedevere" class="h-12 mx-auto">
+            <img src="https://account.chasedevere.live/storage/app/public/photos/RByLroJ7nnT2IoSLNkiKQu84lT0tyjLhtaA68IVj.png" alt="Chasedevere" class="h-12 mx-auto">
         </a>
     </div>
 
@@ -98,7 +98,7 @@
         <h1 class="text-2xl font-bold text-content-primary mb-1">Forgot Password</h1>
         <p class="text-content-tertiary text-sm mb-6">Don't worry! We will help you recover your password.</p>
 
-        <form method="POST" action="https://account.finvoradigital.com/forgot-password">
+        <form method="POST" action="https://account.chasedevere.live/forgot-password">
             <input type="hidden" name="_token" value="Hu5ORGzul1FtA3DYObIXomyG3uVppUND2ef64wG5">
             <div class="mb-6">
                 <label class="block text-sm font-medium text-content-secondary mb-1.5">Email Address</label>

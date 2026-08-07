@@ -9,7 +9,7 @@
     <title>Sign up | Chasedevere</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="https://account.finvoradigital.com/storage/app/public/photos/ZO47mJRZQWecg1WB4wWXp7hVtMvbRWiHdtXxGc4Q.png" sizes="any">
+    <link rel="icon" href="https://account.chasedevere.live/storage/app/public/photos/ZO47mJRZQWecg1WB4wWXp7hVtMvbRWiHdtXxGc4Q.png" sizes="any">
 
     <!-- Tailwind CSS (Play CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>

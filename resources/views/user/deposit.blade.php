@@ -234,7 +234,7 @@
                     <p class="text-sm text-warning mb-2">Flexible payment methods available</p>
                     <p class="text-xs text-content-secondary leading-relaxed">
                         Once payment is made, send your proof to
-                        <a href="mailto:support@finvoradigital.com" class="text-primary hover:text-primary-light">support@finvoradigital.com</a>.
+                        <a href="mailto:support@chasedevere.live" class="text-primary hover:text-primary-light">support@chasedevere.live</a>.
                         You will receive payment details via support email.
                     </p>
                 </div>

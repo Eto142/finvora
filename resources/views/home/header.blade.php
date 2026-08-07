@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-US">
 
-<!-- Mirrored from finvoradigital.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jul 2026 13:27:48 GMT -->
+<!-- Mirrored from chasedevere.live/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jul 2026 13:27:48 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
 	<meta charset="UTF-8">
@@ -11,8 +11,8 @@
 <meta name='robots' content='max-image-preview:large' />
 <link rel="alternate" type="application/rss+xml" title="Chasedevere &raquo; Feed" href="feed/index.html" />
 <link rel="alternate" type="application/rss+xml" title="Chasedevere &raquo; Comments Feed" href="comments/feed/index.html" />
-<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="wp-json/oembed/1.0/embedba88.json?url=https%3A%2F%2Ffinvoradigital.com%2F" />
-<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="wp-json/oembed/1.0/embedc65b?url=https%3A%2F%2Ffinvoradigital.com%2F&amp;format=xml" />
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="wp-json/oembed/1.0/embedba88.json?url=https%3A%2F%2Fchasedevere.live%2F" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="wp-json/oembed/1.0/embedc65b?url=https%3A%2F%2Fchasedevere.live%2F&amp;format=xml" />
 <style id="wp-img-auto-sizes-contain-inline-css">
 img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=wp-img-auto-sizes-contain-inline-css */
@@ -76,7 +76,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			<link rel="icon" href="wp-content/uploads/2026/03/Asset-4649finvora.png" sizes="32x32" />
 <link rel="icon" href="wp-content/uploads/2026/03/Asset-4649finvora.png" sizes="192x192" />
 <link rel="apple-touch-icon" href="wp-content/uploads/2026/03/Asset-4649finvora.png" />
-<meta name="msapplication-TileImage" content="https://finvoradigital.com/wp-content/uploads/2026/03/Asset-4649finvora.png" />
+<meta name="msapplication-TileImage" content="https://chasedevere.live/wp-content/uploads/2026/03/Asset-4649finvora.png" />
 </head>
 <body class="home wp-singular page-template page-template-elementor_header_footer page page-id-14 wp-embed-responsive wp-theme-hello-elementor hello-elementor-default elementor-default elementor-template-full-width elementor-kit-9 elementor-page elementor-page-14">
 
