@@ -33,6 +33,9 @@ class RegisterController extends Controller
         try {
             $code = (string) random_int(100000, 999999);
 
+            $referrerCode = $request->input('ref') ?: session('ref_code');
+            $referrer = $referrerCode ? User::where('referral_code', $referrerCode)->first() : null;
+
             $user = User::create([
                 'name' => $request->name,
                 'username' => $request->username,
@@ -43,7 +46,10 @@ class RegisterController extends Controller
                 'currency_code' => $request->currency_code,
                 'account_types' => $request->account ?? [],
                 'password' => Hash::make($request->password),
+                'referred_by' => $referrer?->id,
             ]);
+
+            session()->forget('ref_code');
 
             $user->forceFill([
                 'otp_code' => $code,

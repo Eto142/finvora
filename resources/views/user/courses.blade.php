@@ -5,7 +5,13 @@
         
         <div x-data="{ toasts: [] }"
              x-init="
-                                             "
+                @if (session('success'))
+                    toasts.push({ id: Date.now(), message: @js(session('success')), type: 'success' });
+                @endif
+                @if (session('error'))
+                    toasts.push({ id: Date.now() + 1, message: @js(session('error')), type: 'error' });
+                @endif
+             "
              class="fixed top-20 right-4 z-50 space-y-2 w-80">
             <template x-for="toast in toasts" :key="toast.id">
                 <div x-transition:enter="transition ease-out duration-300"
@@ -145,8 +151,8 @@
             <p class="text-sm text-content-secondary mt-1">Browse and enroll in trading courses</p>
     </div>
 
-    <div wire:id="kGDvaSK0GYBbcm1CCdr3" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;kGDvaSK0GYBbcm1CCdr3&quot;,&quot;name&quot;:&quot;user.system-courses&quot;,&quot;locale&quot;:&quot;en&quot;,&quot;path&quot;:&quot;dashboard\/courses&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;v&quot;:&quot;acj&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;02c70b26&quot;,&quot;data&quot;:{&quot;courses&quot;:[],&quot;categories&quot;:[]},&quot;dataMeta&quot;:{&quot;modelCollections&quot;:{&quot;courses&quot;:{&quot;class&quot;:&quot;App\\Models\\Course&quot;,&quot;id&quot;:[1,2,3,4],&quot;relations&quot;:[&quot;lessons&quot;,&quot;users&quot;,&quot;category&quot;],&quot;connection&quot;:&quot;mysql&quot;},&quot;categories&quot;:{&quot;class&quot;:&quot;App\\Models\\CourseCategory&quot;,&quot;id&quot;:[1,2],&quot;relations&quot;:[&quot;standaloneLessons&quot;],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;fc9a6f519b01c0cb1663488b1ff5fc92fbbd8f1a329ebe6d7de0f49a0250b341&quot;}}">
-    
+    <div>
+
     <div class="mb-6">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
@@ -169,171 +175,64 @@
 
             
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                            <div class="bg-surface-raised border border-surface-border rounded-xl overflow-hidden hover:border-primary/30 transition-all group">
-                    <a href="{{ url('/') }}/course-details/Introduction-to-Cryptocurrency/1">
+            @forelse ($courses as $course)
+                <div class="bg-surface-raised border border-surface-border rounded-xl overflow-hidden hover:border-primary/30 transition-all group">
+                    <a href="{{ route('user.courses.show', $course) }}">
                         <div class="aspect-video overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=600"
+                            <img src="{{ $course->thumbnail_url ?? 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600' }}"
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                alt="Introduction to Cryptocurrency">
+                                alt="{{ $course->title }}">
                         </div>
                     </a>
                     <div class="p-4">
-                        <a href="{{ url('/') }}/course-details/Introduction-to-Cryptocurrency/1">
-                            <h3 class="text-content-primary font-semibold hover:text-primary transition-colors line-clamp-2">Introduction to Cryptocurrency</h3>
+                        <a href="{{ route('user.courses.show', $course) }}">
+                            <h3 class="text-content-primary font-semibold hover:text-primary transition-colors line-clamp-2">{{ $course->title }}</h3>
                         </a>
                         <div class="flex items-center justify-between mt-3 text-sm text-content-secondary">
                             <div class="flex items-center gap-1.5">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
   <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/>
 </svg>
-                                <span>3 Lessons</span>
+                                <span>{{ $course->lessons_count }} Lessons</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
 </svg>
-                                <span>0</span>
+                                <span>{{ $course->enrolled_count }}</span>
                             </div>
                         </div>
                         <div class="border-t border-dashed border-surface-border my-3"></div>
                         <div class="flex items-center justify-between">
-                            <span class="text-lg font-bold text-gain">
-                                Free
+                            <span class="text-lg font-bold {{ $course->isFree() ? 'text-gain' : 'text-content-primary' }}">
+                                {{ $course->isFree() ? 'Free' : '$' . number_format($course->price, 2) }}
                             </span>
-                            <a href="{{ url('/') }}/course-details/Introduction-to-Cryptocurrency/1"
+                            <a href="{{ route('user.courses.show', $course) }}"
                                 class="text-sm bg-primary/10 text-primary hover:bg-primary hover:text-white px-3 py-1.5 rounded-md transition-colors">
                                 Get
                             </a>
                         </div>
                     </div>
                 </div>
-                            <div class="bg-surface-raised border border-surface-border rounded-xl overflow-hidden hover:border-primary/30 transition-all group">
-                    <a href="{{ url('/') }}/course-details/Technical-Analysis-Masterclass/2">
-                        <div class="aspect-video overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                alt="Technical Analysis Masterclass">
-                        </div>
-                    </a>
-                    <div class="p-4">
-                        <a href="{{ url('/') }}/course-details/Technical-Analysis-Masterclass/2">
-                            <h3 class="text-content-primary font-semibold hover:text-primary transition-colors line-clamp-2">Technical Analysis Masterclass</h3>
-                        </a>
-                        <div class="flex items-center justify-between mt-3 text-sm text-content-secondary">
-                            <div class="flex items-center gap-1.5">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/>
-</svg>
-                                <span>4 Lessons</span>
-                            </div>
-                            <div class="flex items-center gap-1.5">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-</svg>
-                                <span>0</span>
-                            </div>
-                        </div>
-                        <div class="border-t border-dashed border-surface-border my-3"></div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-lg font-bold text-content-primary">
-                                $49.00
-                            </span>
-                            <a href="{{ url('/') }}/course-details/Technical-Analysis-Masterclass/2"
-                                class="text-sm bg-primary/10 text-primary hover:bg-primary hover:text-white px-3 py-1.5 rounded-md transition-colors">
-                                Get
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                            <div class="bg-surface-raised border border-surface-border rounded-xl overflow-hidden hover:border-primary/30 transition-all group">
-                    <a href="{{ url('/') }}/course-details/Risk-Management-&amp;-Portfolio-Strategy/3">
-                        <div class="aspect-video overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                alt="Risk Management &amp; Portfolio Strategy">
-                        </div>
-                    </a>
-                    <div class="p-4">
-                        <a href="{{ url('/') }}/course-details/Risk-Management-&amp;-Portfolio-Strategy/3">
-                            <h3 class="text-content-primary font-semibold hover:text-primary transition-colors line-clamp-2">Risk Management &amp; Portfolio Strategy</h3>
-                        </a>
-                        <div class="flex items-center justify-between mt-3 text-sm text-content-secondary">
-                            <div class="flex items-center gap-1.5">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/>
-</svg>
-                                <span>2 Lessons</span>
-                            </div>
-                            <div class="flex items-center gap-1.5">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-</svg>
-                                <span>0</span>
-                            </div>
-                        </div>
-                        <div class="border-t border-dashed border-surface-border my-3"></div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-lg font-bold text-content-primary">
-                                $29.00
-                            </span>
-                            <a href="{{ url('/') }}/course-details/Risk-Management-&amp;-Portfolio-Strategy/3"
-                                class="text-sm bg-primary/10 text-primary hover:bg-primary hover:text-white px-3 py-1.5 rounded-md transition-colors">
-                                Get
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                            <div class="bg-surface-raised border border-surface-border rounded-xl overflow-hidden hover:border-primary/30 transition-all group">
-                    <a href="{{ url('/') }}/course-details/Forex-Trading-for-Beginners/4">
-                        <div class="aspect-video overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=600"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                alt="Forex Trading for Beginners">
-                        </div>
-                    </a>
-                    <div class="p-4">
-                        <a href="{{ url('/') }}/course-details/Forex-Trading-for-Beginners/4">
-                            <h3 class="text-content-primary font-semibold hover:text-primary transition-colors line-clamp-2">Forex Trading for Beginners</h3>
-                        </a>
-                        <div class="flex items-center justify-between mt-3 text-sm text-content-secondary">
-                            <div class="flex items-center gap-1.5">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/>
-</svg>
-                                <span>3 Lessons</span>
-                            </div>
-                            <div class="flex items-center gap-1.5">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-</svg>
-                                <span>0</span>
-                            </div>
-                        </div>
-                        <div class="border-t border-dashed border-surface-border my-3"></div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-lg font-bold text-content-primary">
-                                $19.00
-                            </span>
-                            <a href="{{ url('/') }}/course-details/Forex-Trading-for-Beginners/4"
-                                class="text-sm bg-primary/10 text-primary hover:bg-primary hover:text-white px-3 py-1.5 rounded-md transition-colors">
-                                Get
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            @empty
+                <p class="text-content-tertiary col-span-full text-center py-8">No courses available yet.</p>
+            @endforelse
                     </div>
 
         
+        @if ($categories->isNotEmpty())
                     <div class="mt-10 mb-6">
                 <h3 class="text-xl font-bold text-content-primary">More Lessons</h3>
             </div>
             <div class="space-y-6">
-                                    <div class="mb-2">
+                @foreach ($categories as $category)
+                    <div class="mb-2">
                         <p class="text-xs text-content-tertiary uppercase tracking-wider mb-1">Category</p>
-                        <h4 class="text-lg font-bold text-content-primary">Crypto Basics</h4>
+                        <h4 class="text-lg font-bold text-content-primary">{{ $category->name }}</h4>
                     </div>
                     <div class="space-y-2">
-                                                    <div class="bg-surface-raised border border-surface-border rounded-lg px-4 py-3 flex items-center justify-between hover:border-primary/30 transition-colors">
+                        @foreach ($category->standaloneLessons as $lesson)
+                            <div class="bg-surface-raised border border-surface-border rounded-lg px-4 py-3 flex items-center justify-between hover:border-primary/30 transition-colors">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 rounded-full bg-loss/10 flex items-center justify-center flex-shrink-0">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-loss">
@@ -341,45 +240,22 @@
 </svg>
                                     </div>
                                     <div>
-                                        <h6 class="text-sm font-medium text-content-primary">Bitcoin vs Ethereum</h6>
-                                        <p class="text-xs text-content-tertiary mt-0.5">Key differences between the two largest cryptocurrencies</p>
-                                        <p class="text-xs text-content-tertiary">7:30</p>
+                                        <h6 class="text-sm font-medium text-content-primary">{{ $lesson->title }}</h6>
+                                        <p class="text-xs text-content-tertiary mt-0.5">{{ $lesson->description }}</p>
+                                        <p class="text-xs text-content-tertiary">{{ $lesson->duration }}</p>
                                     </div>
                                 </div>
-                                <a href="{{ url('/') }}/learning/16"
-                                    class="text-sm bg-info/10 text-info hover:bg-info hover:text-white px-3 py-1.5 rounded-md transition-colors whitespace-nowrap">
+                                <span class="text-sm bg-info/10 text-info px-3 py-1.5 rounded-md whitespace-nowrap">
                                     Watch
-                                </a>
+                                </span>
                             </div>
-                                            </div>
-                                    <div class="mb-2">
-                        <p class="text-xs text-content-tertiary uppercase tracking-wider mb-1">Category</p>
-                        <h4 class="text-lg font-bold text-content-primary">Technical Analysis</h4>
+                        @endforeach
                     </div>
-                    <div class="space-y-2">
-                                                    <div class="bg-surface-raised border border-surface-border rounded-lg px-4 py-3 flex items-center justify-between hover:border-primary/30 transition-colors">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-loss/10 flex items-center justify-center flex-shrink-0">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-loss">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"/>
-</svg>
-                                    </div>
-                                    <div>
-                                        <h6 class="text-sm font-medium text-content-primary">Volume Profile Trading</h6>
-                                        <p class="text-xs text-content-tertiary mt-0.5">Use volume profile to find high-probability setups</p>
-                                        <p class="text-xs text-content-tertiary">9:15</p>
-                                    </div>
-                                </div>
-                                <a href="{{ url('/') }}/learning/17"
-                                    class="text-sm bg-info/10 text-info hover:bg-info hover:text-white px-3 py-1.5 rounded-md transition-colors whitespace-nowrap">
-                                    Watch
-                                </a>
-                            </div>
-                                            </div>
-                            </div>
+                @endforeach
             </div>
+        @endif
 
-<!-- Livewire Component wire-end:kGDvaSK0GYBbcm1CCdr3 -->        </div>
+        </div>
 
         
         <footer class="border-t border-surface-border py-6 px-6 mt-8">

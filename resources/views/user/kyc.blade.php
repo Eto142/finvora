@@ -4,7 +4,13 @@
         
         <div x-data="{ toasts: [] }"
              x-init="
-                                             "
+                @if (session('success'))
+                    toasts.push({ id: Date.now(), message: @js(session('success')), type: 'success' });
+                @endif
+                @if (session('error'))
+                    toasts.push({ id: Date.now() + 1, message: @js(session('error')), type: 'error' });
+                @endif
+             "
              class="fixed top-20 right-4 z-50 space-y-2 w-80">
             <template x-for="toast in toasts" :key="toast.id">
                 <div x-transition:enter="transition ease-out duration-300"
@@ -144,13 +150,49 @@
 
     
     <div class="mb-6">
-    <h2 class="text-xl font-bold text-content-primary">KYC Verification</h2>
+    <h2 class="text-xl font-bold text-content-primary">Verify Your Account</h2>
             <p class="text-sm text-content-secondary mt-1">Verify your identity to comply with regulations</p>
     </div>
 
     
     <div class="max-w-xl mx-auto">
-                    
+
+        @if ($submission && $submission->isApproved())
+            <div class="rounded-xl bg-surface-raised border border-surface-border p-8 text-center">
+                <div class="w-16 h-16 rounded-full bg-gain/10 flex items-center justify-center mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-gain" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+</svg>
+                </div>
+                <h3 class="text-lg font-bold text-content-primary mb-2">Identity Verified</h3>
+                <p class="text-sm text-content-secondary mb-1">Your identity has been successfully verified.</p>
+                <p class="text-xs text-content-tertiary">{{ \App\Models\KycSubmission::DOCUMENT_TYPES[$submission->document_type] ?? $submission->document_type }} &middot; Reviewed {{ $submission->reviewed_at?->format('M d, Y') ?? $submission->updated_at->format('M d, Y') }}</p>
+            </div>
+        @elseif ($submission && $submission->isPending())
+            <div class="rounded-xl bg-surface-raised border border-surface-border p-8 text-center">
+                <div class="w-16 h-16 rounded-full bg-warning/10 flex items-center justify-center mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-warning" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                </div>
+                <h3 class="text-lg font-bold text-content-primary mb-2">Under Review</h3>
+                <p class="text-sm text-content-secondary mb-1">Your documents have been submitted and are being reviewed by our team.</p>
+                <p class="text-xs text-content-tertiary">{{ \App\Models\KycSubmission::DOCUMENT_TYPES[$submission->document_type] ?? $submission->document_type }} &middot; Submitted {{ $submission->created_at->format('M d, Y') }}</p>
+            </div>
+        @elseif ($submission && $submission->isRejected())
+            <div class="rounded-xl bg-surface-raised border border-surface-border p-8 text-center">
+                <div class="w-16 h-16 rounded-full bg-loss/10 flex items-center justify-center mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-loss" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                </div>
+                <h3 class="text-lg font-bold text-content-primary mb-2">Verification Rejected</h3>
+                <p class="text-sm text-content-secondary mb-4">{{ $submission->rejection_reason ?: 'Please review your documents and submit again.' }}</p>
+                <a href="{{ route('user.kyc.create') }}" class="inline-block px-6 py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-sm font-semibold transition-colors">
+                    Resubmit Documents
+                </a>
+            </div>
+        @else
             <div class="rounded-xl bg-surface-raised border border-surface-border p-8 text-center">
                 <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-primary" aria-hidden="true">
@@ -166,11 +208,13 @@
                     You have not submitted your necessary documents to verify your identity. Please verify your identity to enjoy our services.
                 </p>
 
-                <a href="{{ url('/') }}/kyc-form" class="inline-block px-6 py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-sm font-semibold transition-colors">
+                <a href="{{ route('user.kyc.create') }}" class="inline-block px-6 py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-sm font-semibold transition-colors">
                     Click here to complete your KYC
                 </a>
             </div>
-            </div>
+        @endif
+
+    </div>
 
         </div>
 

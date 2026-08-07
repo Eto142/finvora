@@ -1,10 +1,16 @@
-@include('user.header')
+﻿@include('user.header')
     
     <main class="transition-all duration-200 lg:ml-64 pt-16 min-h-screen">
         
         <div x-data="{ toasts: [] }"
              x-init="
-                                             "
+                @if (session('success'))
+                    toasts.push({ id: Date.now(), message: @js(session('success')), type: 'success' });
+                @endif
+                @if (session('error'))
+                    toasts.push({ id: Date.now() + 1, message: @js(session('error')), type: 'error' });
+                @endif
+             "
              class="fixed top-20 right-4 z-50 space-y-2 w-80">
             <template x-for="toast in toasts" :key="toast.id">
                 <div x-transition:enter="transition ease-out duration-300"
@@ -153,36 +159,50 @@
 
 <div class="rounded-xl bg-surface-raised border border-surface-border p-6 mb-6">
     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-        
-        <div class="relative shrink-0">
-                            <img src="{{ url('/') }}/storage/app/public/photos/&#039;DCOFeWgh.jpg1741102440&#039;"
-                     alt="egod"
-                     class="w-20 h-20 rounded-full border-2 border-primary object-cover bg-surface-overlay">
-                                </div>
 
-        
+        <div class="relative shrink-0">
+            <img src="{{ $user->avatarUrl() }}"
+                 alt="{{ $user->name }}"
+                 class="w-20 h-20 rounded-full border-2 border-primary object-cover bg-surface-overlay">
+        </div>
+
         <div class="flex-1 min-w-0">
-            <h2 class="text-xl font-bold text-content-primary">egod</h2>
-            <p class="text-sm text-content-secondary mt-0.5">egod1422@gmail.com</p>
-                        <div class="flex items-center gap-2 mt-2">
-                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-warning/10 text-warning text-xs font-medium">
+            <h2 class="text-xl font-bold text-content-primary">{{ $user->name }}</h2>
+            <p class="text-sm text-content-secondary mt-0.5">{{ $user->email }}</p>
+            <div class="flex items-center gap-2 mt-2">
+                @if ($user->isKycApproved())
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gain/10 text-gain text-xs font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+</svg>
+                        Verified
+                    </span>
+                @elseif ($user->isKycPending())
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-warning/10 text-warning text-xs font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+                        Pending Review
+                    </span>
+                @else
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-warning/10 text-warning text-xs font-medium">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
 </svg>
                         Not Verified
                     </span>
-                            </div>
-                    </div>
+                @endif
+            </div>
+        </div>
 
-        
         <div class="flex gap-6 text-center sm:text-right">
             <div>
                 <p class="text-xs text-content-tertiary font-medium uppercase tracking-wide">Profit</p>
-                <p class="text-lg font-bold text-content-primary">$0.00</p>
+                <p class="text-lg font-bold {{ $stats['total_pnl'] > 0 ? 'text-gain' : ($stats['total_pnl'] < 0 ? 'text-loss' : 'text-content-primary') }}">{{ ($stats['total_pnl'] >= 0 ? '' : '-') . '$' . number_format(abs($stats['total_pnl']), 2) }}</p>
             </div>
             <div>
                 <p class="text-xs text-content-tertiary font-medium uppercase tracking-wide">Balance</p>
-                <p class="text-lg font-bold text-content-primary">$0.00</p>
+                <p class="text-lg font-bold text-content-primary">${{ number_format($stats['deposits']['total'] - $stats['withdrawals']['total'], 2) }}</p>
             </div>
             <div>
                 <p class="text-xs text-content-tertiary font-medium uppercase tracking-wide">Bonus</p>
@@ -202,11 +222,11 @@
                 class="px-4 py-3 text-sm font-medium border-b-2 transition-colors -mb-px">
             Personal Profile
         </button>
-        <!--<button @click="tab = 'records'"-->
-        <!--        :class="tab === 'records' ? 'border-primary text-primary' : 'border-transparent text-content-tertiary hover:text-content-secondary'"-->
-        <!--        class="px-4 py-3 text-sm font-medium border-b-2 transition-colors -mb-px">-->
-        <!--    Account Records-->
-        <!--</button>-->
+        <button @click="tab = 'records'"
+                :class="tab === 'records' ? 'border-primary text-primary' : 'border-transparent text-content-tertiary hover:text-content-secondary'"
+                class="px-4 py-3 text-sm font-medium border-b-2 transition-colors -mb-px">
+            Account Records
+        </button>
         <button @click="tab = 'settings'"
                 :class="tab === 'settings' ? 'border-primary text-primary' : 'border-transparent text-content-tertiary hover:text-content-secondary'"
                 class="px-4 py-3 text-sm font-medium border-b-2 transition-colors -mb-px">
@@ -218,512 +238,49 @@
     
     
     <div x-show="tab === 'profile'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
-        <form method="POST" action="{{ url('/') }}/profileinfo" class="rounded-xl bg-surface-raised border border-surface-border p-6">
-            <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">            <h3 class="text-lg font-semibold text-content-primary mb-6">Personal Information</h3>
+        <form method="POST" action="{{ route('user.profile.update') }}" class="rounded-xl bg-surface-raised border border-surface-border p-6">
+            @csrf
+            <h3 class="text-lg font-semibold text-content-primary mb-6">Personal Information</h3>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                
+
                 <div class="md:col-span-2">
                     <label class="block text-xs font-medium text-content-tertiary uppercase tracking-wide mb-1.5">Full Name</label>
-                    <input type="text" name="name" value="egod" readonly
+                    <input type="text" name="name" value="{{ $user->name }}" readonly
                            class="w-full bg-surface-overlay border border-surface-border-light rounded-lg px-4 py-3 text-sm text-content-primary focus:outline-none focus:border-primary transition">
                 </div>
 
-                
                 <div>
                     <label class="block text-xs font-medium text-content-tertiary uppercase tracking-wide mb-1.5">Username</label>
-                    <input type="text" value="egod1422" readonly
+                    <input type="text" value="{{ $user->username }}" readonly
                            class="w-full bg-surface-overlay border border-surface-border-light rounded-lg px-4 py-3 text-sm text-content-primary/60 focus:outline-none">
                 </div>
 
-                
                 <div>
                     <label class="block text-xs font-medium text-content-tertiary uppercase tracking-wide mb-1.5">Email Address</label>
-                    <input type="email" value="egod1422@gmail.com" readonly
+                    <input type="email" value="{{ $user->email }}" readonly
                            class="w-full bg-surface-overlay border border-surface-border-light rounded-lg px-4 py-3 text-sm text-content-primary/60 focus:outline-none">
                 </div>
 
-                
                 <div>
                     <label class="block text-xs font-medium text-content-tertiary uppercase tracking-wide mb-1.5">Phone Number</label>
-                    <input type="text" value="8349394939" readonly
+                    <input type="text" value="{{ $user->phone }}" readonly
                            class="w-full bg-surface-overlay border border-surface-border-light rounded-lg px-4 py-3 text-sm text-content-primary/60 focus:outline-none">
                 </div>
 
-                
                 <div>
                     <label class="block text-xs font-medium text-content-tertiary uppercase tracking-wide mb-1.5">Country</label>
-                    <input type="text" name="country" value="Albania"
+                    <input type="text" name="country" value="{{ $user->country }}"
                            class="w-full bg-surface-overlay border border-surface-border-light rounded-lg px-4 py-3 text-sm text-content-primary focus:outline-none focus:border-primary transition">
                 </div>
 
-                
                 <div>
                     <label class="block text-xs font-medium text-content-tertiary uppercase tracking-wide mb-1.5">Preferred Currency</label>
                     <select name="currency_code"
                             class="w-full bg-surface-overlay border border-surface-border-light rounded-lg px-4 py-3 text-sm text-content-primary focus:outline-none focus:border-primary transition">
-                                                    <option value="AED" >
-                                AED (د.إ) — UAE Dirham
-                            </option>
-                                                    <option value="AFN" >
-                                AFN (Af) — Afghan Afghani
-                            </option>
-                                                    <option value="ALL" >
-                                ALL (Lek) — Albanian Lek
-                            </option>
-                                                    <option value="ANG" >
-                                ANG (ƒ) — Netherlands Antillean Guilder
-                            </option>
-                                                    <option value="AOA" >
-                                AOA (Kz) — Angolan Kwanza
-                            </option>
-                                                    <option value="ARS" >
-                                ARS ($) — Argentine Peso
-                            </option>
-                                                    <option value="AUD" >
-                                AUD ($) — Australian Dollar
-                            </option>
-                                                    <option value="AWG" >
-                                AWG (ƒ) — Aruban Florin
-                            </option>
-                                                    <option value="AZN" >
-                                AZN (ман) — Azerbaijani Manat
-                            </option>
-                                                    <option value="BAM" >
-                                BAM (KM) — Bosnia-Herzegovina Mark
-                            </option>
-                                                    <option value="BBD" >
-                                BBD ($) — Barbadian Dollar
-                            </option>
-                                                    <option value="BDT" >
-                                BDT (৳) — Bangladeshi Taka
-                            </option>
-                                                    <option value="BGN" >
-                                BGN (лв) — Bulgarian Lev
-                            </option>
-                                                    <option value="BHD" >
-                                BHD (.د.ب) — Bahraini Dinar
-                            </option>
-                                                    <option value="BIF" >
-                                BIF (FBu) — Burundian Franc
-                            </option>
-                                                    <option value="BMD" >
-                                BMD ($) — Bermudian Dollar
-                            </option>
-                                                    <option value="BND" >
-                                BND ($) — Brunei Dollar
-                            </option>
-                                                    <option value="BOB" >
-                                BOB ($b) — Bolivian Boliviano
-                            </option>
-                                                    <option value="BRL" >
-                                BRL (R$) — Brazilian Real
-                            </option>
-                                                    <option value="BSD" >
-                                BSD ($) — Bahamian Dollar
-                            </option>
-                                                    <option value="BTN" >
-                                BTN (Nu.) — Bhutanese Ngultrum
-                            </option>
-                                                    <option value="BWP" >
-                                BWP (P) — Botswanan Pula
-                            </option>
-                                                    <option value="BYR" >
-                                BYR (p.) — Belarusian Ruble
-                            </option>
-                                                    <option value="BZD" >
-                                BZD (BZ$) — Belize Dollar
-                            </option>
-                                                    <option value="CAD" >
-                                CAD ($) — Canadian Dollar
-                            </option>
-                                                    <option value="CDF" >
-                                CDF (FC) — Congolese Franc
-                            </option>
-                                                    <option value="CHF" >
-                                CHF (CHF) — Swiss Franc
-                            </option>
-                                                    <option value="CLP" >
-                                CLP ($) — Chilean Peso
-                            </option>
-                                                    <option value="CNY" >
-                                CNY (¥) — Chinese Yuan
-                            </option>
-                                                    <option value="COP" >
-                                COP ($) — Colombian Peso
-                            </option>
-                                                    <option value="CRC" >
-                                CRC (₡) — Costa Rican Colón
-                            </option>
-                                                    <option value="CUP" >
-                                CUP (⃌) — Cuban Peso
-                            </option>
-                                                    <option value="CVE" >
-                                CVE ($) — Cape Verdean Escudo
-                            </option>
-                                                    <option value="CZK" >
-                                CZK (Kč) — Czech Koruna
-                            </option>
-                                                    <option value="DJF" >
-                                DJF (Fdj) — Djiboutian Franc
-                            </option>
-                                                    <option value="DKK" >
-                                DKK (kr) — Danish Krone
-                            </option>
-                                                    <option value="DOP" >
-                                DOP (RD$) — Dominican Peso
-                            </option>
-                                                    <option value="DZD" >
-                                DZD (دج) — Algerian Dinar
-                            </option>
-                                                    <option value="EGP" >
-                                EGP (£) — Egyptian Pound
-                            </option>
-                                                    <option value="ETB" >
-                                ETB (Br) — Ethiopian Birr
-                            </option>
-                                                    <option value="EUR" >
-                                EUR (€) — Euro
-                            </option>
-                                                    <option value="FJD" >
-                                FJD ($) — Fijian Dollar
-                            </option>
-                                                    <option value="FKP" >
-                                FKP (£) — Falkland Islands Pound
-                            </option>
-                                                    <option value="GBP" >
-                                GBP (£) — British Pound Sterling
-                            </option>
-                                                    <option value="GEL" >
-                                GEL (ლ) — Georgian Lari
-                            </option>
-                                                    <option value="GHS" >
-                                GHS (¢) — Ghanaian Cedi
-                            </option>
-                                                    <option value="GIP" >
-                                GIP (£) — Gibraltar Pound
-                            </option>
-                                                    <option value="GMD" >
-                                GMD (D) — Gambian Dalasi
-                            </option>
-                                                    <option value="GNF" >
-                                GNF (FG) — Guinean Franc
-                            </option>
-                                                    <option value="GTQ" >
-                                GTQ (Q) — Guatemalan Quetzal
-                            </option>
-                                                    <option value="GYD" >
-                                GYD ($) — Guyanaese Dollar
-                            </option>
-                                                    <option value="HKD" >
-                                HKD ($) — Hong Kong Dollar
-                            </option>
-                                                    <option value="HNL" >
-                                HNL (L) — Honduran Lempira
-                            </option>
-                                                    <option value="HRK" >
-                                HRK (kn) — Croatian Kuna
-                            </option>
-                                                    <option value="HTG" >
-                                HTG (G) — Haitian Gourde
-                            </option>
-                                                    <option value="HUF" >
-                                HUF (Ft) — Hungarian Forint
-                            </option>
-                                                    <option value="IDR" >
-                                IDR (Rp) — Indonesian Rupiah
-                            </option>
-                                                    <option value="ILS" >
-                                ILS (₪) — Israeli New Sheqel
-                            </option>
-                                                    <option value="INR" >
-                                INR (₹) — Indian Rupee
-                            </option>
-                                                    <option value="IQD" >
-                                IQD (ع.د) — Iraqi Dinar
-                            </option>
-                                                    <option value="IRR" >
-                                IRR (﷼) — Iranian Rial
-                            </option>
-                                                    <option value="ISK" >
-                                ISK (kr) — Icelandic Króna
-                            </option>
-                                                    <option value="JEP" >
-                                JEP (£) — Jersey Pound
-                            </option>
-                                                    <option value="JMD" >
-                                JMD (J$) — Jamaican Dollar
-                            </option>
-                                                    <option value="JOD" >
-                                JOD (JD) — Jordanian Dinar
-                            </option>
-                                                    <option value="JPY" >
-                                JPY (¥) — Japanese Yen
-                            </option>
-                                                    <option value="KES" >
-                                KES (KSh) — Kenyan Shilling
-                            </option>
-                                                    <option value="KGS" >
-                                KGS (лв) — Kyrgystani Som
-                            </option>
-                                                    <option value="KHR" >
-                                KHR (៛) — Cambodian Riel
-                            </option>
-                                                    <option value="KMF" >
-                                KMF (CF) — Comorian Franc
-                            </option>
-                                                    <option value="KPW" >
-                                KPW (₩) — North Korean Won
-                            </option>
-                                                    <option value="KRW" >
-                                KRW (₩) — South Korean Won
-                            </option>
-                                                    <option value="KWD" >
-                                KWD (د.ك) — Kuwaiti Dinar
-                            </option>
-                                                    <option value="KYD" >
-                                KYD ($) — Cayman Islands Dollar
-                            </option>
-                                                    <option value="KZT" >
-                                KZT (лв) — Kazakhstani Tenge
-                            </option>
-                                                    <option value="LAK" >
-                                LAK (₭) — Laotian Kip
-                            </option>
-                                                    <option value="LBP" >
-                                LBP (£) — Lebanese Pound
-                            </option>
-                                                    <option value="LKR" >
-                                LKR (₨) — Sri Lankan Rupee
-                            </option>
-                                                    <option value="LRD" >
-                                LRD ($) — Liberian Dollar
-                            </option>
-                                                    <option value="LSL" >
-                                LSL (L) — Lesotho Loti
-                            </option>
-                                                    <option value="LTL" >
-                                LTL (Lt) — Lithuanian Litas
-                            </option>
-                                                    <option value="LVL" >
-                                LVL (Ls) — Latvian Lats
-                            </option>
-                                                    <option value="LYD" >
-                                LYD (ل.د) — Libyan Dinar
-                            </option>
-                                                    <option value="MAD" >
-                                MAD (د.م.) — Moroccan Dirham
-                            </option>
-                                                    <option value="MDL" >
-                                MDL (L) — Moldovan Leu
-                            </option>
-                                                    <option value="MGA" >
-                                MGA (Ar) — Malagasy Ariary
-                            </option>
-                                                    <option value="MKD" >
-                                MKD (ден) — Macedonian Denar
-                            </option>
-                                                    <option value="MMK" >
-                                MMK (K) — Myanma Kyat
-                            </option>
-                                                    <option value="MNT" >
-                                MNT (₮) — Mongolian Tugrik
-                            </option>
-                                                    <option value="MOP" >
-                                MOP (MOP$) — Macanese Pataca
-                            </option>
-                                                    <option value="MRO" >
-                                MRO (UM) — Mauritanian Ouguiya
-                            </option>
-                                                    <option value="MUR" >
-                                MUR (₨) — Mauritian Rupee
-                            </option>
-                                                    <option value="MVR" >
-                                MVR (.ރ) — Maldivian Rufiyaa
-                            </option>
-                                                    <option value="MWK" >
-                                MWK (MK) — Malawian Kwacha
-                            </option>
-                                                    <option value="MXN" >
-                                MXN ($) — Mexican Peso
-                            </option>
-                                                    <option value="MYR" >
-                                MYR (RM) — Malaysian Ringgit
-                            </option>
-                                                    <option value="MZN" >
-                                MZN (MT) — Mozambican Metical
-                            </option>
-                                                    <option value="NAD" >
-                                NAD ($) — Namibian Dollar
-                            </option>
-                                                    <option value="NGN" >
-                                NGN (₦) — Nigerian Naira
-                            </option>
-                                                    <option value="NIO" >
-                                NIO (C$) — Nicaraguan Córdoba
-                            </option>
-                                                    <option value="NOK" >
-                                NOK (kr) — Norwegian Krone
-                            </option>
-                                                    <option value="NPR" >
-                                NPR (₨) — Nepalese Rupee
-                            </option>
-                                                    <option value="NZD" >
-                                NZD ($) — New Zealand Dollar
-                            </option>
-                                                    <option value="OMR" >
-                                OMR (﷼) — Omani Rial
-                            </option>
-                                                    <option value="PAB" >
-                                PAB (B/.) — Panamanian Balboa
-                            </option>
-                                                    <option value="PEN" >
-                                PEN (S/.) — Peruvian Sol
-                            </option>
-                                                    <option value="PGK" >
-                                PGK (K) — Papua New Guinean Kina
-                            </option>
-                                                    <option value="PHP" >
-                                PHP (₱) — Philippine Peso
-                            </option>
-                                                    <option value="PKR" >
-                                PKR (₨) — Pakistani Rupee
-                            </option>
-                                                    <option value="PLN" >
-                                PLN (zł) — Polish Zloty
-                            </option>
-                                                    <option value="PYG" >
-                                PYG (Gs) — Paraguayan Guarani
-                            </option>
-                                                    <option value="QAR" >
-                                QAR (﷼) — Qatari Rial
-                            </option>
-                                                    <option value="RON" >
-                                RON (lei) — Romanian Leu
-                            </option>
-                                                    <option value="RSD" >
-                                RSD (Дин.) — Serbian Dinar
-                            </option>
-                                                    <option value="RUB" >
-                                RUB (руб) — Russian Ruble
-                            </option>
-                                                    <option value="RWF" >
-                                RWF (ر.س) — Rwandan Franc
-                            </option>
-                                                    <option value="SAR" >
-                                SAR (﷼) — Saudi Riyal
-                            </option>
-                                                    <option value="SBD" >
-                                SBD ($) — Solomon Islands Dollar
-                            </option>
-                                                    <option value="SCR" >
-                                SCR (₨) — Seychellois Rupee
-                            </option>
-                                                    <option value="SDG" >
-                                SDG (£) — Sudanese Pound
-                            </option>
-                                                    <option value="SEK" >
-                                SEK (kr) — Swedish Krona
-                            </option>
-                                                    <option value="SGD" >
-                                SGD ($) — Singapore Dollar
-                            </option>
-                                                    <option value="SHP" >
-                                SHP (£) — Saint Helena Pound
-                            </option>
-                                                    <option value="SLL" >
-                                SLL (Le) — Sierra Leonean Leone
-                            </option>
-                                                    <option value="SOS" >
-                                SOS (S) — Somali Shilling
-                            </option>
-                                                    <option value="SRD" >
-                                SRD ($) — Surinamese Dollar
-                            </option>
-                                                    <option value="STD" >
-                                STD (Db) — São Tomé and Príncipe Dobra
-                            </option>
-                                                    <option value="SVC" >
-                                SVC ($) — Salvadoran Colón
-                            </option>
-                                                    <option value="SYP" >
-                                SYP (£) — Syrian Pound
-                            </option>
-                                                    <option value="SZL" >
-                                SZL (L) — Swazi Lilangeni
-                            </option>
-                                                    <option value="THB" >
-                                THB (฿) — Thai Baht
-                            </option>
-                                                    <option value="TJS" >
-                                TJS (TJS) — Tajikistani Somoni
-                            </option>
-                                                    <option value="TMT" >
-                                TMT (m) — Turkmenistani Manat
-                            </option>
-                                                    <option value="TND" >
-                                TND (د.ت) — Tunisian Dinar
-                            </option>
-                                                    <option value="TOP" >
-                                TOP (T$) — Tongan Pa&#039;anga
-                            </option>
-                                                    <option value="TRY" >
-                                TRY (₤) — Turkish Lira
-                            </option>
-                                                    <option value="TTD" >
-                                TTD ($) — Trinidad and Tobago Dollar
-                            </option>
-                                                    <option value="TWD" >
-                                TWD (NT$) — New Taiwan Dollar
-                            </option>
-                                                    <option value="UAH" >
-                                UAH (₴) — Ukrainian Hryvnia
-                            </option>
-                                                    <option value="UGX" >
-                                UGX (USh) — Ugandan Shilling
-                            </option>
-                                                    <option value="USD" selected>
-                                USD ($) — US Dollar
-                            </option>
-                                                    <option value="UYU" >
-                                UYU ($U) — Uruguayan Peso
-                            </option>
-                                                    <option value="UZS" >
-                                UZS (лв) — Uzbekistan Som
-                            </option>
-                                                    <option value="VEF" >
-                                VEF (Bs) — Venezuelan Bolívar
-                            </option>
-                                                    <option value="VND" >
-                                VND (₫) — Vietnamese Dong
-                            </option>
-                                                    <option value="VUV" >
-                                VUV (VT) — Vanuatu Vatu
-                            </option>
-                                                    <option value="WST" >
-                                WST (WS$) — Samoan Tala
-                            </option>
-                                                    <option value="XAF" >
-                                XAF (FCFA) — CFA Franc BEAC
-                            </option>
-                                                    <option value="XCD" >
-                                XCD ($) — East Caribbean Dollar
-                            </option>
-                                                    <option value="XPF" >
-                                XPF (F) — CFP Franc
-                            </option>
-                                                    <option value="YER" >
-                                YER (﷼) — Yemeni Rial
-                            </option>
-                                                    <option value="ZAR" >
-                                ZAR (R) — South African Rand
-                            </option>
-                                                    <option value="ZMK" >
-                                ZMK (ZK) — Zambian Kwacha
-                            </option>
-                                                    <option value="ZWL" >
-                                ZWL (Z$) — Zimbabwean Dollar
-                            </option>
+                    @foreach (config('currencies') as $code => $label)
+                        <option value="{{ $code }}" {{ $user->currency_code === $code ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
                                             </select>
                     <p class="mt-1 text-xs text-content-tertiary">Amounts will be displayed in this currency</p>
                 </div>
@@ -731,38 +288,40 @@
                 
                 <div>
                     <label class="block text-xs font-medium text-content-tertiary uppercase tracking-wide mb-1.5">State / Province</label>
-                    <input type="text" name="state" value=""
+                    <input type="text" name="state" value="{{ $user->state }}"
                            class="w-full bg-surface-overlay border border-surface-border-light rounded-lg px-4 py-3 text-sm text-content-primary focus:outline-none focus:border-primary transition">
                 </div>
 
-                
+
                 <div>
                     <label class="block text-xs font-medium text-content-tertiary uppercase tracking-wide mb-1.5">Postal / Zip Code</label>
-                    <input type="text" name="zipcode" value=""
+                    <input type="text" name="zipcode" value="{{ $user->zipcode }}"
                            class="w-full bg-surface-overlay border border-surface-border-light rounded-lg px-4 py-3 text-sm text-content-primary focus:outline-none focus:border-primary transition">
                 </div>
 
-                
+
                 <div class="md:col-span-2">
                     <label class="block text-xs font-medium text-content-tertiary uppercase tracking-wide mb-1.5">Address</label>
                     <textarea name="address" rows="3"
-                              class="w-full bg-surface-overlay border border-surface-border-light rounded-lg px-4 py-3 text-sm text-content-primary focus:outline-none focus:border-primary transition resize-none"></textarea>
+                              class="w-full bg-surface-overlay border border-surface-border-light rounded-lg px-4 py-3 text-sm text-content-primary focus:outline-none focus:border-primary transition resize-none">{{ $user->address }}</textarea>
                 </div>
             </div>
 
-            
+
             <div class="mt-6 p-4 rounded-lg bg-surface-overlay border border-surface-border-light">
                 <div class="flex flex-wrap gap-6">
-                                        <div>
+                    <div>
                         <p class="text-xs text-content-tertiary font-medium uppercase tracking-wide mb-1">Account Status</p>
-                                                    <span class="text-sm text-warning font-medium">Not Verified</span>
-                                            </div>
-                                        
+                        @if ($user->isKycApproved())
+                            <span class="text-sm text-gain font-medium">Verified</span>
+                        @else
+                            <span class="text-sm text-warning font-medium">{{ $user->kycStatusLabel() }}</span>
+                        @endif
+                    </div>
                 </div>
             </div>
 
             <div class="flex items-center justify-between mt-6 pt-6 border-t border-surface-border">
-                <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">
                 <button type="submit" name="client_update_info"
                         class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-content-inverse font-semibold hover:bg-primary-dark transition">
                     Update Profile
@@ -788,7 +347,7 @@
         </div>
     </div>
     <p class="text-xs text-content-tertiary font-medium uppercase tracking-wide mb-1">Net Worth</p>
-    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="$0.00">$0.00</p>
+    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="${{ number_format($stats['net_worth'], 2) }}">${{ number_format($stats['net_worth'], 2) }}</p>
     </div>
                 <div class="bg-surface-raised border border-surface-border rounded-xl p-4 sm:p-5 hover:border-surface-border-light transition-colors group min-w-0 overflow-hidden">
     <div class="flex items-start justify-between mb-3">
@@ -799,7 +358,7 @@
         </div>
     </div>
     <p class="text-xs text-content-tertiary font-medium uppercase tracking-wide mb-1">Total Invested</p>
-    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="$0.00">$0.00</p>
+    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="${{ number_format($stats['total_invested'], 2) }}">${{ number_format($stats['total_invested'], 2) }}</p>
     </div>
                 <div class="bg-surface-raised border border-surface-border rounded-xl p-4 sm:p-5 hover:border-surface-border-light transition-colors group min-w-0 overflow-hidden">
     <div class="flex items-start justify-between mb-3">
@@ -810,7 +369,7 @@
         </div>
     </div>
     <p class="text-xs text-content-tertiary font-medium uppercase tracking-wide mb-1">Total P/L</p>
-    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="+$0.00">+$0.00</p>
+    <p class="text-[15px] sm:text-2xl font-bold {{ $stats['total_pnl'] > 0 ? 'text-gain' : ($stats['total_pnl'] < 0 ? 'text-loss' : 'text-content-primary') }} truncate" title="{{ $stats['total_pnl'] >= 0 ? '+' : '-' }}${{ number_format(abs($stats['total_pnl']), 2) }}">{{ $stats['total_pnl'] >= 0 ? '+' : '-' }}${{ number_format(abs($stats['total_pnl']), 2) }}</p>
     </div>
                 <div class="bg-surface-raised border border-surface-border rounded-xl p-4 sm:p-5 hover:border-surface-border-light transition-colors group min-w-0 overflow-hidden">
     <div class="flex items-start justify-between mb-3">
@@ -821,7 +380,7 @@
         </div>
     </div>
     <p class="text-xs text-content-tertiary font-medium uppercase tracking-wide mb-1">Win Rate</p>
-    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="N/A">N/A</p>
+    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="{{ $stats['win_rate'] === null ? 'N/A' : $stats['win_rate'] . '%' }}">{{ $stats['win_rate'] === null ? 'N/A' : $stats['win_rate'] . '%' }}</p>
     </div>
             </div>
 
@@ -830,7 +389,8 @@
                 
                 <div class="lg:col-span-2 rounded-xl bg-surface-raised border border-surface-border p-5">
                     <h4 class="text-sm font-semibold text-content-primary mb-4">Portfolio Allocation</h4>
-                                            <div class="flex items-center justify-center h-48">
+                    @if ($stats['allocation']->isEmpty())
+                        <div class="flex items-center justify-center h-48">
                             <div class="text-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-content-tertiary mx-auto mb-2" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
@@ -839,24 +399,47 @@
                                 <p class="text-xs text-content-tertiary mt-1">Start trading or investing to see your breakdown</p>
                             </div>
                         </div>
+                    @else
+                        <div class="space-y-3">
+                            @foreach ($stats['allocation'] as $label => $amount)
+                                <div>
+                                    <div class="flex items-center justify-between text-xs mb-1">
+                                        <span class="text-content-secondary">{{ $label }}</span>
+                                        <span class="text-content-primary font-medium">{{ round($amount / $stats['allocation_total'] * 100) }}%</span>
                                     </div>
+                                    <div class="w-full h-1.5 rounded-full bg-surface-overlay overflow-hidden">
+                                        <div class="h-full bg-primary rounded-full" style="width: {{ round($amount / $stats['allocation_total'] * 100) }}%"></div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
 
-                
                 <div class="lg:col-span-3 rounded-xl bg-surface-raised border border-surface-border p-5">
                     <h4 class="text-sm font-semibold text-content-primary mb-4">Breakdown</h4>
 
-                    
-                                            <p class="text-sm text-content-tertiary">No active allocations to display.</p>
-                    
-                    
+                    @if ($stats['allocation']->isEmpty())
+                        <p class="text-sm text-content-tertiary">No active allocations to display.</p>
+                    @else
+                        <div class="space-y-2">
+                            @foreach ($stats['allocation'] as $label => $amount)
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-content-secondary">{{ $label }}</span>
+                                    <span class="text-content-primary font-medium">${{ number_format($amount, 2) }}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+
                     <div class="mt-5 pt-4 border-t border-surface-border grid grid-cols-2 sm:grid-cols-4 gap-4">
                         <div>
                             <p class="text-[10px] text-content-tertiary font-medium uppercase tracking-widest mb-0.5">Balance</p>
-                            <p class="text-sm font-bold text-content-primary">$0.00</p>
+                            <p class="text-sm font-bold text-content-primary">${{ number_format($stats['deposits']['total'] - $stats['withdrawals']['total'], 2) }}</p>
                         </div>
                         <div>
                             <p class="text-[10px] text-content-tertiary font-medium uppercase tracking-widest mb-0.5">Profit</p>
-                            <p class="text-sm font-bold text-content-primary">$0.00</p>
+                            <p class="text-sm font-bold {{ $stats['total_pnl'] >= 0 ? 'text-gain' : 'text-loss' }}">${{ number_format($stats['total_pnl'], 2) }}</p>
                         </div>
                         <div>
                             <p class="text-[10px] text-content-tertiary font-medium uppercase tracking-widest mb-0.5">Bonus</p>
@@ -883,25 +466,25 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-semibold text-content-primary">Trading</h4>
-                            <p class="text-xs text-content-tertiary">0 total trades</p>
+                            <p class="text-xs text-content-tertiary">{{ $stats['trading']['total_trades'] }} total trades</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Open</p>
-                            <p class="text-base font-bold text-content-primary">0</p>
+                            <p class="text-base font-bold text-content-primary">{{ $stats['trading']['open'] }}</p>
                         </div>
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Invested</p>
-                            <p class="text-base font-bold text-content-primary">$0.00</p>
+                            <p class="text-base font-bold text-content-primary">${{ number_format($stats['trading']['invested'], 2) }}</p>
                         </div>
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Total Profit</p>
-                            <p class="text-base font-bold text-gain">+$0.00</p>
+                            <p class="text-base font-bold text-gain">+${{ number_format($stats['trading']['profit'], 2) }}</p>
                         </div>
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Total Loss</p>
-                            <p class="text-base font-bold text-loss">-$0.00</p>
+                            <p class="text-base font-bold text-loss">-${{ number_format($stats['trading']['loss'], 2) }}</p>
                         </div>
                     </div>
                 </div>
@@ -916,17 +499,17 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-semibold text-content-primary">Copy Trading</h4>
-                            <p class="text-xs text-content-tertiary">0 active positions</p>
+                            <p class="text-xs text-content-tertiary">{{ $stats['copy_trading']['active'] }} active positions</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Invested</p>
-                            <p class="text-base font-bold text-content-primary">$0.00</p>
+                            <p class="text-base font-bold text-content-primary">${{ number_format($stats['copy_trading']['invested'], 2) }}</p>
                         </div>
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Profit</p>
-                            <p class="text-base font-bold text-gain">+$0.00</p>
+                            <p class="text-base font-bold text-gain">+${{ number_format($stats['copy_trading']['profit'], 2) }}</p>
                         </div>
                     </div>
                 </div>
@@ -941,17 +524,17 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-semibold text-content-primary">Investment Plans</h4>
-                            <p class="text-xs text-content-tertiary">0 active plans</p>
+                            <p class="text-xs text-content-tertiary">{{ $stats['investments']['active'] }} active plans</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Invested</p>
-                            <p class="text-base font-bold text-content-primary">$0.00</p>
+                            <p class="text-base font-bold text-content-primary">${{ number_format($stats['investments']['invested'], 2) }}</p>
                         </div>
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Earned</p>
-                            <p class="text-base font-bold text-gain">+$0.00</p>
+                            <p class="text-base font-bold text-gain">+${{ number_format($stats['investments']['earned'], 2) }}</p>
                         </div>
                     </div>
                 </div>
@@ -966,17 +549,17 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-semibold text-content-primary">Pre-IPO</h4>
-                            <p class="text-xs text-content-tertiary">0 holdings</p>
+                            <p class="text-xs text-content-tertiary">{{ $stats['pre_ipo']['holdings'] }} holdings</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Cost</p>
-                            <p class="text-base font-bold text-content-primary">$0.00</p>
+                            <p class="text-base font-bold text-content-primary">${{ number_format($stats['pre_ipo']['cost'], 2) }}</p>
                         </div>
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Value</p>
-                                                        <p class="text-base font-bold text-content-primary">$0.00</p>
+                            <p class="text-base font-bold text-content-primary">${{ number_format($stats['pre_ipo']['value'], 2) }}</p>
                         </div>
                     </div>
                 </div>
@@ -991,17 +574,17 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-semibold text-content-primary">Stock Shares</h4>
-                            <p class="text-xs text-content-tertiary">0 positions</p>
+                            <p class="text-xs text-content-tertiary">{{ $stats['stocks']['positions'] }} positions</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Invested</p>
-                            <p class="text-base font-bold text-content-primary">$0.00</p>
+                            <p class="text-base font-bold text-content-primary">${{ number_format($stats['stocks']['invested'], 2) }}</p>
                         </div>
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Value</p>
-                            <p class="text-base font-bold text-content-primary">$0.00</p>
+                            <p class="text-base font-bold text-content-primary">${{ number_format($stats['stocks']['value'], 2) }}</p>
                         </div>
                     </div>
                 </div>
@@ -1016,17 +599,17 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-semibold text-content-primary">NFTs</h4>
-                            <p class="text-xs text-content-tertiary">0 owned</p>
+                            <p class="text-xs text-content-tertiary">{{ $stats['nfts']['owned'] }} owned</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Collection Value</p>
-                            <p class="text-base font-bold text-content-primary">$0.00</p>
+                            <p class="text-base font-bold text-content-primary">${{ number_format($stats['nfts']['value'], 2) }}</p>
                         </div>
                         <div class="bg-surface-overlay rounded-lg p-3">
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Items</p>
-                            <p class="text-base font-bold text-content-primary">0</p>
+                            <p class="text-base font-bold text-content-primary">{{ $stats['nfts']['owned'] }}</p>
                         </div>
                     </div>
                 </div>
@@ -1044,10 +627,10 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-semibold text-content-primary">Deposits</h4>
-                            <p class="text-xs text-content-tertiary">0 transactions</p>
+                            <p class="text-xs text-content-tertiary">{{ $stats['deposits']['count'] }} transactions</p>
                         </div>
                     </div>
-                    <p class="text-2xl font-bold text-content-primary">$0.00</p>
+                    <p class="text-2xl font-bold text-content-primary">${{ number_format($stats['deposits']['total'], 2) }}</p>
                     <p class="text-xs text-content-tertiary mt-1">Total deposited (processed)</p>
                 </div>
 
@@ -1061,10 +644,10 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-semibold text-content-primary">Withdrawals</h4>
-                            <p class="text-xs text-content-tertiary">0 transactions</p>
+                            <p class="text-xs text-content-tertiary">{{ $stats['withdrawals']['count'] }} transactions</p>
                         </div>
                     </div>
-                    <p class="text-2xl font-bold text-content-primary">$0.00</p>
+                    <p class="text-2xl font-bold text-content-primary">${{ number_format($stats['withdrawals']['total'], 2) }}</p>
                     <p class="text-xs text-content-tertiary mt-1">Total withdrawn (processed)</p>
                 </div>
 
@@ -1078,17 +661,17 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-semibold text-content-primary">Loans</h4>
-                            <p class="text-xs text-content-tertiary">0 active</p>
+                            <p class="text-xs text-content-tertiary">{{ $stats['loans']['active'] }} active</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Outstanding</p>
-                            <p class="text-base font-bold text-warning">$0.00</p>
+                            <p class="text-base font-bold text-warning">${{ number_format($stats['loans']['outstanding'], 2) }}</p>
                         </div>
                         <div>
                             <p class="text-[10px] text-content-tertiary uppercase tracking-widest mb-0.5">Repaid</p>
-                            <p class="text-base font-bold text-gain">$0.00</p>
+                            <p class="text-base font-bold text-gain">${{ number_format($stats['loans']['repaid'], 2) }}</p>
                         </div>
                     </div>
                 </div>
@@ -1108,8 +691,9 @@
                 <h3 class="text-lg font-semibold text-content-primary mb-1">Change Password</h3>
                 <p class="text-xs text-content-tertiary mb-5">You will be logged out after changing your password.</p>
 
-                <form method="POST" action="{{ url('/') }}/updatepass" class="space-y-4">
-                    <input type="hidden" name="_method" value="PUT">                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">
+                <form method="POST" action="{{ route('user.profile.password') }}" class="space-y-4">
+                    @csrf
+                    @method('PUT')
                     <div>
                         <label class="block text-xs font-medium text-content-tertiary uppercase tracking-wide mb-1.5">Current Password</label>
                         <input type="password" name="current_password" required autocomplete="off"
@@ -1144,19 +728,18 @@
                 <h3 class="text-lg font-semibold text-content-primary mb-1">Change Profile Image</h3>
                 <p class="text-xs text-content-tertiary mb-5">Upload a new profile photo.</p>
 
-                <form method="POST" action="{{ url('/') }}/updateprofileimage" enctype="multipart/form-data" class="space-y-4">
-                    <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">
+                <form method="POST" action="{{ route('user.profile.avatar') }}" enctype="multipart/form-data" class="space-y-4">
+                    @csrf
                     <div class="flex justify-center">
-                                                    <img src="{{ url('/') }}/storage/app/public/photos/&#039;DCOFeWgh.jpg1741102440&#039;"
-                                 alt="egod"
-                                 class="w-32 h-32 rounded-full border-2 border-surface-border-light object-cover bg-surface-overlay">
-                                            </div>
+                        <img src="{{ $user->avatarUrl() }}"
+                             alt="{{ $user->name }}"
+                             class="w-32 h-32 rounded-full border-2 border-surface-border-light object-cover bg-surface-overlay">
+                    </div>
 
-                    <input type="file" name="profileimage"
+                    <input type="file" name="profileimage" accept="image/*"
                            class="block w-full text-sm text-content-secondary file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition cursor-pointer">
 
                     <div class="pt-2">
-                        <input type="hidden" name="_token" value="33urHJ6yXCmJ10M5P6VQb1q8wXyBAhRpUNl6CGKT">
                         <button type="submit"
                                 class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-content-inverse text-sm font-semibold hover:bg-primary-dark transition">
                             Change Profile Image
@@ -1171,7 +754,7 @@
     <div class="rounded-xl bg-surface-raised border border-surface-border p-6">
         <h3 class="text-sm font-semibold text-content-primary mb-3">Your Referral Link</h3>
         <div x-data="{ copied: false }" class="flex items-stretch gap-2">
-            <input type="text" id="referral_link" value="{{ url('/') }}//ref/egod1422" readonly
+            <input type="text" id="referral_link" value="{{ route('ref.redirect', $user->referral_code) }}" readonly
                    class="flex-1 bg-surface-overlay border border-surface-border-light rounded-lg px-4 py-3 text-sm text-content-primary font-mono select-all focus:outline-none">
             <button @click="navigator.clipboard.writeText(document.getElementById('referral_link').value); copied = true; setTimeout(() => copied = false, 2000)"
                     class="px-5 rounded-lg bg-primary text-content-inverse text-sm font-semibold hover:bg-primary-dark transition flex items-center gap-2">

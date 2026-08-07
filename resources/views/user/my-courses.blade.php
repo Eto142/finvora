@@ -5,7 +5,13 @@
         
         <div x-data="{ toasts: [] }"
              x-init="
-                                             "
+                @if (session('success'))
+                    toasts.push({ id: Date.now(), message: @js(session('success')), type: 'success' });
+                @endif
+                @if (session('error'))
+                    toasts.push({ id: Date.now() + 1, message: @js(session('error')), type: 'error' });
+                @endif
+             "
              class="fixed top-20 right-4 z-50 space-y-2 w-80">
             <template x-for="toast in toasts" :key="toast.id">
                 <div x-transition:enter="transition ease-out duration-300"
@@ -149,7 +155,8 @@
             <p class="text-sm text-content-secondary mt-1">Continue learning where you left off</p>
     </div>
 
-    
+
+        @if ($enrollments->isEmpty())
             <div class="rounded-xl bg-surface-raised border border-surface-border p-8 text-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-content-tertiary mx-auto mb-3">
   <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"/>
@@ -157,7 +164,49 @@
             <p class="text-content-secondary mb-3">You haven't purchased any courses yet.</p>
             <a href="{{ route('user.courses') }}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-sm font-medium transition-colors">Browse Courses</a>
         </div>
-    
+        @else
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach ($enrollments as $enrollment)
+                    <div class="bg-surface-raised border border-surface-border rounded-xl overflow-hidden hover:border-primary/30 transition-all">
+                        <div class="aspect-video overflow-hidden">
+                            <img src="{{ $enrollment->course->thumbnail_url ?? 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600' }}"
+                                class="w-full h-full object-cover"
+                                alt="{{ $enrollment->course->title ?? 'Course' }}">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-content-primary font-semibold line-clamp-2">{{ $enrollment->course->title ?? 'Course removed' }}</h3>
+
+                            <div class="flex items-center justify-between mt-2">
+                                @if ($enrollment->isActive())
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gain/10 text-gain">Active</span>
+                                @else
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-warning/10 text-warning">Pending</span>
+                                @endif
+                                <span class="text-xs text-content-tertiary">{{ $enrollment->created_at->format('M d, Y') }}</span>
+                            </div>
+
+                            <div class="mt-3">
+                                <div class="flex items-center justify-between text-xs text-content-tertiary mb-1">
+                                    <span>Progress</span>
+                                    <span>{{ $enrollment->progress_percent }}%</span>
+                                </div>
+                                <div class="w-full h-1.5 rounded-full bg-surface-overlay overflow-hidden">
+                                    <div class="h-full bg-primary rounded-full" style="width: {{ $enrollment->progress_percent }}%"></div>
+                                </div>
+                            </div>
+
+                            @if ($enrollment->course)
+                                <a href="{{ route('user.courses.show', $enrollment->course) }}"
+                                    class="mt-4 block text-center text-sm bg-primary/10 text-primary hover:bg-primary hover:text-white px-3 py-2 rounded-md transition-colors">
+                                    {{ $enrollment->isActive() ? 'Continue' : 'View Course' }}
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+
         </div>
 
         

@@ -4,7 +4,13 @@
         
         <div x-data="{ toasts: [] }"
              x-init="
-                                             "
+                @if (session('success'))
+                    toasts.push({ id: Date.now(), message: @js(session('success')), type: 'success' });
+                @endif
+                @if (session('error'))
+                    toasts.push({ id: Date.now() + 1, message: @js(session('error')), type: 'error' });
+                @endif
+             "
              class="fixed top-20 right-4 z-50 space-y-2 w-80">
             <template x-for="toast in toasts" :key="toast.id">
                 <div x-transition:enter="transition ease-out duration-300"
@@ -161,7 +167,7 @@
 
             
             <div class="flex items-center gap-2 max-w-lg mx-auto mb-4">
-                <input type="text" id="reflink" value="{{ url('/') }}//ref/egod1422" readonly
+                <input type="text" id="reflink" value="{{ route('ref.redirect', $user->referral_code) }}" readonly
                        class="flex-1 px-4 py-2.5 rounded-lg bg-surface-overlay border border-surface-border text-content-primary text-sm focus:outline-none">
                 <button onclick="copyReferralLink()" class="px-4 py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-content-inverse text-sm font-medium transition-colors flex items-center gap-1.5">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
@@ -171,11 +177,9 @@
                 </button>
             </div>
 
-            
             <p class="text-sm text-content-secondary mb-1">or share your Referral ID</p>
-            <span class="text-lg font-bold text-primary">egod1422</span>
+            <span class="text-lg font-bold text-primary">{{ $user->referral_code }}</span>
 
-            
             <div class="mt-5 pt-5 border-t border-surface-border">
                 <p class="text-xs text-content-tertiary mb-1">You were referred by</p>
                 <div class="inline-flex items-center gap-2">
@@ -184,7 +188,7 @@
     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
 </svg>
                     </div>
-                    <span class="text-sm font-medium text-content-primary">null</span>
+                    <span class="text-sm font-medium text-content-primary">{{ $user->referredBy->name ?? '—' }}</span>
                 </div>
             </div>
         </div>
@@ -210,7 +214,25 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-surface-border text-content-secondary">
-                    
+                    @forelse ($referrals as $referral)
+                        <tr>
+                            <td class="px-5 py-3.5 text-content-primary font-medium">{{ $referral->name }}</td>
+                            <td class="px-5 py-3.5">1</td>
+                            <td class="px-5 py-3.5">{{ $user->name }}</td>
+                            <td class="px-5 py-3.5">
+                                @if ($referral->hasVerifiedEmail())
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gain/10 text-gain">Verified</span>
+                                @else
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-warning/10 text-warning">Unverified</span>
+                                @endif
+                            </td>
+                            <td class="px-5 py-3.5">{{ $referral->created_at->format('M d, Y') }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="px-5 py-8 text-center text-content-tertiary">You haven't referred anyone yet.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

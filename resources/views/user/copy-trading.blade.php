@@ -3,7 +3,13 @@
         
         <div x-data="{ toasts: [] }"
              x-init="
-                                             "
+                @if (session('success'))
+                    toasts.push({ id: Date.now(), message: @js(session('success')), type: 'success' });
+                @endif
+                @if (session('error'))
+                    toasts.push({ id: Date.now() + 1, message: @js(session('error')), type: 'error' });
+                @endif
+             "
              class="fixed top-20 right-4 z-50 space-y-2 w-80">
             <template x-for="toast in toasts" :key="toast.id">
                 <div x-transition:enter="transition ease-out duration-300"
@@ -157,334 +163,59 @@
         
         <div x-show="tab === 'experts'">
                             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                                            <a href="{{ route('user.copy-trading') }}/expert/2" class="group block bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
-                            
+                                @foreach ($traders as $trader)
+                                <a href="{{ route('user.copy-trading.show', $trader) }}" class="group block bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
+
                             <div class="flex items-center gap-3.5 mb-4">
                                 <div class="relative flex-shrink-0">
-                                                                            <img src="{{ url('/') }}/storage/app/public/experts/GMFwXyAvtIngLHF3WWL0ZVIQv0xPEQYdap7AfcFB.jpg" alt="Albert Burgess" class="w-12 h-12 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
-                                                                        <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-gain rounded-full border-2 border-surface-raised" title="Active"></span>
+                                    <img src="{{ $trader->avatar_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($trader->name) }}" alt="{{ $trader->name }}" class="w-12 h-12 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
+                                    <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-gain rounded-full border-2 border-surface-raised" title="Active"></span>
                                 </div>
                                 <div class="min-w-0 flex-1">
-                                    <h4 class="text-sm font-semibold text-content-primary truncate group-hover:text-primary transition-colors">Albert Burgess</h4>
+                                    <h4 class="text-sm font-semibold text-content-primary truncate group-hover:text-primary transition-colors">{{ $trader->name }}</h4>
                                     <div class="flex items-center gap-2 mt-0.5">
-                                        <span class="bg-primary/10 text-primary text-[10px] font-medium px-1.5 py-0.5 rounded">Mixed</span>
-                                        <span class="text-content-tertiary text-[10px]">4,000 followers</span>
+                                        <span class="bg-primary/10 text-primary text-[10px] font-medium px-1.5 py-0.5 rounded">{{ $trader->style_label }}</span>
+                                        <span class="text-content-tertiary text-[10px]">{{ number_format($trader->followers_count) }} followers</span>
                                     </div>
                                 </div>
                                 <div class="text-right flex-shrink-0">
-                                    <p class="text-base font-bold text-gain">12.00%</p>
+                                    <p class="text-base font-bold text-gain">{{ number_format($trader->daily_roi_pct, 2) }}%</p>
                                     <p class="text-[10px] text-content-tertiary">daily ROI</p>
                                 </div>
                             </div>
 
-                            
                             <div class="grid grid-cols-4 gap-3 py-3 border-t border-surface-border">
                                 <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">30d</p>
+                                    <p class="text-xs font-semibold text-content-primary">{{ $trader->duration_days }}d</p>
                                     <p class="text-[10px] text-content-tertiary mt-0.5">Duration</p>
                                 </div>
                                 <div class="text-center">
-                                    <p class="text-xs font-semibold text-gain">120.0%</p>
+                                    <p class="text-xs font-semibold text-gain">{{ number_format($trader->total_roi_pct, 1) }}%</p>
                                     <p class="text-[10px] text-content-tertiary mt-0.5">Total ROI</p>
                                 </div>
                                 <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">67%</p>
+                                    <p class="text-xs font-semibold text-content-primary">{{ number_format($trader->win_rate_pct, 0) }}%</p>
                                     <p class="text-[10px] text-content-tertiary mt-0.5">Win Rate</p>
                                 </div>
                                 <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">$500.00</p>
+                                    <p class="text-xs font-semibold text-content-primary">${{ number_format($trader->min_capital, 2) }}</p>
                                     <p class="text-[10px] text-content-tertiary mt-0.5">Min Capital</p>
                                 </div>
                             </div>
 
-                            
                             <div class="mt-3 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-primary/10 text-primary text-xs font-semibold group-hover:bg-primary group-hover:text-content-inverse transition-all duration-200">
                                 View Expert
                                 <svg class="w-3.5 h-3.5 opacity-0 -ml-1 group-hover:opacity-100 group-hover:ml-0 transition-all" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
                             </div>
                         </a>
-                                            <a href="{{ route('user.copy-trading') }}/expert/3" class="group block bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
-                            
-                            <div class="flex items-center gap-3.5 mb-4">
-                                <div class="relative flex-shrink-0">
-                                                                            <img src="{{ url('/') }}/storage/app/public/experts/blzX1VIWDtVrGLfViyCnthLITC0SH6qYamkrMCKy.jpg" alt="Axel Merk" class="w-12 h-12 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
-                                                                        <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-gain rounded-full border-2 border-surface-raised" title="Active"></span>
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <h4 class="text-sm font-semibold text-content-primary truncate group-hover:text-primary transition-colors">Axel Merk</h4>
-                                    <div class="flex items-center gap-2 mt-0.5">
-                                        <span class="bg-primary/10 text-primary text-[10px] font-medium px-1.5 py-0.5 rounded">Mixed</span>
-                                        <span class="text-content-tertiary text-[10px]">3,000 followers</span>
-                                    </div>
-                                </div>
-                                <div class="text-right flex-shrink-0">
-                                    <p class="text-base font-bold text-gain">20.00%</p>
-                                    <p class="text-[10px] text-content-tertiary">daily ROI</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="grid grid-cols-4 gap-3 py-3 border-t border-surface-border">
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">30d</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Duration</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-gain">598.0%</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Total ROI</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">65%</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Win Rate</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">$2,500.00</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Min Capital</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="mt-3 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-primary/10 text-primary text-xs font-semibold group-hover:bg-primary group-hover:text-content-inverse transition-all duration-200">
-                                View Expert
-                                <svg class="w-3.5 h-3.5 opacity-0 -ml-1 group-hover:opacity-100 group-hover:ml-0 transition-all" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
-                            </div>
-                        </a>
-                                            <a href="{{ route('user.copy-trading') }}/expert/4" class="group block bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
-                            
-                            <div class="flex items-center gap-3.5 mb-4">
-                                <div class="relative flex-shrink-0">
-                                                                            <img src="{{ url('/') }}/storage/app/public/experts/uAzXukRIVidkzW3TuEj2tnh4VHjLn7rR1wOOwZVL.jpg" alt="Paul Tudor Jones" class="w-12 h-12 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
-                                                                        <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-gain rounded-full border-2 border-surface-raised" title="Active"></span>
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <h4 class="text-sm font-semibold text-content-primary truncate group-hover:text-primary transition-colors">Paul Tudor Jones</h4>
-                                    <div class="flex items-center gap-2 mt-0.5">
-                                        <span class="bg-primary/10 text-primary text-[10px] font-medium px-1.5 py-0.5 rounded">Mixed</span>
-                                        <span class="text-content-tertiary text-[10px]">40,000 followers</span>
-                                    </div>
-                                </div>
-                                <div class="text-right flex-shrink-0">
-                                    <p class="text-base font-bold text-gain">6.34%</p>
-                                    <p class="text-[10px] text-content-tertiary">daily ROI</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="grid grid-cols-4 gap-3 py-3 border-t border-surface-border">
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">30d</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Duration</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-gain">4,570.0%</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Total ROI</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">86%</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Win Rate</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">$1,300.00</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Min Capital</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="mt-3 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-primary/10 text-primary text-xs font-semibold group-hover:bg-primary group-hover:text-content-inverse transition-all duration-200">
-                                View Expert
-                                <svg class="w-3.5 h-3.5 opacity-0 -ml-1 group-hover:opacity-100 group-hover:ml-0 transition-all" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
-                            </div>
-                        </a>
-                                            <a href="{{ route('user.copy-trading') }}/expert/5" class="group block bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
-                            
-                            <div class="flex items-center gap-3.5 mb-4">
-                                <div class="relative flex-shrink-0">
-                                                                            <img src="{{ url('/') }}/storage/app/public/experts/Pig6FQxoDQopSzBT2xsrbKrlQnHnk0Qh70ZEWHrN.jpg" alt="Andrew Kreiger" class="w-12 h-12 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
-                                                                        <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-gain rounded-full border-2 border-surface-raised" title="Active"></span>
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <h4 class="text-sm font-semibold text-content-primary truncate group-hover:text-primary transition-colors">Andrew Kreiger</h4>
-                                    <div class="flex items-center gap-2 mt-0.5">
-                                        <span class="bg-primary/10 text-primary text-[10px] font-medium px-1.5 py-0.5 rounded">Mixed</span>
-                                        <span class="text-content-tertiary text-[10px]">5,456,766 followers</span>
-                                    </div>
-                                </div>
-                                <div class="text-right flex-shrink-0">
-                                    <p class="text-base font-bold text-gain">14.00%</p>
-                                    <p class="text-[10px] text-content-tertiary">daily ROI</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="grid grid-cols-4 gap-3 py-3 border-t border-surface-border">
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">30d</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Duration</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-gain">9,000.0%</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Total ROI</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">95%</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Win Rate</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">$5,400.00</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Min Capital</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="mt-3 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-primary/10 text-primary text-xs font-semibold group-hover:bg-primary group-hover:text-content-inverse transition-all duration-200">
-                                View Expert
-                                <svg class="w-3.5 h-3.5 opacity-0 -ml-1 group-hover:opacity-100 group-hover:ml-0 transition-all" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
-                            </div>
-                        </a>
-                                            <a href="{{ route('user.copy-trading') }}/expert/6" class="group block bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
-                            
-                            <div class="flex items-center gap-3.5 mb-4">
-                                <div class="relative flex-shrink-0">
-                                                                            <img src="{{ url('/') }}/storage/app/public/experts/aXps1D2XJxOyBphvaIOIBVVPm7umALLmq4T4ePf6.jpg" alt="Andrei Neagu" class="w-12 h-12 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
-                                                                        <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-gain rounded-full border-2 border-surface-raised" title="Active"></span>
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <h4 class="text-sm font-semibold text-content-primary truncate group-hover:text-primary transition-colors">Andrei Neagu</h4>
-                                    <div class="flex items-center gap-2 mt-0.5">
-                                        <span class="bg-primary/10 text-primary text-[10px] font-medium px-1.5 py-0.5 rounded">Mixed</span>
-                                        <span class="text-content-tertiary text-[10px]">7,000,000 followers</span>
-                                    </div>
-                                </div>
-                                <div class="text-right flex-shrink-0">
-                                    <p class="text-base font-bold text-gain">65.00%</p>
-                                    <p class="text-[10px] text-content-tertiary">daily ROI</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="grid grid-cols-4 gap-3 py-3 border-t border-surface-border">
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">30d</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Duration</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-gain">6,000.0%</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Total ROI</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">66%</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Win Rate</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">$300.00</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Min Capital</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="mt-3 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-primary/10 text-primary text-xs font-semibold group-hover:bg-primary group-hover:text-content-inverse transition-all duration-200">
-                                View Expert
-                                <svg class="w-3.5 h-3.5 opacity-0 -ml-1 group-hover:opacity-100 group-hover:ml-0 transition-all" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
-                            </div>
-                        </a>
-                                            <a href="{{ route('user.copy-trading') }}/expert/7" class="group block bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
-                            
-                            <div class="flex items-center gap-3.5 mb-4">
-                                <div class="relative flex-shrink-0">
-                                                                            <img src="{{ url('/') }}/storage/app/public/experts/w7rvBcvM4y7NO9bnWNXk5A6MSlaco0rIJH36qlaA.jpg" alt="Abdullah Rasheed" class="w-12 h-12 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
-                                                                        <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-gain rounded-full border-2 border-surface-raised" title="Active"></span>
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <h4 class="text-sm font-semibold text-content-primary truncate group-hover:text-primary transition-colors">Abdullah Rasheed</h4>
-                                    <div class="flex items-center gap-2 mt-0.5">
-                                        <span class="bg-primary/10 text-primary text-[10px] font-medium px-1.5 py-0.5 rounded">Mixed</span>
-                                        <span class="text-content-tertiary text-[10px]">65,000 followers</span>
-                                    </div>
-                                </div>
-                                <div class="text-right flex-shrink-0">
-                                    <p class="text-base font-bold text-gain">12.00%</p>
-                                    <p class="text-[10px] text-content-tertiary">daily ROI</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="grid grid-cols-4 gap-3 py-3 border-t border-surface-border">
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">30d</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Duration</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-gain">18,000.0%</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Total ROI</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">78%</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Win Rate</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">$700.00</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Min Capital</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="mt-3 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-primary/10 text-primary text-xs font-semibold group-hover:bg-primary group-hover:text-content-inverse transition-all duration-200">
-                                View Expert
-                                <svg class="w-3.5 h-3.5 opacity-0 -ml-1 group-hover:opacity-100 group-hover:ml-0 transition-all" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
-                            </div>
-                        </a>
-                                            <a href="{{ route('user.copy-trading') }}/expert/8" class="group block bg-surface-raised border border-surface-border rounded-xl p-5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
-                            
-                            <div class="flex items-center gap-3.5 mb-4">
-                                <div class="relative flex-shrink-0">
-                                                                            <img src="{{ url('/') }}/storage/app/public/experts/8ArEeTJN5JySoUFHCpW277KhSowQzrqxybZVMjec.jpg" alt="Alex Gonzalez" class="w-12 h-12 rounded-full object-cover ring-2 ring-surface-border group-hover:ring-primary/40 transition-all">
-                                                                        <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-gain rounded-full border-2 border-surface-raised" title="Active"></span>
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <h4 class="text-sm font-semibold text-content-primary truncate group-hover:text-primary transition-colors">Alex Gonzalez</h4>
-                                    <div class="flex items-center gap-2 mt-0.5">
-                                        <span class="bg-primary/10 text-primary text-[10px] font-medium px-1.5 py-0.5 rounded">Mixed</span>
-                                        <span class="text-content-tertiary text-[10px]">400,000 followers</span>
-                                    </div>
-                                </div>
-                                <div class="text-right flex-shrink-0">
-                                    <p class="text-base font-bold text-gain">13.00%</p>
-                                    <p class="text-[10px] text-content-tertiary">daily ROI</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="grid grid-cols-4 gap-3 py-3 border-t border-surface-border">
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">30d</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Duration</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-gain">1,200.0%</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Total ROI</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">98%</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Win Rate</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-xs font-semibold text-content-primary">$500.00</p>
-                                    <p class="text-[10px] text-content-tertiary mt-0.5">Min Capital</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="mt-3 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-primary/10 text-primary text-xs font-semibold group-hover:bg-primary group-hover:text-content-inverse transition-all duration-200">
-                                View Expert
-                                <svg class="w-3.5 h-3.5 opacity-0 -ml-1 group-hover:opacity-100 group-hover:ml-0 transition-all" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
-                            </div>
-                        </a>
+                                @endforeach
                                     </div>
                 <div class="mt-6"></div>
                     </div>
 
         
         <div x-show="tab === 'positions'" x-cloak>
+                @if ($subscriptions->isEmpty())
                             <div class="bg-surface-raised border border-surface-border rounded-xl p-8 text-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-content-tertiary mx-auto mb-3" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
@@ -492,6 +223,31 @@
                     <p class="text-content-secondary mb-2">You're not copying any experts yet.</p>
                     <button @click="tab = 'experts'" class="text-primary hover:text-primary-dark text-sm font-medium">Browse Experts</button>
                 </div>
+                @else
+                    <div class="space-y-3">
+                        @foreach ($subscriptions as $subscription)
+                            <div class="flex items-center gap-4 bg-surface-raised border border-surface-border rounded-xl p-4">
+                                <img src="{{ $subscription->trader->avatar_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($subscription->trader->name ?? '?') }}" alt="{{ $subscription->trader->name ?? 'Trader' }}" class="w-10 h-10 rounded-full object-cover ring-2 ring-surface-border flex-shrink-0">
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-sm font-semibold text-content-primary truncate">{{ $subscription->trader->name ?? 'Unknown Trader' }}</p>
+                                    <p class="text-xs text-content-tertiary mt-0.5">${{ number_format($subscription->amount, 2) }} invested &middot; {{ $subscription->created_at->format('M d, Y') }}</p>
+                                </div>
+                                <div>
+                                    @if ($subscription->isActive())
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gain/10 text-gain">Active</span>
+                                    @elseif ($subscription->status === \App\Models\CopyTradingSubscription::STATUS_APPROVED)
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-content-tertiary/10 text-content-tertiary">Expired</span>
+                                    @else
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-warning/10 text-warning">Pending</span>
+                                    @endif
+                                </div>
+                                @if ($subscription->trader)
+                                    <a href="{{ route('user.copy-trading.show', $subscription->trader) }}" class="text-xs text-primary hover:text-primary-light font-medium flex-shrink-0">View</a>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
                     </div>
     </div>
 

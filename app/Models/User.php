@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -28,7 +29,26 @@ class User extends Authenticatable
         'currency_code',
         'account_types',
         'password',
+        'avatar_path',
+        'address',
+        'state',
+        'zipcode',
+        'referral_code',
+        'referred_by',
     ];
+
+    protected static function booted(): void
+    {
+        static::creating(function (User $user) {
+            if (empty($user->referral_code)) {
+                do {
+                    $code = strtoupper(Str::random(8));
+                } while (static::where('referral_code', $code)->exists());
+
+                $user->referral_code = $code;
+            }
+        });
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -64,6 +84,23 @@ class User extends Authenticatable
         return ! is_null($this->email_verified_at);
     }
 
+    public function avatarUrl(): string
+    {
+        return $this->avatar_path
+            ? asset('storage/' . $this->avatar_path)
+            : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=EFB90B&color=0D0F14';
+    }
+
+    public function referredBy()
+    {
+        return $this->belongsTo(User::class, 'referred_by');
+    }
+
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'referred_by');
+    }
+
     public function deposits()
     {
         return $this->hasMany(Deposit::class);
@@ -84,6 +121,11 @@ class User extends Authenticatable
         return $this->hasMany(Investment::class);
     }
 
+    public function signalSubscriptions()
+    {
+        return $this->hasMany(SignalSubscription::class);
+    }
+
     public function preIpoHoldings()
     {
         return $this->hasMany(PreIpoHolding::class);
@@ -92,5 +134,55 @@ class User extends Authenticatable
     public function stockOrders()
     {
         return $this->hasMany(StockOrder::class);
+    }
+
+    public function nfts()
+    {
+        return $this->hasMany(Nft::class);
+    }
+
+    public function nftLikes()
+    {
+        return $this->hasMany(NftLike::class);
+    }
+
+    public function trades()
+    {
+        return $this->hasMany(Trade::class);
+    }
+
+    public function copyTradingSubscriptions()
+    {
+        return $this->hasMany(CopyTradingSubscription::class);
+    }
+
+    public function courseEnrollments()
+    {
+        return $this->hasMany(CourseEnrollment::class);
+    }
+
+    public function kycSubmissions()
+    {
+        return $this->hasMany(KycSubmission::class);
+    }
+
+    public function latestKycSubmission()
+    {
+        return $this->hasOne(KycSubmission::class)->latestOfMany();
+    }
+
+    public function isKycApproved(): bool
+    {
+        return $this->latestKycSubmission?->isApproved() ?? false;
+    }
+
+    public function isKycPending(): bool
+    {
+        return $this->latestKycSubmission?->isPending() ?? false;
+    }
+
+    public function kycStatusLabel(): string
+    {
+        return $this->latestKycSubmission?->statusLabel() ?? 'Not Verified';
     }
 }

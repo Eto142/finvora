@@ -116,13 +116,13 @@
         
         <div class="px-4 py-4 border-b border-surface-border shrink-0">
             <div class="flex items-center gap-3">
-                                    <img src="{{ url('/') }}/storage/app/public/photos/&#039;DCOFeWgh.jpg1741102440&#039;"
+                                    <img src="{{ Auth::user()->avatarUrl() }}"
                          alt="{{Auth::user()->name}}"
                          class="w-10 h-10 rounded-full object-cover bg-surface-overlay shrink-0">
                                 <div class="min-w-0">
                     <p class="text-sm font-medium text-content-primary truncate">{{Auth::user()->name}}</p>
-                                        <p class="text-xs text-content-tertiary">
-                        Unverified
+                                        <p class="text-xs {{ Auth::user()->isKycApproved() ? 'text-gain' : 'text-content-tertiary' }}">
+                        {{ Auth::user()->kycStatusLabel() }}
                     </p>
                                     </div>
             </div>
@@ -387,17 +387,19 @@
                 </div>
 
                 
-                                                            <a href="{{route('user.kyc')}}" class="hidden sm:inline-flex items-center gap-1 text-xs font-medium text-warning bg-warning/10 px-2.5 py-1 rounded-full hover:bg-warning/20 transition-colors">
+                                                            @unless (Auth::user()->isKycApproved())
+                            <a href="{{route('user.kyc')}}" class="hidden sm:inline-flex items-center gap-1 text-xs font-medium text-warning bg-warning/10 px-2.5 py-1 rounded-full hover:bg-warning/20 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
 </svg>
  Verify KYC
                         </a>
+                        @endunless
                                     
                 
                 <div class="relative" @click.away="userDropdown = false">
                     <button @click="userDropdown = !userDropdown" class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-surface-overlay transition-colors">
-                                                    <img src="{{ url('/') }}/storage/app/public/photos/&#039;DCOFeWgh.jpg1741102440&#039;"
+                                                    <img src="{{ Auth::user()->avatarUrl() }}"
                                  alt="{{ Auth::user()->name }}"
                                  class="w-8 h-8 rounded-full object-cover bg-surface-overlay">
                                                 <span class="text-sm font-medium text-content-primary hidden md:block">{{ Auth::user()->name }}</span>
