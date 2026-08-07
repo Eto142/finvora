@@ -51,6 +51,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
         Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
         Route::post('/users/{user}/credit', [UserController::class, 'credit'])->name('users.credit');
+        Route::post('/users/{user}/mail', [UserController::class, 'sendMail'])->name('users.mail');
 
         // KYC
         Route::get('/kyc', [KycController::class, 'index'])->name('kyc');

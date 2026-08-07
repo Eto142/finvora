@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AdminMessageMail;
 use App\Models\Balance;
 use App\Models\Deposit;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -65,6 +67,18 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('admin.users')->with('success', 'User account deleted.');
+    }
+
+    public function sendMail(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'subject' => ['required', 'string', 'max:255'],
+            'message' => ['required', 'string', 'max:5000'],
+        ]);
+
+        Mail::to($user->email)->send(new AdminMessageMail($user->name, $validated['subject'], $validated['message']));
+
+        return back()->with('success', "Email sent to {$user->name}.");
     }
 
     public function credit(Request $request, User $user)

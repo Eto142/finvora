@@ -13,5 +13,6 @@
         document.getElementById('adminSidebarBackdrop').classList.remove('show');
     }
 </script>
+@stack('scripts')
 </body>
 </html>
