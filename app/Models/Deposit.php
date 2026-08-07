@@ -11,6 +11,7 @@ class Deposit extends Model
 
     protected $fillable = [
         'user_id',
+        'transaction_id',
         'method',
         'amount',
         'proof',
@@ -28,5 +29,17 @@ class Deposit extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Generate a unique, user-facing reference number for a new deposit.
+     */
+    public static function generateTransactionId(): string
+    {
+        do {
+            $id = (string) random_int(1000000000, 9999999999);
+        } while (static::where('transaction_id', $id)->exists());
+
+        return $id;
     }
 }

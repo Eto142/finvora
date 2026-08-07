@@ -11,6 +11,7 @@ class Withdrawal extends Model
 
     protected $fillable = [
         'user_id',
+        'transaction_id',
         'method',
         'method_type',
         'wallet_address',
@@ -37,5 +38,17 @@ class Withdrawal extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Generate a unique, user-facing reference number for a new withdrawal.
+     */
+    public static function generateTransactionId(): string
+    {
+        do {
+            $id = (string) random_int(1000000000, 9999999999);
+        } while (static::where('transaction_id', $id)->exists());
+
+        return $id;
     }
 }

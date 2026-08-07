@@ -29,6 +29,7 @@ class DepositController extends Controller
         $proofPath = $request->file('proof')->store('deposit-proofs', 'public');
 
         $request->user()->deposits()->create([
+            'transaction_id' => Deposit::generateTransactionId(),
             'method' => $validated['method'],
             'amount' => $validated['amount'],
             'proof' => $proofPath,
@@ -49,6 +50,7 @@ class DepositController extends Controller
         ]);
 
         $request->user()->deposits()->create([
+            'transaction_id' => Deposit::generateTransactionId(),
             'method' => $validated['method'],
             'amount' => $validated['amount'],
             'status' => Deposit::STATUS_PENDING,

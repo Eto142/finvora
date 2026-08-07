@@ -209,10 +209,10 @@
     <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3" />
 </svg>
                     </div>
-                    <span class="text-xs font-medium uppercase tracking-widest text-content-tertiary">Portfolio Value</span>
+                    <span class="text-xs font-medium uppercase tracking-widest text-content-tertiary">Total Balance</span>
                 </div>
                 <p class="text-content-primary tracking-tight truncate">
-                    <span class="text-base sm:text-2xl font-semibold text-content-secondary align-top">$</span><span class="text-2xl sm:text-4xl font-bold">0.00</span>
+                    <span class="text-base sm:text-2xl font-semibold text-content-secondary align-top">$</span><span class="text-2xl sm:text-4xl font-bold">{{ number_format($balance->total, 2) }}</span>
                 </p>
             </div>
 
@@ -272,7 +272,7 @@
         </div>
     </div>
     <p class="text-xs text-content-tertiary font-medium uppercase tracking-wide mb-1">Total Profit</p>
-    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="$0.00">$0.00</p>
+    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="${{ number_format($balance->profit, 2) }}">${{ number_format($balance->profit, 2) }}</p>
     </div>
                 <div class="bg-surface-raised border border-surface-border rounded-xl p-4 sm:p-5 hover:border-surface-border-light transition-colors group min-w-0 overflow-hidden">
     <div class="flex items-start justify-between mb-3">
@@ -283,7 +283,7 @@
         </div>
     </div>
     <p class="text-xs text-content-tertiary font-medium uppercase tracking-wide mb-1">Bonus</p>
-    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="$0.00">$0.00</p>
+    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="${{ number_format($balance->bonus, 2) }}">${{ number_format($balance->bonus, 2) }}</p>
     </div>
                 <div class="bg-surface-raised border border-surface-border rounded-xl p-4 sm:p-5 hover:border-surface-border-light transition-colors group min-w-0 overflow-hidden">
     <div class="flex items-start justify-between mb-3">
@@ -294,7 +294,7 @@
         </div>
     </div>
     <p class="text-xs text-content-tertiary font-medium uppercase tracking-wide mb-1">Referral Bonus</p>
-    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="$0.00">$0.00</p>
+    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="${{ number_format($balance->bonus, 2) }}">${{ number_format($balance->bonus, 2) }}</p>
     </div>
                 <div class="bg-surface-raised border border-surface-border rounded-xl p-4 sm:p-5 hover:border-surface-border-light transition-colors group min-w-0 overflow-hidden">
     <div class="flex items-start justify-between mb-3">
@@ -305,7 +305,7 @@
         </div>
     </div>
     <p class="text-xs text-content-tertiary font-medium uppercase tracking-wide mb-1">Withdrawals</p>
-    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="$0.00">$0.00</p>
+    <p class="text-[15px] sm:text-2xl font-bold text-content-primary truncate" title="${{ number_format($balance->withdrawn, 2) }}">${{ number_format($balance->withdrawn, 2) }}</p>
     </div>
             </div>
 

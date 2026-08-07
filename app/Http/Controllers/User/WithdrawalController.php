@@ -36,6 +36,7 @@ class WithdrawalController extends Controller
         $fee = $validated['fee'] ?? 0;
 
         $request->user()->withdrawals()->create([
+            'transaction_id' => Withdrawal::generateTransactionId(),
             'method' => $validated['method'],
             'method_type' => $validated['method_type'],
             'wallet_address' => $validated['wallet_address'] ?? null,
