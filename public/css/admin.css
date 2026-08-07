@@ -350,7 +350,7 @@ a.stat-card:hover {
     right: 0;
     left: 260px;
     height: 64px;
-    z-index: 1020;
+    z-index: 1040;
     background-color: #12151C;
     border-bottom: 1px solid #2A2F36;
     box-shadow: 0 1px 8px rgba(0, 0, 0, .25);
@@ -370,6 +370,10 @@ a.stat-card:hover {
     padding: 1.5rem;
 }
 
+.sidebar-backdrop {
+    display: none;
+}
+
 @media (max-width: 991.98px) {
     .sidebar {
         transform: translateX(-100%);
@@ -383,5 +387,17 @@ a.stat-card:hover {
     .main-panel {
         left: 0;
         margin-left: 0;
+    }
+
+    .sidebar-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .5);
+        z-index: 1025;
+    }
+
+    .sidebar-backdrop.show {
+        display: block;
     }
 }

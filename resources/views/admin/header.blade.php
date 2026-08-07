@@ -135,9 +135,11 @@
     </div>
 </nav>
 
+<div class="sidebar-backdrop" id="adminSidebarBackdrop" onclick="closeAdminSidebar()"></div>
+
 <header class="topbar">
     <div class="d-flex align-items-center gap-3">
-        <button class="btn btn-sm btn-outline-secondary d-lg-none" type="button" onclick="document.getElementById('adminSidebar').classList.toggle('show')">
+        <button class="btn btn-sm btn-outline-secondary d-lg-none" type="button" onclick="toggleAdminSidebar()">
             <i class="bi bi-list"></i>
         </button>
         <h1 class="h5 mb-0 text-light">{{ $heading ?? ($title ?? 'Dashboard') }}</h1>
